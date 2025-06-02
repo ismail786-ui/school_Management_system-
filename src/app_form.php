@@ -52,7 +52,7 @@ if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
     )";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Form submitted successfully!'); window.location.href='app_vform.php';</script>";
+        echo "<script>window.location.href='app_vform.php';</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
