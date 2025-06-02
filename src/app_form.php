@@ -372,6 +372,7 @@ if (isset($_POST['submit'])) {
     </form>
     </div>
   </div>
+  pugal
 
 <script>
   function toggleInputBox(selectElement) {
