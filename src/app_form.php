@@ -1,62 +1,58 @@
 <?php
-include 'conn.php';
-
-// DEBUG: Check if form is submitted
-var_dump($_POST);
-var_dump($_FILES);
+include "./conn.php";
 
 if (isset($_POST['submit'])) {
-    echo "Submit button was clicked.<br>";
-    // Get form input values
-    $stu_name       = $_POST['stu_name'];
-    $stu_email      = $_POST['stu_email'];
-    $stu_dob        = $_POST['stu_dob'];
-    $stu_age        = $_POST['stu_age'];
-    $stu_gender     = $_POST['stu_gender'];
-    $stu_address    = $_POST['stu_address'];
-    $stu_city       = $_POST['stu_city'];
-    $stu_state      = $_POST['stu_state'];
-    $stu_pincode    = $_POST['stu_pincode'];
-    $stu_mother     = $_POST['stu_mother'];
-    $stu_father     = $_POST['stu_father'];
-    $stu_mobile     = $_POST['stu_mobile'];
-    $stu_admission  = $_POST['stu_admission'];
-    $standard       = $_POST['standard'];
+    // Collect form data
+    $stu_name = $_POST['stu_name'];
+    $stu_email = $_POST['stu_email'];
+    $stu_dob = $_POST['stu_dob'];
+    $stu_age = $_POST['stu_age'];
+    $stu_gender = $_POST['stu_gender'];
+    $stu_address = $_POST['stu_address'];
+    $stu_city = $_POST['stu_city'];
+    $stu_state = $_POST['stu_state'];
+    $stu_pincode = $_POST['stu_pincode'];
+    $stu_mother = $_POST['stu_mother'];
+    $stu_father = $_POST['stu_father'];
+    $stu_mobile = $_POST['stu_mobile'];
+    $stu_admission = $_POST['stu_admission'];
+    $stu_standard = $_POST['standard'];
 
-    // Validate Admission Date
-    if (empty($stu_admission) || $stu_admission === '0000-00-00') {
-        die("Admission date is required.");
-    }
+$upload_dir = "uploads/";
 
-    // Handle file uploads
-    function uploadFile($fileKey, $uploadDir = "uploads/") {
-        if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
-            $fileName = basename($_FILES[$fileKey]['name']);
-            $targetFilePath = $uploadDir . $fileName;
-            move_uploaded_file($_FILES[$fileKey]['tmp_name'], $targetFilePath);
-            return $fileName;
-        }
-        return '';
-    }
+$stu_aadhar = $_FILES['stu_aadhar']['name'];
+move_uploaded_file($_FILES['stu_aadhar']['tmp_name'], $upload_dir . $stu_aadhar);
 
-    $stu_aadhar = uploadFile('stu_aadhar');
-    $stu_photo = uploadFile('stu_photo');
-    $transfercertificate = uploadFile('transfercertificate');
-    $marksheet = uploadFile('marksheet');
+$stu_photo = $_FILES['stu_photo']['name'];
+move_uploaded_file($_FILES['stu_photo']['tmp_name'], $upload_dir . $stu_photo);
 
-    // Insert data into MySQL
+// Optional fields
+$stu_tc = '';
+if (isset($_FILES['transfercertificate']) && $_FILES['transfercertificate']['error'] === 0) {
+    $stu_tc = $_FILES['transfercertificate']['name'];
+    move_uploaded_file($_FILES['transfercertificate']['tmp_name'], $upload_dir . $stu_tc);
+}
+
+$stu_marksheet = '';
+if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
+    $stu_marksheet = $_FILES['marksheet']['name'];
+    move_uploaded_file($_FILES['marksheet']['tmp_name'], $upload_dir . $stu_marksheet);
+}
+
+
+    // Insert into DB
     $sql = "INSERT INTO student_admission (
-        stu_name, stu_email, stu_dob, stu_age, stu_gender, stu_address, stu_city, stu_state, stu_pincode,
-        stu_mother, stu_father, stu_mobile, stu_aadhar, stu_photo, stu_admission,
-        stu_standard, stu_tc, stu_marksheet
+        stu_name, stu_email, stu_dob, stu_age, stu_gender, stu_address,
+        stu_city, stu_state, stu_pincode, stu_mother, stu_father, stu_mobile,
+        stu_aadhar, stu_photo, stu_admission, stu_standard, stu_tc, stu_marksheet
     ) VALUES (
-        '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender', '$stu_address', '$stu_city', '$stu_state', '$stu_pincode',
-        '$stu_mother', '$stu_father', '$stu_mobile', '$stu_aadhar', '$stu_photo', '$stu_admission',
-        '$standard', '$transfercertificate', '$marksheet'
+        '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender', '$stu_address',
+        '$stu_city', '$stu_state', '$stu_pincode', '$stu_mother', '$stu_father', '$stu_mobile',
+        '$stu_aadhar', '$stu_photo', '$stu_admission', '$stu_standard', '$stu_tc', '$stu_marksheet'
     )";
 
-    if ($conn->query($sql) == TRUE) {
-        echo "<script>alert('Student admission successful.'); window.location.href='app_form.php';</script>";
+    if ($conn->query($sql) === TRUE) {
+        echo "<script>alert('Form submitted successfully!'); window.location.href='app_vform.php';</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -64,6 +60,7 @@ if (isset($_POST['submit'])) {
     $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -238,7 +235,7 @@ if (isset($_POST['submit'])) {
  <div class="container mt-5 mb-5 ">
     <div class="bg-white p-5 shadow rounded text-black">
       <h2 class="mb-4 text-center">Admission Form</h2>
-      <form action="" method="POST" enctype="multipart/form-data">
+      <form action="app_form.php" method="POST" enctype="multipart/form-data">
        <!-- Name and Email -->
         <div class="row mb-3">
           <div class="col-md-4">
@@ -319,13 +316,7 @@ if (isset($_POST['submit'])) {
         <label for="stu_admission" class="form-label">Admission Date</label>
         <input type="date" class="form-control" id="stu_admission" name="stu_admission" required>
       </div>
-      <script>
-    // Get today's date in YYYY-MM-DD format
-    const today = new Date().toISOString().split('T')[0];
-  
-    // Set the min attribute to today
-    document.getElementById("stu_admission").setAttribute("min", today);
-    </script>
+ 
         </div>
 <!--------------------------------------------------------------------------------------------------------->
  <div class="row mb-3">
@@ -367,17 +358,19 @@ if (isset($_POST['submit'])) {
     <!---Submit button -->
     <div class="col-lg-12 mt-5 text-center">
     <button type="submit" name="submit" class="btn btn-primary">Save</button>
-    <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button>
+    <!-- <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button> -->
     </div>  
     </form>
     </div>
   </div>
-  pugal
 
 <script>
   function toggleInputBox(selectElement) {
     const inputBox = document.getElementById("transferCertificate");
     const additionalBox = document.getElementById("markSheet");
+
+    const transferInput = document.getElementById("transfercertificate");
+    const marksheetInput = document.getElementById("marksheet");
 
     const requiresTransfer = [
       "ukg", "first", "second", "third", "fourth", "fifth",
@@ -388,13 +381,26 @@ if (isset($_POST['submit'])) {
 
     const selectedValue = selectElement.value.toLowerCase();
 
-    // Show/hide Transfer Certificate field
-    inputBox.style.display = requiresTransfer.includes(selectedValue) ? "block" : "none";
+    // Toggle Transfer Certificate
+    if (requiresTransfer.includes(selectedValue)) {
+      inputBox.style.display = "block";
+      transferInput.setAttribute("required", "required");
+    } else {
+      inputBox.style.display = "none";
+      transferInput.removeAttribute("required");
+    }
 
-    // Show/hide Marksheet Input field for 11th & 12th
-    additionalBox.style.display = requiresAdditional.includes(selectedValue) ? "block" : "none";
+    // Toggle Marksheet
+    if (requiresAdditional.includes(selectedValue)) {
+      additionalBox.style.display = "block";
+      marksheetInput.setAttribute("required", "required");
+    } else {
+      additionalBox.style.display = "none";
+      marksheetInput.removeAttribute("required");
+    }
   }
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- ------------------------------------------------------------------------------- -->
 <!--------------------------------------------------------------------------------------------------------->
