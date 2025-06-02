@@ -1,0 +1,85 @@
+<div class="row mb-3">
+  <div class="col-md-4">
+    <label for="community" class="form-label">School Standard</label>
+    <select id="community" class="form-select" name="community" onchange="toggleInputBox(this)">
+      <option selected disabled>Select</option>
+      <option value="Pre Kg">Pre Kg</option>
+      <option value="Lkg">Lkg</option>
+      <option value="ukg">Ukg</option>
+      <option value="first">First</option>
+      <option value="second">Second</option>
+      <option value="third">Third</option>
+      <option value="fourth">Fourth</option>
+      <option value="fifth">Fifth</option>
+      <option value="sixth">Sixth</option>
+      <option value="seventh">Seventh</option>
+      <option value="eighth">Eighth</option>
+      <option value="ninth">Ninth</option>
+      <option value="tenth">Tenth</option>
+      <option value="eleventh">Eleventh</option>
+      <option value="twelfth">Twelfth</option>
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <div id="customInput" style="display: none;">
+      <label for="stu_photo" class="form-label">Transfer Certificate</label>
+      <input class="form-control" type="file" id="stu_photo" name="stu_photo">
+    </div>
+
+    <div id="additionalInput" style="display: none;" class="mt-2">
+      <label for="prev_marks" class="form-label">Marksheet</label>
+      <input class="form-control" type="file" id="prev_marks" name="prev_marks" placeholder="Enter details">
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleInputBox(selectElement) {
+    const inputBox = document.getElementById("customInput");
+    const additionalBox = document.getElementById("additionalInput");
+
+    const requiresTransfer = [
+      "ukg", "first", "second", "third", "fourth", "fifth",
+      "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
+    ];
+
+    const requiresAdditional = ["eleventh", "twelfth"];
+
+    const selectedValue = selectElement.value.toLowerCase();
+
+    // Show/hide Transfer Certificate field
+    inputBox.style.display = requiresTransfer.includes(selectedValue) ? "block" : "none";
+
+    // Show/hide Additional Input field for 11th & 12th
+    additionalBox.style.display = requiresAdditional.includes(selectedValue) ? "block" : "none";
+  }
+</script>
+
+
+ <div class="col-md-4">
+  <label for="community" class="form-label">School Standard</label>
+  <select id="community" class="form-select"  name="community" onchange="toggleInputBox(this)">
+    <option selected disabled>Select</option>
+    <option value="Pre Kg">Pre Kg</option>
+    <option value="Lkg">Lkg</option>
+    <option value="ukg">Ukg</option>
+    <option value="first">First</option>
+    <option value="second">Second</option>
+    <option value="third">Third</option>
+    <option value="fourth">Fourth</option>
+    <option value="fifth">Fifth</option>
+    <option value="sixth">Sixth</option>
+    <option value="seventh">Seventh</option>
+    <option value="eighth">Eighth</option>
+    <option value="ninth">Ninth</option>
+    <option value="tenth">Tenth</option>
+    <option value="eleventh">Eleventh</option>
+    <option value="twelvth">Twelvth</option>
+
+  </select>
+  </div>
+
+  <div id="customInput" style="display: none;">
+    <label for="stu_photo" class="form-label">Transfer Certificate</label>
+    <input class="form-control" type="file" id="stu_photo" name="stu_photo">

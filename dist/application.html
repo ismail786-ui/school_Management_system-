@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Admission Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style rel="stylesheet">
+    body {
+      background-color: #f0f2f5; /* light gray background */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5 mb-5 ">
+    <div class="bg-white p-5 shadow rounded">
+      <h2 class="mb-4 text-center">Admission Form</h2>
+      <form action="submit.php" method="POST" enctype="multipart/form-data">
+       <!-- Name and Email -->
+        <div class="row mb-3">
+          <div class="col-md-4">
+             <label for="stu_name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="stu_name" name="stu_name" required>
+          </div>
+          <div class="col-md-4">
+             <label for="stu_email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="stu_email" name="stu_email">
+          </div>
+           <div class="col-md-4">
+            <label for="stu_dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="stu_dob" name="stu_dob">
+          </div>
+        </div>     
+        <!--Age,Gender,Address -->
+<!---------------------------------------------------------------------------->
+         <div class="row mb-3">   
+          <div class="col-md-4">
+            <label for="stu_age" class="form-label">Age</label>
+            <input type="number" class="form-control" id="stu_age" name="stu_age">
+          </div>
+           <div class="col-md-4">
+           <label for="stu_gender" class="form-label">Gender</label>
+            <select class="form-select" id="stu_gender" name="stu_gender">
+              <option selected disabled>Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+        </div>  
+           <div class="col-md-4">
+          <label for="stu_address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="stu_address" name="stu_address">
+          </div>
+        </div>
+<!---------------------------------------------------------------------------->
+          <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="stu_city" class="form-label">City</label>
+            <input type="text" class="form-control" id="stu_city" name="stu_city">
+          </div>
+          <div class="col-md-4">
+            <label for="stu_state" class="form-label">State</label>
+            <input type="text" class="form-control" id="stu_state" name="stu_state">
+          </div>
+          <div class="col-md-4">
+            <label for="stu_state" class="form-label">Pincode</label>
+            <input type="text" class="form-control" id="stu_state" name="stu_state">
+          </div>
+        </div>
+<!--------------------------------------------------------------------------------------------------------------->
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="stu_city" class="form-label">Mother Name</label>
+            <input type="text" class="form-control" id="stu_city" name="stu_city">
+          </div>
+          <div class="col-md-4">
+            <label for="stu_state" class="form-label">Father Name</label>
+            <input type="text" class="form-control" id="stu_state" name="stu_state">
+          </div>
+          <div class="col-md-4">
+            <label for="stu_state" class="form-label">Mobile Number</label>
+            <input type="text" class="form-control" id="stu_state" name="stu_state">
+          </div>
+        </div>
+<!------------------------------------------------------------------------------------------------------------>
+<!--------------------Admission,Photo,certificate-------------------------->
+          <div class="row mb-3">
+         <div class="col-md-4">
+           <label for="stu_photo" class="form-label">Aadhar Card</label>
+          <input class="form-control" type="file" id="stu_photo" name="stu_photo"accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          </div>
+          <div class="col-md-4">
+           <label for="stu_photo" class="form-label">Student Photo</label>
+          <input class="form-control" type="file" id="stu_photo" name="stu_photo">
+          </div>
+          <div class="col-md-4">
+        <label for="stu_admission" class="form-label">Admission Date</label>
+        <input type="date" class="form-control" id="stu_admission" name="stu_admission">
+      </div>
+        </div>
+<!--------------------------------------------------------------------------------------------------------->
+ <div class="row mb-3">
+  <div class="col-md-4">
+    <label for="community" class="form-label">School Standard</label>
+    <select id="community" class="form-select" name="community" onchange="toggleInputBox(this)">
+      <option selected disabled>Select</option>
+      <option value="Pre Kg">Pre Kg</option>
+      <option value="Lkg">Lkg</option>
+      <option value="ukg">Ukg</option>
+      <option value="first">First</option>
+      <option value="second">Second</option>
+      <option value="third">Third</option>
+      <option value="fourth">Fourth</option>
+      <option value="fifth">Fifth</option>
+      <option value="sixth">Sixth</option>
+      <option value="seventh">Seventh</option>
+      <option value="eighth">Eighth</option>
+      <option value="ninth">Ninth</option>
+      <option value="tenth">Tenth</option>
+      <option value="eleventh">Eleventh</option>
+      <option value="twelfth">Twelfth</option>
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <div id="customInput" style="display: none;">
+      <label for="stu_photo" class="form-label">Transfer Certificate</label>
+      <input class="form-control" type="file" id="stu_photo" name="stu_photo"accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    </div>
+    </div>
+    <div class="col-md-4">
+    <div id="additionalInput" style="display: none;">
+    <label for="prev_marks" class="form-label">Marksheet</label>
+    <input class="form-control" type="file" id="prev_marks" name="prev_marks" placeholder="Enter details"accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    </div>
+  </div>
+<!---------------------------------------------------------------------------------------------------------------------------------------------->
+    <!---Submit button -->
+    <div class="col-lg-12 mt-4 text-center">
+    <button type="submit" class="btn btn-primary">Submit Form</button>
+    </div>  
+    </form>
+    </div>
+  </div>
+
+    <div class="col-md-4">
+           <label for="stu_gender" class="form-label">Gender</label>
+            <select class="form-select" id="stu_gender" name="stu_gender">
+              <option selected disabled>Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+        </div>  
+
+
+
+
+<script>
+  function toggleInputBox(selectElement) {
+    const inputBox = document.getElementById("customInput");
+    const additionalBox = document.getElementById("additionalInput");
+
+    const requiresTransfer = [
+      "ukg", "first", "second", "third", "fourth", "fifth",
+      "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
+    ];
+
+    const requiresAdditional = ["eleventh", "twelfth"];
+
+    const selectedValue = selectElement.value.toLowerCase();
+
+    // Show/hide Transfer Certificate field
+    inputBox.style.display = requiresTransfer.includes(selectedValue) ? "block" : "none";
+
+    // Show/hide Marksheet Input field for 11th & 12th
+    additionalBox.style.display = requiresAdditional.includes(selectedValue) ? "block" : "none";
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+ <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Bar chart</h4>
+                    <canvas id="barChart"></canvas>
+                  </div>
+                </div>
+              </div>
