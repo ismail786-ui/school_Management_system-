@@ -156,7 +156,7 @@ if (isset($_POST['emp_submit'])) {
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
       </div>

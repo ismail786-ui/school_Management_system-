@@ -1,82 +1,53 @@
 <?php
-include './conn.php';
+include "./conn.php";
 
 if (isset($_POST['update'])) {
-    $id = $_POST['stu_id'];
+    $id = $_GET['update'];  // 
 
-    $stu_name       = $_POST['stu_name'];
-    $stu_email      = $_POST['stu_email'];
-    $stu_dob        = $_POST['stu_dob'];
-    $stu_age        = $_POST['stu_age'];
-    $stu_gender     = $_POST['stu_gender'];
-    $stu_address    = $_POST['stu_address'];
-    $stu_city       = $_POST['stu_city'];
-    $stu_state      = $_POST['stu_state'];
-    $stu_pincode    = $_POST['stu_pincode'];
-    $stu_mother     = $_POST['stu_mother'];
-    $stu_father     = $_POST['stu_father'];
-    $stu_mobile     = $_POST['stu_mobile'];
-    $stu_admission  = $_POST['stu_admission'];
-    $standard       = $_POST['standard'];
+    // Collect only the fields you want to update
+    $stu_name     = $_POST['stu_name'];
+    $stu_email    = $_POST['stu_email'];
+    $stu_dob      = $_POST['stu_dob'];
+    $stu_age      = $_POST['stu_age'];
+    $stu_gender   = $_POST['stu_gender'];
+    $stu_address  = $_POST['stu_address'];
+    $stu_city     = $_POST['stu_city'];
+    $stu_state    = $_POST['stu_state'];
+    $stu_pincode  = $_POST['stu_pincode'];
+    $stu_mother   = $_POST['stu_mother'];
+    $stu_father   = $_POST['stu_father'];
+    $stu_mobile   = $_POST['stu_mobile'];
+    $stu_admission= $_POST['stu_admission'];
 
-    $old_aadhar     = $_POST['old_stu_aadhar'];
-    $old_photo      = $_POST['old_stu_photo'];
-    $old_tc         = $_POST['old_transfercertificate'];
-    $old_marksheet  = $_POST['old_marksheet'];
 
-    $uploads_dir = "uploads/";
 
-    function uploadFile($input, $oldFile) {
-        global $uploads_dir;
-        if (isset($_FILES[$input]) && $_FILES[$input]['error'] == 0) {
-            $filename = time() . "_" . basename($_FILES[$input]["name"]);
-            $target_file = $uploads_dir . $filename;
-            if (move_uploaded_file($_FILES[$input]["tmp_name"], $target_file)) {
-                return $filename;
-            }
-        }
-        return $oldFile;
-    }
+    // Update query excluding 
+    $sql = "UPDATE student_admission SET 
+        stu_name = '$stu_name',
+        stu_email = '$stu_email',
+        stu_dob = '$stu_dob',
+        stu_age = '$stu_age',
+        stu_gender = '$stu_gender',
+        stu_address = '$stu_address',
+        stu_city = '$stu_city',
+        stu_state = '$stu_state',
+        stu_pincode = '$stu_pincode',
+        stu_mother = '$stu_mother',
+        stu_father = '$stu_father',
+        stu_mobile = '$stu_mobile',
+        stu_admission = '$stu_admission',
+        standard = '$standard',
+        WHERE stu_id = $id";
 
-    $stu_aadhar = uploadFile("stu_aadhar", $old_aadhar);
-    $stu_photo = uploadFile("stu_photo", $old_photo);
-    $transfercertificate = uploadFile("transfercertificate", $old_tc);
-    $marksheet = uploadFile("marksheet", $old_marksheet);
-
-    $stmt = $conn->prepare("UPDATE student_admission SET 
-        stu_name = ?, stu_email = ?, stu_dob = ?, stu_age = ?, stu_gender = ?, 
-        stu_address = ?, stu_city = ?, stu_state = ?, stu_pincode = ?, 
-        stu_mother = ?, stu_father = ?, stu_mobile = ?, stu_aadhar = ?, 
-        stu_photo = ?, stu_admission = ?, stu_standard = ?, stu_tc = ?, stu_marksheet = ?
-        WHERE stu_id = ?");
-
-    $stmt->bind_param("ssssssssssssssssssi",
-        $stu_name, $stu_email, $stu_dob, $stu_age, $stu_gender,
-        $stu_address, $stu_city, $stu_state, $stu_pincode,
-        $stu_mother, $stu_father, $stu_mobile, $stu_aadhar,
-        $stu_photo, $stu_admission, $standard, $transfercertificate, $marksheet,
-        $id);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Student updated successfully'); window.location='app_vform.php';</script>";
+    if ($conn->query($sql) == TRUE) {
+        echo "<script>alert('Record updated successfully'); window.location.href='app_vform.php';</script>";
     } else {
-        echo "<div class='alert alert-danger'>Error: " . $stmt->error . "</div>";
+        echo "Error updating record: " . $conn->error;
     }
 
-    $stmt->close();
+    $conn->close();
 }
 ?>
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!DOCTYPE html>

@@ -1,4 +1,58 @@
-      
+<?php
+include './conn.php';
+
+if (isset($_POST['update_fees'])) {
+    $id = $_GET['sfedit'];
+
+    // Fetch form inputs
+    $name = $_POST['student_name'];
+    $email = $_POST['student_email'];
+    $standard = $_POST['standard'];
+    $fees_type = $_POST['fees_type'];
+    $payment_date = $_POST['payment_date'];
+    $payment_mode = $_POST['payment_mode'];
+    $old_paid = $_POST['student_paid'];
+    $new_pay = $_POST['pay_amount'];
+
+    // Fixed total fee
+    $amount = 15000;
+
+    // Calculate totals
+    $total_paid = $old_paid + $new_pay;
+    $new_balance = $amount - $total_paid;
+
+    // Prevent overpayment
+    if ($total_paid > $amount) {
+        echo "<script>alert('Total paid amount exceeds total fees.'); window.history.back();</script>";
+        exit;
+    }
+
+    // Update query
+    $update_sql = "UPDATE student_fees SET 
+        student_name = '$name',
+        student_email = '$email',
+        standard = '$standard',
+        fees_type = '$fees_type',
+        amount = '$amount',
+        payment_date = '$payment_date',
+        payment_mode = '$payment_mode',
+        student_paid = '$total_paid',
+        balance_amount = '$new_balance',
+        total_paid = '$total_paid',
+        newbalance = '$new_balance'
+        WHERE sf_id = '$id'";
+
+    if (mysqli_query($conn, $update_sql)) {
+        echo "<script>alert('Record updated successfully'); window.location.href='stu_vfees.php';</script>";
+        exit;
+    } else {
+        echo "Error updating record: " . mysqli_error($conn);
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,6 +78,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <style rel="stylesheet">
+    body {
+       background-color: #f0f2f5; /* light gray background */
+    }
+  </style>
   </head>
   <body>
 <!--------------------------------------------------------------------------------------------------------------->
@@ -46,8 +105,6 @@
         <h2><i class="bi bi-person-circle menu-icon"></i></h2>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a href="./login.php" class="dropdown-item">
-          <i class="bi bi-person-fill"></i>Admin</a>
           <a class="dropdown-item" href="./login.php">
           <i class="bi bi-box-arrow-right"></i> Logout </a>
         </div>
@@ -94,9 +151,8 @@
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Details</a></li>
-          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
       </div>
     </li>
@@ -109,9 +165,9 @@
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Information</a></li>
+          <li class="nav-item"> <a class="nav-link" href="#">Fees</a></li>
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_form.php">View Form</a></li>
 
         </ul>
       </div>
@@ -142,7 +198,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+     <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title"> Report</span>
         <i class="menu-arrow"></i>
@@ -155,136 +211,124 @@
       </div>
     </li>
     <li class="nav-item">
-   <a class="nav-link" href="./login.php">
+      <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>
     </li>
   </ul>
 </nav>
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome to Our Staffs</h3>
-                    <h6 class="font-weight-normal mb-0">Have a Great Days !</h6>
-</div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card tale-bg">
-                  <div class="card-people mt-auto">
-                    <img src="assets/images/dashboard/people.svg" alt="people">
-                    <div class="weather-info">
-                      <div class="d-flex">
-                        <div>
-                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun me-2"></i>31<sup>C</sup></h2>
-                        </div>
-                        <div class="ms-2">
-                          <h4 class="location font-weight-normal">Urapakkam</h4>
-                          <h6 class="font-weight-normal">Chennai</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<!----------------------------------------------------------------------------------------------------------->
 
+<div class="container mt-5">
+<?php 
+include 'conn.php';
+$id = $_GET['sfedit'];
 
-        
-              <div class="col-md-6 grid-margin transparent">
-                <div class="row">
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                      <div class="card-body">
-                        <p class="mb-4">Staffs</p>
-                        <p class="fs-30 mb-2"></p>
-                        
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Students</p>
-                        <p class="fs-30 mb-2">61</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Number of Buses</p>
-                        <p class="fs-30 mb-2">14</p>                   
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                      <div class="card-body">
-                        <p class="mb-4">Number of Drivers</p>
-                        <p class="fs-30 mb-2">30</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-</div>
+$sql = "SELECT * FROM student_fees WHERE sf_id = $id";
+$result = mysqli_query($conn, $sql);
 
-
-<!-- ------------------------------------------------------------------------------- -->
-<!--------------------------------------------------------------------------------------------------------->
-                     <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
+if ($result && mysqli_num_rows($result) > 0) {
+  while($row = mysqli_fetch_assoc($result)) {
+?>
+<h3 class="text-center mb-4">Edit School Fees Payment</h3>
+<form method="POST" action="">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label>Name</label>
+      <input type="text" name="student_name" class="form-control" value="<?= $row['student_name']; ?>" required>
+    </div>
+    <div class="col-md-6">
+      <label>Email</label>
+      <input type="email" name="student_email" class="form-control" value="<?= $row['student_email']; ?>" required>
+    </div>
   </div>
-</footer>
-          <!-- partial -->
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label>Standard</label>
+      <input type="text" name="standard" class="form-control" value="<?= $row['standard']; ?>" required>
+    </div>
+    <div class="col-md-6">
+      <label>Fees Type</label>
+      <input type="text" name="fees_type" class="form-control" value="<?= $row['fees_type']; ?>" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label>Total Fees (₹)</label>
+      <input type="number" id="total_fees" class="form-control" value="15000" readonly>
+      <input type="hidden" name="amount" value="15000">
+    </div>
+    <div class="col-md-6">
+      <label>Paid Amount So Far (₹)</label>
+      <input type="number" id="paid_so_far" name="student_paid" class="form-control" value="<?= $row['student_paid']; ?>" readonly>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label>Payment Date</label>
+      <input type="date" name="payment_date" class="form-control" value="<?= $row['payment_date']; ?>" required>
+    </div>
+    <div class="col-md-6">
+      <label>Payment Mode</label>
+      <input type="text" name="payment_mode" class="form-control" value="<?= $row['payment_mode']; ?>" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label>Remaining Balance (₹)</label>
+      <input type="number" id="new_balance" class="form-control" value="" readonly>
+    <input type="hidden" name="payment_balance" id="payment_balance" value="<?= $row['balance_amount'] ?>">
+    </div>
+    <div class="col-md-6">
+      <label>New Pay Amount (₹)</label>
+      <input type="number" name="pay_amount"  id="pay_amount" class="form-control" max="15000" required>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button type="submit" name="update_fees" class="btn btn-success">Update</button>
+  </div>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const payAmountInput = document.getElementById('pay_amount');
+    const paidSoFarInput = document.getElementById('paid_so_far');
+    const newBalanceInput = document.getElementById('new_balance');
+    const paymentBalanceInput = document.getElementById('payment_balance');
+
+    payAmountInput.addEventListener('input', function () {
+        const totalFees = 15000;
+        const paidSoFar = parseInt(paidSoFarInput.value) || 0;
+        const newPay = parseInt(payAmountInput.value) || 0;
+        const totalPaid = paidSoFar + newPay;
+        const balance = totalFees - totalPaid;
+
+        newBalanceInput.value = balance >= 0 ? balance : 0;
+        paymentBalanceInput.value = newBalanceInput.value;
+    });
+});
+</script>
+
+<?php 
+  }
+}
+?>
 </div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
-          <!-- partial -->
+<!------------------------------------------------------------------------------------------------------------->
+       <!-- partial -->
         </div>
         <!-- main-panel ends -->
       </div>
-      <!-- page-body-wrapper ends -->
-    </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>

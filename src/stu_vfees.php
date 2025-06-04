@@ -37,7 +37,7 @@
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Application Form</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -64,7 +64,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -160,127 +160,86 @@
     </li>
   </ul>
 </nav>
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome to Our School</h3>
-                    <h6 class="font-weight-normal mb-0">Have a Great Days !</h6>
-</div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card tale-bg">
-                  <div class="card-people mt-auto">
-                    <img src="assets/images/dashboard/people.svg" alt="people">
-                    <div class="weather-info">
-                      <div class="d-flex">
-                        <div>
-                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun me-2"></i>31<sup>C</sup></h2>
-                        </div>
-                        <div class="ms-2">
-                          <h4 class="location font-weight-normal">Urapakkam</h4>
-                          <h6 class="font-weight-normal">Chennai</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               <?php
 
-      include './conn.php';
 
-// Fetch records
+<?php
+// Database connection
 
-$sql = "SELECT COUNT(*) AS row_count FROM student_admission";
-$result = $conn->query($sql);
+include "./conn.php";
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-$conn->close();
+// Fetch data
+$sql = "SELECT * FROM student_fees";
+$result = mysqli_query($conn, $sql);
 ?>
-              <div class="col-md-6 grid-margin transparent">
-                <div class="row">
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                      <div class="card-body">
-                        <p class="mb-4">Total Students</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["row_count"] ?></p>
-                        
-                      </div>
-                    </div>
-                  </div>
-                              <?php
 
-      include './conn.php';
-
-// Fetch records
-
-$sql = "SELECT COUNT(*) AS emp_count FROM employee_form";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-$conn->close();
-?>
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Teachers</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["emp_count"] ?></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Non Teachers</p>
-                        <p class="fs-30 mb-2">14</p>                   
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                      <div class="card-body">
-                        <p class="mb-4">Subjects</p>
-                        <p class="fs-30 mb-2">30</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-</div>
-<!-- ------------------------------------------------------------------------------- -->
- e voluptas quibusdam quidem rerum. Molestias magni voluptate, nemo quae velit,oluptatem perspiciatis eos exercitationem vitae corrupti perferendis voluptate numquam! Aliquid sed odio blanditiis inventore praesentium perspiciatis officia optio aspernatur illum vitae aliquam laborum, aperiam, dolor culpa tempora earum libero animi quaerat quasi saepe deserunt quo ullam hic nobis. Minima, laboriosam? Aliquam id sit nostrum, consequuntur quibusdam ex doloribus rerum placeat exercitationem ipsa corrupti dolor dicta odit nemo quaerat debitis, quo ipsam voluptatibus corporis asperiores aspernatur? Consequatur magni impedit sequi. Sed possimus, sint quis perferendis veniam, earum quidem qui laborum placeat, tenetur sit sapiente. Eum suscipit ex vitae perspiciatis reiciendis accusamus unde. Aspernatur, distinctio. Non laboriosam sit libero quis labore cum fugit quaerat quas temporibus voluptate voluptatum, quos iste in nulla eligendi? Magnam excepturi labore recusandae deserunt, eum illo harum optio! Iste alias atque quis odio, vel ipsum minima expedita nisi eius voluptatem debitis consequatur quas, aspernatur quibusdam reiciendis blanditiis laborum enim est! Culpa eos quos aperiam sunt modi quae iste est perferendis hic voluptatum quas, praesentium perspiciatis nisi deleniti in reiciendis illo sapiente officia sint maiores odio saepe reprehenderit enim laboriosam! Velit fugit deleniti, repellat nesciunt quibusdam harum, odio dicta dolorem id esse ipsam? Aut praesentium cum a vero temporibus doloribus molestiae dolorum quam reprehenderit ipsum repellendus magnam qui doloremque, tempora sit possimus nisi incidunt, facilis dicta. Quo dolore sit adipisci ad illo quam?</p>
-<!--------------------------------------------------------------------------------------------------------->
-                     <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Fees Details</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-secondary text-center">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Standard</th>
+          <th>Fees Type</th>
+          <th>Payment Date</th>
+          <th>Payment Mode</th>
+          <th>Amount (₹)</th>
+          <th>Student Paid (₹)</th>
+          <th>Balance (Old) (₹)</th>
+          <th>Total Paid (₹)</th>
+          <th>Remaining Amount (₹)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <?php if (mysqli_num_rows($result) > 0): ?>
+          <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <tr>
+              <td><?= $row['sf_id']; ?></td>
+              <td><?= htmlspecialchars($row['student_name']); ?></td>
+              <td><?= htmlspecialchars($row['student_email']); ?></td>
+              <td><?= $row['standard']; ?></td>
+              <td><?= $row['fees_type']; ?></td>
+              <td><?= $row['payment_date']; ?></td>
+              <td><?= $row['payment_mode']; ?></td>
+              <td><?= $row['amount']; ?></td>
+              <td><?= $row['student_paid']; ?></td>
+              <td><?= $row['balance_amount']; ?></td>
+              <td><?= $row['total_paid']; ?></td> 
+              <td><?= $row['newbalance']; ?></td>
+              <td>
+                <a class="btn btn-success text-white mb-1" href="stu_ufees.php?sfedit=<?= $row['sf_id']; ?>">Edit</a>
+                <a class="btn btn-danger text-white " href="stu_dfees.php?sfdelete=<?= $row['sf_id']; ?>" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <tr>
+            <td colspan="13" class="text-center">No records found</td>
+          </tr>
+        <?php endif; ?>
+      </tbody>
+    </table>
   </div>
-</footer>
-          <!-- partial -->
 </div>
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const totalPaid = parseInt(document.getElementById('paid_so_far').value);
+    if (totalPaid >= 15000) {
+        document.getElementById('pay_amount').setAttribute('disabled', 'true');
+        document.querySelector('button[name="update_fees"]').setAttribute('disabled', 'true');
+        alert("Full payment already done. No more payments required.");
+    }
+});
+</script>
 
-
+</body>
+</html>
+</div>
+</div>
+    
 
 
 

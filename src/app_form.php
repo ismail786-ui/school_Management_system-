@@ -1,8 +1,11 @@
 <?php
 include "./conn.php";
 
+$upload_dir = "uploads/"; // make sure this folder exists and is writable
+
 if (isset($_POST['submit'])) {
-    // Collect form data
+    // FORM FIELDS
+    $academic_year = $_POST['academic_year'];
     $stu_name = $_POST['stu_name'];
     $stu_email = $_POST['stu_email'];
     $stu_dob = $_POST['stu_dob'];
@@ -17,49 +20,50 @@ if (isset($_POST['submit'])) {
     $stu_mobile = $_POST['stu_mobile'];
     $stu_admission = $_POST['stu_admission'];
     $stu_standard = $_POST['standard'];
+    $stu_blood = $_POST['stu_blood'];
+    // $academic_year = $_POST['academic_year'];
+    // UPLOAD FUNCTION
+    function uploadFile($key) {
+        global $upload_dir;
+        if (isset($_FILES[$key]) && $_FILES[$key]['error'] === 0) {
+            $filename = time() . '_' . basename($_FILES[$key]['name']);
+            move_uploaded_file($_FILES[$key]['tmp_name'], $upload_dir . $filename);
+            return $filename;
+        }
+        return '';
+    }
 
-$upload_dir = "uploads/";
+    // FILE UPLOADS
+    $file_aadhar = uploadFile('stu_aadhar');
+    $file_photo = uploadFile('stu_photo');
+    $file_community = uploadFile('stu_community');
+    $file_pan = uploadFile('stu_pan');
+    $file_tc = uploadFile('transfercertificate');
+    $file_marksheet = uploadFile('marksheet');
 
-$stu_aadhar = $_FILES['stu_aadhar']['name'];
-move_uploaded_file($_FILES['stu_aadhar']['tmp_name'], $upload_dir . $stu_aadhar);
-
-$stu_photo = $_FILES['stu_photo']['name'];
-move_uploaded_file($_FILES['stu_photo']['tmp_name'], $upload_dir . $stu_photo);
-
-// Optional fields
-$stu_tc = '';
-if (isset($_FILES['transfercertificate']) && $_FILES['transfercertificate']['error'] === 0) {
-    $stu_tc = $_FILES['transfercertificate']['name'];
-    move_uploaded_file($_FILES['transfercertificate']['tmp_name'], $upload_dir . $stu_tc);
-}
-
-$stu_marksheet = '';
-if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
-    $stu_marksheet = $_FILES['marksheet']['name'];
-    move_uploaded_file($_FILES['marksheet']['tmp_name'], $upload_dir . $stu_marksheet);
-}
-
-
-    // Insert into DB
+    // SQL INSERT QUERY
     $sql = "INSERT INTO student_admission (
-        stu_name, stu_email, stu_dob, stu_age, stu_gender, stu_address,
-        stu_city, stu_state, stu_pincode, stu_mother, stu_father, stu_mobile,
-        stu_aadhar, stu_photo, stu_admission, stu_standard, stu_tc, stu_marksheet
+        stu_name, stu_email, stu_dob, stu_age, stu_gender,
+        stu_address, stu_city, stu_state, stu_pincode, stu_mother, stu_father, stu_mobile,
+        stu_admission, stu_standard, stu_blood,
+        stu_aadhar, stu_photo, stu_community, stu_pan, stu_tc, stu_marksheet, academic_year
     ) VALUES (
-        '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender', '$stu_address',
-        '$stu_city', '$stu_state', '$stu_pincode', '$stu_mother', '$stu_father', '$stu_mobile',
-        '$stu_aadhar', '$stu_photo', '$stu_admission', '$stu_standard', '$stu_tc', '$stu_marksheet'
+         '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender',
+        '$stu_address', '$stu_city', '$stu_state', '$stu_pincode', '$stu_mother', '$stu_father', '$stu_mobile',
+        '$stu_admission', '$stu_standard', '$stu_blood',
+        '$file_aadhar', '$file_photo', '$file_community', '$file_pan', '$file_tc', '$file_marksheet','$academic_year'
     )";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<script>window.location.href='app_vform.php';</script>";
+        echo "<script>alert('Data saved successfully.');</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-
-    $conn->close();
 }
+
+$conn->close();
 ?>
+
 
 
 
@@ -90,9 +94,7 @@ if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
     <link rel="shortcut icon" href="assets/images/favicon.png" />
      <!--Internal Stylesheet-->
      <style rel="stylesheet">
-    body {
-       background-color: #f0f2f5; /* light gray background */
-    }
+  
   </style>
   </head>
   <body>
@@ -108,7 +110,7 @@ if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Application Form</h4>
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -232,95 +234,125 @@ if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
   </ul>
 </nav>
 <!----------------------------------------------Admission Form------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
- <div class="container mt-5 mb-5 ">
-    <div class="bg-white p-5 shadow rounded text-black">
-      <h2 class="mb-4 text-center">Admission Form</h2>
-      <form action="app_form.php" method="POST" enctype="multipart/form-data">
-       <!-- Name and Email -->
+ <div class="container mt-5">
+  <form method="POST" action="" enctype="multipart/form-data">
+    
+   <div class="row mb-3 justify-content-start">
+        
+                 <div class="col-md-4">
+           <label for="academic_year" class="form-label bg-primary  text-white p-2 rounded">Academic Year</label>
+            <select class="form-select p-3 text-dark p-3  text-white mb-3"  required id="academic_year"  name="academic_year" >
+              <option selected disabled>Select</option>
+              <option disabled value="2023-2024">2023-2024</option>
+              <option disabled value="2024-2025">2024-2025</option>
+              <option value="2025-2026">2025-2026</option>
+            </select>
+       
+        
+      </div>
+    <h2 class="text-center mb-5">Student Enrollment</h2>
         <div class="row mb-3">
           <div class="col-md-4">
              <label for="stu_name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="stu_name" name="stu_name" required>
-          </div>
-          <div class="col-md-4">
-             <label for="stu_email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="stu_email" name="stu_email" required>
+          <input type="text" class="form-control p-3" id="stu_name" name="stu_name" required >
+          </div>   
+           <div class="col-md-4">
+            <label for="stu_mother" class="form-label">Mother Name</label>
+            <input type="text" class="form-control p-3" id="stu_mother" name="stu_mother" required>
           </div>
            <div class="col-md-4">
-            <label for="stu_dob" class="form-label">Date of Birth</label>
-            <input type="date" class="form-control" id="stu_dob" name="stu_dob" required>
+            <label for="stu_pincode" class="form-label">Pincode</label>
+            <input type="text" class="form-control p-3" id="stu_pincode" required name="stu_pincode" maxlength="6" >
           </div>
         </div>     
         <!--Age,Gender,Address -->
 <!---------------------------------------------------------------------------->
          <div class="row mb-3">   
-          <div class="col-md-4">
-            <label for="stu_age" class="form-label">Age</label>
-            <input type="number" class="form-control" id="stu_age" name="stu_age" max="50" required>
+         <div class="col-md-4">
+             <label for="stu_email" class="form-label">Email</label>
+          <input type="email" class="form-control p-3" id="stu_email" name="stu_email" required>
           </div>
-           <div class="col-md-4">
-           <label for="stu_gender" class="form-label">Gender</label>
-            <select class="form-select text-dark p-3" id="stu_gender" name="stu_gender" required>
-              <option selected disabled>Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-        </div>  
-           <div class="col-md-4">
-          <label for="stu_address" class="form-label">Address</label>
-          <input type="text" class="form-control" id="stu_address" name="stu_address" required>
+         <div class="col-md-4">
+            <label for="stu_father" class="form-label">Father Name</label>
+            <input type="text" class="form-control p-3" id="stu_father" name="stu_father" required>
+          </div>
+          <div class="col-md-4">
+           <label for="stu_aadhar" class="form-label">Aadhar Card</label>
+          <input class="form-control p-3" type="file" id="stu_aadhar" required name="stu_aadhar"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
           </div>
         </div>
 <!---------------------------------------------------------------------------->
           <div class="row mb-3">
+            <div class="col-md-4">
+            <label for="stu_dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control p-3" id="stu_dob" required name="stu_dob" >
+</div>      
           <div class="col-md-4">
-            <label for="stu_city" class="form-label">City</label>
-            <input type="text" class="form-control" id="stu_city" name="stu_city" required>
+            <label for="stu_mobile" class="form-label">Mobile Number</label>
+            <input type="text" class="form-control p-3" id="stu_mobile" name="stu_mobile"maxlength="10" required >
           </div>
           <div class="col-md-4">
-            <label for="stu_state" class="form-label">State</label>
-            <input type="text" class="form-control" id="stu_state" name="stu_state" required>
+           <label for="stu_photo" class="form-label">Student Photo</label>
+          <input class="form-control p-3" type="file" id="stu_photo" name="stu_photo" required accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" >
           </div>
-          <div class="col-md-4">
-            <label for="stu_pincode" class="form-label">Pincode</label>
-            <input type="text" class="form-control" id="stu_pincode" name="stu_pincode" maxlength="6" required>
-          </div>
+         
+          
         </div>
 <!--------------------------------------------------------------------------------------------------------------->
         <div class="row mb-3">
-          <div class="col-md-4">
-            <label for="stu_mother" class="form-label">Mother Name</label>
-            <input type="text" class="form-control" id="stu_mother" name="stu_mother" required>
+           <div class="col-md-4">
+            <label for="stu_age" class="form-label">Age</label>
+            <input type="number" class="form-control p-3" id="stu_age" name="stu_age" max="50"required >
           </div>
-          <div class="col-md-4">
-            <label for="stu_father" class="form-label">Father Name</label>
-            <input type="text" class="form-control" id="stu_father" name="stu_father" required>
+         <div class="col-md-4">
+          <label for="stu_address" class="form-label">Address</label>
+          <input type="text" class="form-control p-3" id="stu_address" name="stu_address" required>
           </div>
-          <div class="col-md-4">
-            <label for="stu_mobile" class="form-label">Mobile Number</label>
-            <input type="text" class="form-control" id="stu_mobile" name="stu_mobile"maxlength="10" required>
-          </div>
+        <div class="col-md-4">
+        <label for="stu_admission" class="form-label">Admission Date</label>
+        <input type="date" class="form-control p-3" id="stu_admission" name="stu_admission" required>
+      </div>
         </div>
 <!------------------------------------------------------------------------------------------------------------>
 <!--------------------Admission,Photo,certificate-------------------------->
           <div class="row mb-3">
+               <div class="col-md-4">
+           <label for="stu_gender" class="form-label">Gender</label>
+            <select class="form-select p-3 text-dark p-3" id="stu_gender" name="stu_gender" required>
+              <option selected disabled>Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Others">Others</option>
+            </select>
+        </div>  
          <div class="col-md-4">
-           <label for="stu_aadhar" class="form-label">Aadhar Card</label>
-          <input class="form-control" type="file" id="stu_aadhar" name="stu_aadhar" required accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-          </div>
+            <label for="stu_city" class="form-label">City</label>
+            <input type="text" class="form-control p-3" id="stu_city" name="stu_city" required>
+         </div>
           <div class="col-md-4">
-           <label for="stu_photo" class="form-label">Student Photo</label>
-          <input class="form-control" type="file" id="stu_photo" name="stu_photo" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
+           <label for="stu_community" class="form-label">Community</label>
+          <input class="form-control p-3" type="file" id="stu_community" name="stu_community"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
           </div>
-          <div class="col-md-4">
-        <label for="stu_admission" class="form-label">Admission Date</label>
-        <input type="date" class="form-control" id="stu_admission" name="stu_admission" required>
-      </div>
- 
+           
         </div>
 <!--------------------------------------------------------------------------------------------------------->
  <div class="row mb-3">
-  <div class="col-md-4">
+     <div class="col-md-4">
+           <label for="stu_blood" class="form-label">Blood Group</label>
+           <input type="text" class="form-control p-3" id="stu_blood" name="stu_blood" required>
+        </div>  
+         <div class="col-md-4">
+            <label for="stu_state" class="form-label">State</label>
+            <input type="text" class="form-control p-3" id="stu_state" name="stu_state" required >
+          </div>
+            <div class="col-md-4">
+           <label for="stu_pan" class="form-label">Pancard</label>
+          <input class="form-control p-3" type="file" id="stu_pan" name="stu_pan"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+          </div>
+</div>
+<!------------------------------------------------------------------------------------------------------------------->
+ <div class="row">
+    <div class="col-md-4">
     <label for="standard" class="form-label ">School Standard</label>
     <select id="standard" class="form-select text-dark p-3" name="standard" onchange="toggleInputBox(this)">
       <option selected disabled>Select</option>
@@ -341,25 +373,25 @@ if (isset($_FILES['marksheet']) && $_FILES['marksheet']['error'] === 0) {
       <option value="twelfth">Twelfth</option>
     </select>
   </div>
-
   <div class="col-md-4">
     <div id="transferCertificate" style="display:none;">
       <label for="transfercertificate" class="form-label">Transfer Certificate</label>
-      <input class="form-control" type="file" id="transfercertificate" required name="transfercertificate"accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+      <input class="form-control" type="file" id="transfercertificate"  name="transfercertificate"accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
     </div>
     </div>
     <div class="col-md-4">
     <div id="markSheet" style="display:none;">
     <label for="marksheet" class="form-label">Marksheet</label>
-    <input class="form-control" type="file" id="marksheet" name="marksheet" required accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+    <input class="form-control" type="file" id="marksheet" name="marksheet"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
     </div>
   </div>
 <!---------------------------------------------------------------------------------------------------------------------------------------------->
     <!---Submit button -->
     <div class="col-lg-12 mt-5 text-center">
     <button type="submit" name="submit" class="btn btn-primary">Save</button>
-    <!-- <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button> -->
+    <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button>
     </div>  
+    
     </form>
     </div>
   </div>

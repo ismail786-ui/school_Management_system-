@@ -1,4 +1,52 @@
-      
+<?php
+include './conn.php'; // your DB connection
+
+$student_name = $student_email = $standard = "";
+$default_fees = 15000;
+
+if (isset($_POST['get_student'])) {
+    $stu_id = intval($_POST['stu_id']);
+    $query = "SELECT stu_name, stu_email, stu_standard,school_fees FROM student_admission WHERE stu_id = $stu_id";
+    $result = mysqli_query($conn, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        // $stu_id = $row['stu_id'];
+        $student_name = $row['stu_name'];
+        $student_email = $row['stu_email'];
+        $standard = $row['stu_standard'];
+        $school_fees = $row['school_fees'];
+    } else {
+        echo "<script>alert('Student ID not found');</script>";
+    }
+}
+if (isset($_POST['submit_fees'])) {
+    $student_name = $_POST['student_name'];
+    $student_email = $_POST['student_email'];
+    $standard = $_POST['standard'];
+    $fees_type = $_POST['fees_type'];
+    $amount = $_POST['amount'];
+    $payment_date = $_POST['payment_date'];
+    $payment_mode = $_POST['payment_mode'];
+    $student_paid = $_POST['student_paid'];
+    $balance = $_POST['balance'];
+
+    $sql = "INSERT INTO student_fees (student_name, student_email, standard, fees_type, amount, payment_date, payment_mode, student_paid, balance_amount)
+            VALUES ('$student_name', '$student_email', '$standard', '$fees_type', '$amount', '$payment_date', '$payment_mode', '$student_paid', '$balance')";
+
+    if (mysqli_query($conn, $sql)) {
+        header('Location: stu_vfees.php');
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,6 +72,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <style rel="stylesheet">
+    body {
+       /* background-color: #f0f2f5;  */
+    }
+  </style>
   </head>
   <body>
 <!--------------------------------------------------------------------------------------------------------------->
@@ -46,8 +99,6 @@
         <h2><i class="bi bi-person-circle menu-icon"></i></h2>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a href="./login.php" class="dropdown-item">
-          <i class="bi bi-person-fill"></i>Admin</a>
           <a class="dropdown-item" href="./login.php">
           <i class="bi bi-box-arrow-right"></i> Logout </a>
         </div>
@@ -94,9 +145,8 @@
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Details</a></li>
-          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
       </div>
     </li>
@@ -109,9 +159,9 @@
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Information</a></li>
+          <li class="nav-item"> <a class="nav-link" href="#">Fees</a></li>
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_form.php">View Form</a></li>
 
         </ul>
       </div>
@@ -142,7 +192,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+     <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title"> Report</span>
         <i class="menu-arrow"></i>
@@ -155,130 +205,115 @@
       </div>
     </li>
     <li class="nav-item">
-   <a class="nav-link" href="./login.php">
+      <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>
     </li>
   </ul>
 </nav>
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome to Our Staffs</h3>
-                    <h6 class="font-weight-normal mb-0">Have a Great Days !</h6>
-</div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card tale-bg">
-                  <div class="card-people mt-auto">
-                    <img src="assets/images/dashboard/people.svg" alt="people">
-                    <div class="weather-info">
-                      <div class="d-flex">
-                        <div>
-                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun me-2"></i>31<sup>C</sup></h2>
-                        </div>
-                        <div class="ms-2">
-                          <h4 class="location font-weight-normal">Urapakkam</h4>
-                          <h6 class="font-weight-normal">Chennai</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+ <div class="container mt-5 mb-5">
+  <h4 class="text-center mb-4">School Fees Payment Form</h4>
 
+  <!-- Centered form using row + col-md-8 + mx-auto -->
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form method="POST" action="" enctype="multipart/form-data">
+        <div class="col-md-4">
+      <label for="stu_id" class="form-label">Enter Student ID</label>
+      <input type="number" class="form-control" id="stu_id" name="stu_id"  value="<?= $stu_id ?>">
+    </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="student_name" class="form-label">Name</label>
+            <input type="text" class="form-control p-2" id="student_name" name="student_name"  value="<?= $student_name ?>">
+          </div>
+          <div class="col-md-6">
+            <label for="student_email" class="form-label">Email</label>
+            <input type="text" class="form-control p-2" id="student_email" name="student_email"  value="<?= $student_email ?>">
+          </div>
+        </div>
 
-        
-              <div class="col-md-6 grid-margin transparent">
-                <div class="row">
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                      <div class="card-body">
-                        <p class="mb-4">Staffs</p>
-                        <p class="fs-30 mb-2"></p>
-                        
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Students</p>
-                        <p class="fs-30 mb-2">61</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Number of Buses</p>
-                        <p class="fs-30 mb-2">14</p>                   
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                      <div class="card-body">
-                        <p class="mb-4">Number of Drivers</p>
-                        <p class="fs-30 mb-2">30</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-</div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="standard" class="form-label">Standard</label>
+<input type="text" class="form-control p-2" id="standard" name="standard"  value="<?= $standard ?>">
+          </div>
+          <div class="col-md-6">
+            <label for="fees_type" class="form-label">Fees Type</label>
+            <select class="form-select" id="fees_type" name="fees_type" >
+              <option selected disabled>Select</option>
+              <option class="text-dark" value="Tuition">School</option>
+            </select>
+          </div>
+        </div>
 
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="amount" class="form-label">Total Amount (₹)</label>
+    <input type="number" class="form-control p-2" id="amount" name="amount" value="<?= $school_fees ?>">
+          </div>
+          <div class="col-md-6">
+            <label for="payment_date" class="form-label">Payment Date</label>
+            <input type="date" class="form-control p-2" id="payment_date" name="payment_date" >
+            <script>
+              const d = new Date();
+              document.getElementById("payment_date").min = d.toISOString().split("T")[0];
+            </script>
+          </div>
+        </div>
 
-<!-- ------------------------------------------------------------------------------- -->
-<!--------------------------------------------------------------------------------------------------------->
-                     <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="payment_mode" class="form-label">Payment Mode</label>
+            <select class="form-select" id="payment_mode" name="payment_mode" >
+              <option selected disabled>Select</option>
+              <option value="Cash" class="text-dark">Cash</option>
+              <option value="Card" class="text-dark">Card</option>
+              <option value="Online Transfer" class="text-dark">Online Transfer</option>
+              <option value="UPI" class="text-dark">UPI</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="student_paid" class="form-label">Paid Amount</label>
+    <input type="number" class="form-control p-2" id="student_paid" name="student_paid" max="15000" >
   </div>
-</footer>
-          <!-- partial -->
+        </div>
+         <div class="col-md-4">
+        <label for="balance" class="form-label">Balance (₹)</label>
+    <input type="number" class="form-control p-2" id="balance" name="balance" readonly>
+  </div>
+        <div class="text-center mt-4">
+          <button type="submit" name="submit_fees" class="btn btn-primary">Submit Form</button>
+          <button type="submit" name="get_student" class="btn btn-info text-white">Get Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
+<script>
+  document.getElementById('student_paid').addEventListener('input', function () {
+    const paid = parseInt(this.value) || 0;
+    const total = 15000;
+    const balance = total - paid;
+    if (paid > total) {
+      alert("Amount should not exceed ₹15,000");
+      this.value = total;
+      document.getElementById('balance').value = 0;
+    } else {
+      document.getElementById('balance').value = balance;
+    }
+  });
+</script>
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
           <!-- partial -->
         </div>
         <!-- main-panel ends -->
