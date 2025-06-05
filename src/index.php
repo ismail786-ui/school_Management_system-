@@ -80,7 +80,7 @@
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Classes</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
 
         </ul>
       </div>
@@ -108,7 +108,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
 
         </ul>
@@ -147,8 +147,12 @@
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html">404</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
+
+
         </ul>
       </div>
     </li>
@@ -249,11 +253,22 @@ $conn->close();
                       </div>
                     </div>
                   </div>
+                 
+<?php 
+include './conn.php';
+$sql = "SELECT COUNT(*) AS sch_class FROM class_master";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} 
+$conn->close();
+?>
                   <div class="col-md-6 stretch-card transparent">
                     <div class="card card-light-danger">
                       <div class="card-body">
-                        <p class="mb-4">Subjects</p>
-                        <p class="fs-30 mb-2">30</p>
+                        <p class="mb-4">Classes</p>
+                        <p class="fs-30 mb-2"><?php echo  $row["sch_class"] ?></p>
                       </div>
                     </div>
                   </div>

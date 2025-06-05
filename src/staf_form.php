@@ -18,6 +18,10 @@ if (isset($_POST['emp_submit'])) {
     $emp_father = $_POST['emp_father'];
     $emp_mobile = $_POST['emp_mobile'];
     $emp_experience = $_POST['emp_experience'];
+    $emp_major = $_POST['emp_major'];
+    $emp_types = $_POST['emp_types'];
+
+
 
     // File Uploads
     $upload_dir = "staff_files/";
@@ -25,27 +29,30 @@ if (isset($_POST['emp_submit'])) {
     $emp_photo = $_FILES['emp_photo']['name'];
     $emp_aadhar = $_FILES['emp_aadhar']['name'];
     $emp_bank = $_FILES['emp_bank']['name'];
+    $emp_community = $_FILES['emp_community']['name'];
     $emp_ecertificate = $_FILES['emp_ecertificate']['name'];
 
     move_uploaded_file($_FILES['emp_qualification']['tmp_name'], $upload_dir . $emp_qualification);
     move_uploaded_file($_FILES['emp_photo']['tmp_name'], $upload_dir . $emp_photo);
     move_uploaded_file($_FILES['emp_aadhar']['tmp_name'], $upload_dir . $emp_aadhar);
     move_uploaded_file($_FILES['emp_bank']['tmp_name'], $upload_dir . $emp_bank);
+    move_uploaded_file($_FILES['emp_community']['tmp_name'], $upload_dir . $emp_community);
     move_uploaded_file($_FILES['emp_ecertificate']['tmp_name'], $upload_dir . $emp_ecertificate);
 
     // Insert query
     $sql = "INSERT INTO employee_form (
         emp_name, emp_email, emp_dob, emp_age, emp_gender, emp_address,
         emp_city, emp_state, emp_pincode, emp_mother, emp_father, emp_mobile,
-        emp_qualification, emp_photo, emp_aadhar, emp_bank,emp_experience,emp_ecertificate
+        emp_qualification, emp_photo, emp_aadhar, emp_bank,emp_experience,emp_ecertificate,emp_major,emp_types,emp_community
     ) VALUES (
         '$emp_name', '$emp_email', '$emp_dob', '$emp_age', '$emp_gender', '$emp_address',
         '$emp_city', '$emp_state', '$emp_pincode', '$emp_mother', '$emp_father', '$emp_mobile',
-         '$emp_qualification', '$emp_photo', '$emp_aadhar', '$emp_bank','$emp_experience','$emp_ecertificate'
+         '$emp_qualification', '$emp_photo', '$emp_aadhar', '$emp_bank','$emp_experience','$emp_ecertificate','$emp_major','$emp_types','$emp_community'
     )";
 
     if ($conn->query($sql) === TRUE) {
-       header('location:staff_view.php');
+     echo "<script>alert('Record updated successfully');</script>";
+
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -87,6 +94,7 @@ if (isset($_POST['emp_submit'])) {
     body {
        background-color: #f0f2f5; /* light gray background */
     }
+   
   </style>
   </head>
   <body>
@@ -227,31 +235,80 @@ if (isset($_POST['emp_submit'])) {
  
  <div class="container mt-5 mb-5 ">
     <div class="bg-white p-5 shadow rounded text-black">
-      <h2 class="mb-4 text-center">Employee Form</h2>
-      <form action="" method="POST" enctype="multipart/form-data">
+      <h2 class="mb-4 text-center">Employee Enrollment</h2>
+      <form action="" method="POST" enctype="multipart/form-data" class="formcolor">
        <!-- Name and Email -->
         <div class="row mb-3">
           <div class="col-md-4">
              <label for="emp_name" class="form-label">Full Name</label>
           <input type="text" class="form-control" id="stu_name" name="emp_name" required>
           </div>
-          <div class="col-md-4">
-             <label for="emp_email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="emp_email" name="emp_email"  required>
+           <div class="col-md-4">
+          <label for="emp_address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="emp_address" name="emp_address"  required> 
           </div>
            <div class="col-md-4">
-            <label for="emp_dob" class="form-label">Date of Birth</label>
-            <input type="date" class="form-control" id="emp_dob" name="emp_dob"  required>
+           <label for="emp_aadhar" class="form-label">Qualification</label>
+        <input type="file" class="form-control" id="emp_qualification" required name="emp_qualification" name="emp_aadhar" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
           </div>
+         
         </div>     
         <!--Age,Gender,Address -->
 <!----------------------------------------------------------------------------------------------------------------->
-         <div class="row mb-3">   
-          <div class="col-md-4">
+         <div class="row mb-3">
+            <div class="col-md-4">
+             <label for="emp_email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="emp_email" name="emp_email"  required>
+          </div>   
+           <div class="col-md-4">
+            <label for="emp_city" class="form-label">City</label>
+            <input type="text" class="form-control" id="emp_city" name="emp_city"  required>
+          </div>
+           <div class="col-md-4">
+           <label for="emp_photo" class="form-label">Staff Photo</label>
+          <input class="form-control" type="file" id="emp_photo"  required name="emp_photo" name="emp_aadhar" accept=".doc, .docx,.jpg,.jpeg,.png">
+          </div>
+            
+        
+        </div>
+<!-------------------------------------------------------------------------------------------------------------->
+          <div class="row mb-3">
+         <div class="col-md-4">
             <label for="emp_age" class="form-label">Age</label>
             <input type="number" class="form-control" id="emp_age" name="emp_age"max="99"  required>
           </div>
            <div class="col-md-4">
+            <label for="emp_pincode" class="form-label">Pincode</label>
+            <input type="text" class="form-control" id="emp_pincode" name="emp_pincode" maxlength="6"  required>
+          </div>
+           <div class="col-md-4">
+        <label for="emp_aadhar" class="form-label">Aadhar Card</label>
+          <input class="form-control" type="file" id="emp_aadhar"  required name="emp_aadhar" accept=".doc, .docx, .jpg, .jpeg, .png">
+      </div>
+       
+        
+        </div>
+<!--------------------------------------------------------------------------------------------------------------->
+        <div class="row mb-3">
+            <div class="col-md-4">
+            <label for="emp_dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="emp_dob" name="emp_dob"  required>
+          </div>
+           <div class="col-md-4">
+            <label for="emp_state" class="form-label">State</label>
+            <input type="text" class="form-control" id="emp_state" name="emp_state"  required>
+          </div>
+              <div class="col-md-4">
+    <div id="">
+    <label for="emp_bank" class="form-label">Bank Details</label>
+    <input class="form-control" type="file" id="emp_bank"  required name="emp_bank"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+    </div>
+  </div>
+        </div>
+<!------------------------------------------------------------------------------------------------------------>
+<!--------------------Admission,Photo,certificate-------------------------->
+          <div class="row mb-3">
+            <div class="col-md-4">
            <label for="emp_gender" class="form-label">Gender</label>
             <select class="form-select text-dark p-3" id="emp_gender" name="emp_gender"  required>
               <option selected disabled>Select</option>
@@ -259,67 +316,35 @@ if (isset($_POST['emp_submit'])) {
               <option value="Female">Female</option>
             </select>
         </div>  
-           <div class="col-md-4">
-          <label for="emp_address" class="form-label">Address</label>
-          <input type="text" class="form-control" id="emp_address" name="emp_address"  required> 
-          </div>
-        </div>
-<!-------------------------------------------------------------------------------------------------------------->
-          <div class="row mb-3">
-          <div class="col-md-4">
-            <label for="emp_city" class="form-label">City</label>
-            <input type="text" class="form-control" id="emp_city" name="emp_city"  required>
-          </div>
-          <div class="col-md-4">
-            <label for="emp_state" class="form-label">State</label>
-            <input type="text" class="form-control" id="emp_state" name="emp_state"  required>
-          </div>
-          <div class="col-md-4">
-            <label for="emp_pincode" class="form-label">Pincode</label>
-            <input type="text" class="form-control" id="emp_pincode" name="emp_pincode" maxlength="6"  required>
-          </div>
-        </div>
-<!--------------------------------------------------------------------------------------------------------------->
-        <div class="row mb-3">
-          <div class="col-md-4">
-            <label for="emp_mother" class="form-label">Mother Name</label>
-            <input type="text" class="form-control" id="emp_mother" name="emp_mother"  required>
-          </div>
-          <div class="col-md-4">
-            <label for="emp_father" class="form-label">Father Name</label>
-            <input type="text" class="form-control" id="emp_father" name="emp_father"  required>
-          </div>
-          <div class="col-md-4">
+        <div class="col-md-4">
             <label for="emp_mobile" class="form-label">Mobile Number</label>
             <input type="text" class="form-control" id="emp_mobile" name="emp_mobile"maxlength="10"  required>
           </div>
-        </div>
-<!------------------------------------------------------------------------------------------------------------>
-<!--------------------Admission,Photo,certificate-------------------------->
-          <div class="row mb-3">
-         <div class="col-md-4">
-           <label for="emp_aadhar" class="form-label">Qualification</label>
-        <input type="file" class="form-control" id="emp_qualification" required name="emp_qualification" name="emp_aadhar" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
 
-          </div>
-          <div class="col-md-4">
-           <label for="emp_photo" class="form-label">Staff Photo</label>
-          <input class="form-control" type="file" id="emp_photo"  required name="emp_photo" name="emp_aadhar" accept=".doc, .docx,.jpg,.jpeg,.png">
-          </div>
-          <div class="col-md-4">
-        <label for="emp_aadhar" class="form-label">Aadhar Card</label>
-          <input class="form-control" type="file" id="emp_aadhar"  required name="emp_aadhar" accept=".doc, .docx, .jpg, .jpeg, .png">
-      </div>
-        </div>
-<!--------------------------------------------------------------------------------------------------------->
- <div class="row mb-3">
-      <div class="col-md-4">
+
+    <div class="col-md-4">
     <div id="">
-    <label for="emp_bank" class="form-label">Bank Details</label>
-    <input class="form-control" type="file" id="emp_bank"  required name="emp_bank"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+    <label for="emp_community" class="form-label">Community</label>
+    <input class="form-control" type="file" id="emp_community"  required name="emp_community"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
     </div>
   </div>
-  <div class="col-md-4">
+         
+        </div>
+        
+<!--------------------------------------------------------------------------------------------------------->
+ <div class="row mb-3">
+   <div class="col-md-4">
+            <label for="emp_mother" class="form-label">Mother Name</label>
+            <input type="text" class="form-control" id="emp_mother" name="emp_mother"  required>
+          </div>
+                <div class="col-md-4">
+    <div id="">
+    <label for="emp_major" class="form-label">Teacher Major</label>
+    <input class="form-control" type="text" id="emp_major"  required name="emp_major">
+    </div>
+  </div>
+          
+     <div class="col-md-4">
   <label for="experience" class="form-label">Experience</label>
   <select id="emp_experience" class="form-select text-dark p-3"  required name="emp_experience" onchange="toggleExperienceInput(this)">
     <option selected disabled>Previous Experience</option>
@@ -327,14 +352,30 @@ if (isset($_POST['emp_submit'])) {
     <option value="No">No</option>
   </select>
 </div>
-  <!----------------------------------------------------------------------------------------------------------------->
- 
-<!------------------------------------------------------------------------------------------------------------------------>
-    <div class="col-md-4" id="experienceDetail" style="display: none;">
-  <label for="emp_ecertificate" class="form-label">Experience Certificates</label>
-   <input type="file" class="form-control" id="emp_ecertificate"  required accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="emp_ecertificate" placeholder="e.g., 3 years in XYZ School">
-
   </div>
+  <!---------------------------------------------------------------------------------------------------------------->
+ <div class="row mb-3">
+  <div class="col-md-4">
+            <label for="emp_father" class="form-label">Father Name</label>
+            <input type="text" class="form-control" id="emp_father" name="emp_father"  required>
+          </div>
+            <div class="col-md-4">
+  <label for="emp_types" class="form-label">Teacher Types</label>
+  <select id="emp_types" class="form-select text-dark p-3"  required name="emp_types">
+    <option selected disabled>select</option>
+    <option value="Primary level">Primary level</option>
+    <option value="Secondary level">Secondary level</option>
+    <option value="Senior secondary level">Senior secondary level</option>
+    <option value="Professors">Professors</option>
+
+  </select>
+</div>
+           <div class="col-md-4" id="experienceDetail" style="display: none;">
+  <label for="emp_ecertificate" class="form-label">Experience Certificates</label>
+   <input type="file" class="form-control" id="emp_ecertificate" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="emp_ecertificate" placeholder="e.g., 3 years in XYZ School">
+  </div>
+  
+        
 <!---------------------------------------------------------------------------------------------------------------------------------------------->
     <!---Submit button -->
     <div class="col-lg-12 mt-4 text-center">

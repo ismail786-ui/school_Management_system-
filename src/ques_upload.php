@@ -1,51 +1,42 @@
 <?php
-include './conn.php'; // your DB connection
+include './conn.php';
 
-$student_name = $student_email = $standard = "";
-$default_fees = 15000;
+$upload_dir = "question_papers/";
+if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
 
-if (isset($_POST['get_student'])) {
-    $stu_id = intval($_POST['stu_id']);
-    $query = "SELECT stu_name, stu_email, stu_standard,school_fees FROM student_admission WHERE stu_id = $stu_id";
-    $result = mysqli_query($conn, $query);
-
-    if ($row = mysqli_fetch_assoc($result)) {
-        // $stu_id = $row['stu_id'];
-        $student_name = $row['stu_name'];
-        $student_email = $row['stu_email'];
-        $standard = $row['stu_standard'];
-        $school_fees = $row['school_fees'];
-    } else {
-        echo "<script>alert('Student ID not found');</script>";
+function uploadFile($key) {
+    global $upload_dir;
+    if (isset($_FILES[$key]) && $_FILES[$key]['error'] === 0) {
+        $file = time() . '_' . basename($_FILES[$key]['name']);
+        move_uploaded_file($_FILES[$key]['tmp_name'], $upload_dir . $file);
+        return $file;
     }
+    return '';
 }
-if (isset($_POST['submit_fees'])) {
-    $student_name = $_POST['student_name'];
-    $student_email = $_POST['student_email'];
-    $standard = $_POST['standard'];
-    $fees_type = $_POST['fees_type'];
-    $amount = $_POST['amount'];
-    $payment_date = $_POST['payment_date'];
-    $payment_mode = $_POST['payment_mode'];
-    $student_paid = $_POST['student_paid'];
-    $balance = $_POST['balance'];
 
-    $sql = "INSERT INTO student_fees (student_name, student_email, standard, fees_type, amount, payment_date, payment_mode, student_paid, balance_amount)
-            VALUES ('$student_name', '$student_email', '$standard', '$fees_type', '$amount', '$payment_date', '$payment_mode', '$student_paid', '$balance')";
+if (isset($_POST['q_upload'])) {
+    $q_standard = $_POST['q_standard'];
+    $q_subject = $_POST['q_subject'];
+    $year = $_POST['q_year'];
+    $file = uploadFile('q_file');
 
-    if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Record updated successfully')</script>";
+    if ($file) {
+        $sql = "INSERT INTO question_papers (q_class_name, q_subject_name, q_year, q_files)
+                VALUES ('$q_standard', '$q_subject', '$year', '$file')";
+        mysqli_query($conn, $sql)
+            ? alert('Question paper uploaded successfully')
+            : die("Error: " . mysqli_error($conn));
     } else {
-        echo "Error: " . mysqli_error($conn);
+        alert('File upload failed.');
     }
 }
 
+function alert($msg) {
+    echo "<script>alert('$msg');</script>";
+}
 ?>
 
-
-
-
-
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -210,128 +201,46 @@ if (isset($_POST['submit_fees'])) {
     </li>
   </ul>
 </nav>
-<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
- <div class="container mt-5 mb-5">
-  <h4 class="text-center mb-4">School Fees Payment Form</h4>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-  <!-- Centered form using row + col-md-8 + mx-auto -->
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <form method="POST" action="" enctype="multipart/form-data">
-        <div class="row">
-        <div class="col-md-4">
-      <label for="stu_id" class="form-label">Enter Student ID</label>
-      <input type="number" class="form-control p-2" id="stu_id" name="stu_id"  value="<?= $stu_id ?>">
-    </div>
-    <div class="col-md-4">
-       <button type="submit" name="get_student" class="btn btn-info text-white mt-4 p-3 justify-content-end">Search</button>
-  </div>
-  </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="student_name" class="form-label">Name</label>
-            <input type="text" class="form-control p-2" id="student_name" name="student_name"  value="<?= $student_name ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="student_email" class="form-label">Email</label>
-            <input type="text" class="form-control p-2" id="student_email" name="student_email"  value="<?= $student_email ?>">
-          </div>
-        </div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="standard" class="form-label">Standard</label>
-<input type="text" class="form-control p-2" id="standard" name="standard"  value="<?= $standard ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="fees_type" class="form-label">Fees Type</label>
-            <select class="form-select" id="fees_type" name="fees_type" >
-              <option selected disabled>Select</option>
-              <option class="text-dark" value="Tuition">School</option>
-            </select>
-          </div>
+<div class="container h-100 mt-5 d-flex justify-content-center">
+  <div class="card shadow p-4 mt-5">
+    <h3 class="text-center mb-4">Admin Question Upload</h3>
+    <form action="" method="POST" enctype="multipart/form-data">
+      <div class="row mb-3">
+        <div class="col-lg-6">
+          <label for="q_standard" class="form-label">Standard</label>
+          <input type="text" name="q_standard" id="q_standard" class="form-control" required placeholder="e.g. 10th Std">
         </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="amount" class="form-label">Total Amount (₹)</label>
-    <input type="number" class="form-control p-2" id="amount" name="amount" value="<?= $school_fees ?>">
-          </div>
-          <div class="col-md-6">
-            <label for="payment_date" class="form-label">Payment Date</label>
-            <input type="date" class="form-control p-2" id="payment_date" name="payment_date" >
-            <script>
-              const d = new Date();
-              document.getElementById("payment_date").min = d.toISOString().split("T")[0];
-            </script>
-          </div>
+        <div class="col-lg-6">
+          <label for="q_subject" class="form-label">Subject</label>
+          <input type="text" name="q_subject" id="q_subject" class="form-control" required placeholder="e.g. Science">
+</div>
+</div>
+      <div class="row mb-3">
+         <div class="col-lg-6">
+          <label for="q_year" class="form-label">Year</label>
+          <select name="q_year" id="q_year" class="form-select" required>
+            <option value="" disabled>Select Year</option>
+            <option value="2025" class="text-dark">2025</option>
+            <option value="2024"  class="text-dark">2024</option>
+          </select>
         </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="payment_mode" class="form-label">Payment Mode</label>
-            <select class="form-select" id="payment_mode" name="payment_mode" >
-              <option selected disabled>Select</option>
-              <option value="Cash" class="text-dark">Cash</option>
-              <option value="Card" class="text-dark">Card</option>
-              <option value="Online Transfer" class="text-dark">Online Transfer</option>
-              <option value="UPI" class="text-dark">UPI</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="student_paid" class="form-label">Paid Amount</label>
-    <input type="number" class="form-control p-2" id="student_paid" name="student_paid" max="15000" >
-  </div>
-        </div>
-         <div class="col-md-4">
-        <label for="balance" class="form-label">Balance (₹)</label>
-    <input type="number" class="form-control p-2" id="balance" name="balance" readonly>
-  </div>
-        <div class="text-center mt-4">
-          <button type="submit" name="submit_fees" class="btn btn-primary">Submit Form</button>
-        </div>
-      </form>
-    </div>
+        <div class="col-lg-6">
+        <label for="file" class="form-label">Upload File</label>
+        <input type="file" name="q_file" id="file" class="form-control" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+      </div>
+</div>
+      <div class="text-center">
+        <button type="submit" name="q_upload" class="btn btn-primary px-4">Upload</button>
+        <button type="reset" class="btn btn-secondary px-4 ms-2">Reset</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<script>
-  document.getElementById('student_paid').addEventListener('input', function () {
-    const paid = parseInt(this.value) || 0;
-    const total = 15000;
-    const balance = total - paid;
-    if (paid > total) {
-      alert("Amount should not exceed ₹15,000");
-      this.value = total;
-      document.getElementById('balance').value = 0;
-    } else {
-      document.getElementById('balance').value = balance;
-    }
-  });
- 
-  document.querySelector("form").addEventListener("submit", function (e) {
-    const stuId = document.getElementById("stu_id").value.trim();
-    const name = document.getElementById("student_name").value.trim();
-    const email = document.getElementById("student_email").value.trim();
-    const standard = document.getElementById("standard").value.trim();
-    const feesType = document.getElementById("fees_type").value;
-    const totalAmount = parseFloat(document.getElementById("amount").value) || 0;
-    const paymentDate = document.getElementById("payment_date").value;
-    const paymentMode = document.getElementById("payment_mode").value;
-    const paidAmount = parseFloat(document.getElementById("student_paid").value) || 0;
-
-    // Email pattern
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (stuId === "") {
-      alert("Please enter Student ID.");
-      e.preventDefault();
-      return;
-    }
-
-  
-  });
-</script>
 
 
 
@@ -340,15 +249,9 @@ if (isset($_POST['submit_fees'])) {
 
 
 
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-          <!-- partial -->
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
