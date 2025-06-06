@@ -37,7 +37,7 @@
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Application Form</h4>
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -64,7 +64,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="index.php">
+      <a class="nav-link" href="">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -80,7 +80,7 @@
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Classes</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
 
         </ul>
       </div>
@@ -108,7 +108,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
 
         </ul>
@@ -147,8 +147,12 @@
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html">404</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
+
+
         </ul>
       </div>
     </li>
@@ -160,102 +164,85 @@
     </li>
   </ul>
 </nav>
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<script> 
+const xValues = [100,200,300,400,500,600,700,800,900,1000];
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+      borderColor: "red",
+      fill: false
+    },{
+      data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+      borderColor: "green",
+      fill: false
+    },{
+      data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+      borderColor: "blue",
+      fill: false
+    }]
+  },
+  options: {
+    legend: {display: false}
+  }
+});
+</script>
 
 
-<?php
-// Database connection
-
-include "./conn.php";
-
-// Fetch all question paper records
-$sql = "SELECT * FROM question_papers";
-$result = mysqli_query($conn, $sql);
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>View Question Papers</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Model Question Papers </h2>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="table-secondary text-center">
-        <tr>
-          <th>Question_ID</th>
-          <th>Class Name</th>
-          <th>Subject</th>
-          <th>Year</th>
-          <th>Download</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <?php if (mysqli_num_rows($result) > 0): ?>
-          <?php while ($row = mysqli_fetch_assoc($result)): ?>
-            <tr>
-              <td><?= $row['q_id']; ?></td>
-              <td><?= $row['q_class_name']; ?></td>
-              <td><?= $row['q_subject_name']; ?></td>
-              <td><?= $row['q_year']; ?></td>
-              <td>
-                <a href="question_papers/<?= $row['q_files']; ?>" target="_blank" class="btn btn-primary ">Download</a>
-              </td>
-            </tr>
-          <?php endwhile; ?>
-        <?php else: ?>
-          <tr>
-            <td colspan="5">No records found</td>
-          </tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
-  </div>
-</div>
-</body>
-</html>
-
-  </div>
-</div>
 
 
-</body>
-</html>
-</div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

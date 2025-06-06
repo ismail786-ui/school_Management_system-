@@ -229,12 +229,12 @@ function alert($msg) {
           </select>
         </div>
         <div class="col-lg-6">
-        <label for="file" class="form-label">Upload File</label>
+        <label for="file" class="form-label">Questions Upload</label>
         <input type="file" name="q_file" id="file" class="form-control" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
       </div>
 </div>
       <div class="text-center">
-        <button type="submit" name="q_upload" class="btn btn-primary px-4">Upload</button>
+        <button type="submit" name="q_upload" class="btn btn-primary px-4">Syllabus Upload</button>
         <button type="reset" class="btn btn-secondary px-4 ms-2">Reset</button>
       </div>
     </form>

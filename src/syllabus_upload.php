@@ -1,3 +1,43 @@
+<?php
+include './conn.php';
+
+$upload_dir = "syllabus_papers/";
+if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+
+function uploadFile($key) {
+    global $upload_dir;
+    if (isset($_FILES[$key]) && $_FILES[$key]['error'] === 0) {
+        $sy_file = time() . '_' . basename($_FILES[$key]['name']);
+        move_uploaded_file($_FILES[$key]['tmp_name'], $upload_dir . $sy_file);
+        return $sy_file;
+    }
+    return '';
+}
+
+if (isset($_POST['sy_upload'])) {
+    $sy_standard = $_POST['sy_standard'];
+    $sy_subject = $_POST['sy_subject'];
+    $sy_year = $_POST['sy_year'];
+    $sy_file = uploadFile('sy_file');
+
+    if ($sy_file) {
+        $sql = "INSERT INTO syllabus_table (sy_standard, sy_subject, sy_year, sy_syllabus)
+                VALUES ('$sy_standard', '$sy_subject', '$sy_year', '$sy_file')";
+        mysqli_query($conn, $sql)
+            ? alert('syllabus uploaded successfully')
+            : die("Error: " . mysqli_error($conn));
+    } else {
+        alert('File upload failed.');
+    }
+}
+
+function alert($msg) {
+    echo "<script>alert('$msg');</script>";
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,9 +63,12 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <style rel="stylesheet">
+ 
+  </style>
   </head>
   <body>
-<!------------------------------------------navbar start--------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------->
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -37,7 +80,7 @@
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Application Form</h4>
+        <h4 class='p-2 bg-success m-2 '>Application Form</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -45,9 +88,7 @@
         <h2><i class="bi bi-person-circle menu-icon"></i></h2>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <!-- <a href="./login.php" class="dropdown-item">
-          <i class="bi bi-person-fill"></i>Admin</a> -->
-          <a class="dropdown-item text-dark" href="./login.php">
+          <a class="dropdown-item" href="./login.php">
           <i class="bi bi-box-arrow-right"></i> Logout </a>
         </div>
       </li>
@@ -66,7 +107,7 @@
     <li class="nav-item">
       <a class="nav-link" href="index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
-               <span class="menu-title">Dashboard</span>
+        <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
@@ -93,8 +134,8 @@
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
       </div>
     </li>
@@ -107,9 +148,9 @@
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="#">Fees</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_form.php">View Form</a></li>
 
         </ul>
       </div>
@@ -123,7 +164,7 @@
       </a>
       <div class="collapse" id="icons">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
+          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Section</a></li>
         </ul>
       </div>
     </li>
@@ -140,92 +181,69 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+     <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title"> Report</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html">404</a></li>
+          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-     <a class="nav-link" href="./login.php">
+      <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>
     </li>
   </ul>
 </nav>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-<?php
-// Database connection
-
-include "./conn.php";
-
-// Fetch all question paper records
-$sql = "SELECT * FROM question_papers";
-$result = mysqli_query($conn, $sql);
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>View Question Papers</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Model Question Papers </h2>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="table-secondary text-center">
-        <tr>
-          <th>Question_ID</th>
-          <th>Class Name</th>
-          <th>Subject</th>
-          <th>Year</th>
-          <th>Download</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <?php if (mysqli_num_rows($result) > 0): ?>
-          <?php while ($row = mysqli_fetch_assoc($result)): ?>
-            <tr>
-              <td><?= $row['q_id']; ?></td>
-              <td><?= $row['q_class_name']; ?></td>
-              <td><?= $row['q_subject_name']; ?></td>
-              <td><?= $row['q_year']; ?></td>
-              <td>
-                <a href="question_papers/<?= $row['q_files']; ?>" target="_blank" class="btn btn-primary ">Download</a>
-              </td>
-            </tr>
-          <?php endwhile; ?>
-        <?php else: ?>
-          <tr>
-            <td colspan="5">No records found</td>
-          </tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
-  </div>
+<div class="container h-100 mt-5 d-flex justify-content-center">
+  <div class="card shadow p-4 mt-5">
+    <h3 class="text-center mb-4">Admin Syllabus Upload</h3>
+    <form action="" method="POST" enctype="multipart/form-data">
+      <div class="row mb-3">
+        <div class="col-lg-6">
+          <label for="q_standard" class="form-label">Standard</label>
+          <input type="text" name="sy_standard" id="sy_standard" class="form-control" required placeholder="e.g. 10th Std">
+        </div>
+        <div class="col-lg-6">
+          <label for="q_subject" class="form-label">Subject</label>
+          <input type="text" name="sy_subject" id="sy_subject" class="form-control" required placeholder="e.g. Science">
 </div>
-</body>
-</html>
+</div>
+      <div class="row mb-3">
+         <div class="col-lg-6">
+          <label for="sy_year" class="form-label">Year</label>
+          <!-- <select name="sy_year" id="sy_year" class="form-select" required> -->
+            <select name="sy_year" id="sy_year" class="form-select" required>
 
+            <option value="" disabled>Select Year</option>
+            <option value="2025" class="text-dark">2025</option>
+            <option value="2024"  class="text-dark">2024</option>
+          </select>
+        </div>
+        <div class="col-lg-6">
+        <label for="file" class="form-label">Syllabus Upload</label>
+        <input type="file" name="sy_file" id="file" class="form-control" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+      </div>
+</div>
+      <div class="text-center">
+        <button type="submit" name="sy_upload" class="btn btn-primary px-4">Upload</button>
+        <button type="reset" class="btn btn-secondary px-4 ms-2">Reset</button>
+      </div>
+    </form>
   </div>
 </div>
 
 
-</body>
-</html>
-</div>
-</div>
-    
 
 
 
@@ -233,30 +251,9 @@ $result = mysqli_query($conn, $sql);
 
 
 
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
