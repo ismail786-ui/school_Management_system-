@@ -66,7 +66,6 @@ $conn->close();
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -83,22 +82,18 @@ $conn->close();
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
-    <!-- End plugin css for this page  -->
+    <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
-     <!--Internal Stylesheet-->
-     <style rel="stylesheet">
-  
-  </style>
   </head>
   <body>
-<!----------------------------------------Navbar Start------------------------------------------------------------------------------------------------------------------------------------>
+<!------------------------------------------navbar start--------------------------------------------------------------------->
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -130,16 +125,16 @@ $conn->close();
     </button>
   </div>
 </nav>
-<!---------------------------------------------------------------------------------------------------------------->
-    <!-- partial -->
+<!----------------------------------------------Start bar------------------------------------------------------------------>
+      <!-- partial -->
       <div class="container-fluid page-body-wrapper ">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
-   <li class="nav-item">
-      <a class="nav-link" href="index.php">
+    <li class="nav-item">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
+               <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
@@ -153,7 +148,7 @@ $conn->close();
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Classes</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
 
         </ul>
       </div>
@@ -165,7 +160,7 @@ $conn->close();
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="form-elements">
-       <ul class="nav flex-column sub-menu">
+        <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
@@ -179,9 +174,9 @@ $conn->close();
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Information</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
 
         </ul>
@@ -196,7 +191,7 @@ $conn->close();
       </a>
       <div class="collapse" id="icons">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Section</a></li>
+          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
         </ul>
       </div>
     </li>
@@ -220,13 +215,16 @@ $conn->close();
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="./login.php">
+     <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>

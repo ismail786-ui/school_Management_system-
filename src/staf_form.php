@@ -64,7 +64,6 @@ if (isset($_POST['emp_submit'])) {
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -90,15 +89,9 @@ if (isset($_POST['emp_submit'])) {
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
-    <style rel="stylesheet">
-    body {
-       background-color: #f0f2f5; /* light gray background */
-    }
-   
-  </style>
   </head>
   <body>
-<!--------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------navbar start--------------------------------------------------------------------->
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -110,7 +103,7 @@ if (isset($_POST['emp_submit'])) {
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success m-2 '>Application Form</h4>
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -118,7 +111,9 @@ if (isset($_POST['emp_submit'])) {
         <h2><i class="bi bi-person-circle menu-icon"></i></h2>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="./login.php">
+          <!-- <a href="./login.php" class="dropdown-item">
+          <i class="bi bi-person-fill"></i>Admin</a> -->
+          <a class="dropdown-item text-dark" href="./login.php">
           <i class="bi bi-box-arrow-right"></i> Logout </a>
         </div>
       </li>
@@ -135,9 +130,9 @@ if (isset($_POST['emp_submit'])) {
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="index.php">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
+               <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
@@ -151,7 +146,7 @@ if (isset($_POST['emp_submit'])) {
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Classes</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
 
         </ul>
       </div>
@@ -164,8 +159,8 @@ if (isset($_POST['emp_submit'])) {
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">Staff Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"><a class="nav-link" href="">Staff Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
       </div>
     </li>
@@ -178,9 +173,9 @@ if (isset($_POST['emp_submit'])) {
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Information</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">View Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
 
         </ul>
       </div>
@@ -194,7 +189,7 @@ if (isset($_POST['emp_submit'])) {
       </a>
       <div class="collapse" id="icons">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Section</a></li>
+          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
         </ul>
       </div>
     </li>
@@ -211,20 +206,23 @@ if (isset($_POST['emp_submit'])) {
       </div>
     </li>
     <li class="nav-item">
-     <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+      <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title"> Report</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="./login.php">
+     <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>

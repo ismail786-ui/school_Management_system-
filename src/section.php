@@ -1,74 +1,24 @@
 <?php
+include 'conn.php';
 
-include './conn.php';
+// $classData = [];
 
-// Fetch records
-$sql = "SELECT * FROM employee_form";
-$result = $conn->query($sql);
-?>
+// if (isset($_GET['search_id']) && $_GET['search_id'] !== '') {
+//     $searchId = intval($_GET['search_id']);
+//     $sql = "SELECT * FROM class_master WHERE class_id = $searchId";
+//     $result = mysqli_query($conn, $sql);
+
+//     if ($result && mysqli_num_rows($result) > 0) {
+//         $classData = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//     }
+// }
+// ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employee Records</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        img {
-            max-width: 100px;
-            height: auto;
-        }
-
-        .editbutton.button {
-            padding: 5px 10px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .editbutton.button:hover {
-            background-color: #218838;
-        }
-          .deletebutton.button {
-            padding: 5px 10px;
-            background-color:rgb(231, 0, 0);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .deletebutton.button:hover{
-            background-color:rgb(168, 33, 33);
-        }
-        
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-}
-table {
-    white-space: nowrap;
-}
-    </style>
-</head>
-<body>
-
-
-    <!-- plugins:css -->
+  <title>Search Class</title>
+      <!-- plugins:css -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -127,7 +77,7 @@ table {
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="./index.php">
+      <a class="nav-link" href="">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -157,7 +107,7 @@ table {
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Staff View</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
         </ul>
       </div>
     </li>
@@ -186,7 +136,7 @@ table {
       </a>
       <div class="collapse" id="icons">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Sections</a></li>
         </ul>
       </div>
     </li>
@@ -211,7 +161,7 @@ table {
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Emp Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
            <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
@@ -226,73 +176,70 @@ table {
     </li>
   </ul>
 </nav>
-<!--------------------------------------------------Retrive Form---------------------------------------------------------------------->
-<div class="container">
-     <h2 class="text-center">Employee Details </h2>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>DOB</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Pincode</th>
-                    <th>Mother Name</th>
-                    <th>Father Name</th>
-                    <th>Mobile</th>
-                    <th>Qualification</th>
-                    <th>Photo</th>
-                    <th>Aadhar Card</th>
-                    <th>Bank Details</th>
-                    <th>Experience</th>
-                    <th>Experience Certificate</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                            <td>" . $row["id"] . "</td>
-                            <td>" . $row["emp_Name"] . "</td>
-                            <td>" . $row["emp_email"] . "</td>
-                            <td>" . $row["emp_dob"] . "</td>
-                            <td>" . $row["emp_age"] . "</td>
-                            <td>" . $row["emp_gender"] . "</td>
-                            <td>" . $row["emp_address"] . "</td>
-                            <td>" . $row["emp_city"] . "</td>
-                            <td>" . $row["emp_state"] . "</td>
-                            <td>" . $row["emp_pincode"] . "</td>
-                            <td>" . $row["emp_mother"] . "</td>
-                            <td>" . $row["emp_father"] . "</td>
-                            <td>" . $row["emp_mobile"] . "</td>
-                            <td><a href='staff_files/" . $row["emp_qualification"] . "' download>Download</a></td>
-                            <td><img src='staff_files/" . $row["emp_photo"] . "' alt='Photo' width='80'></td>
-                            <td><a href='staff_files/" . $row["emp_aadhar"] . "' download>Download</a></td>
-                            <td><a href='staff_files/" . $row["emp_bank"] . "' download>Download</a></td>
-                            <td>" . $row["emp_experience"] . "</td>
-                            <td><a href='staff_files/" . $row["emp_ecertificate"] . "' download>Download</a></td>
-                            <td>
-                                <a class='button editbutton' href='edit_employee.php?id=" . $row["id"] . "'>Edit</a>
-                                <a class='button deletebutton' href='delete_employee.php?id=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
-                            </td>
-                        </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='20'>No records found.</td></tr>";
-                }
-                ?>
-            </tbody>
+</head>
+<body>
+<?php
+include 'conn.php';
+
+$classData = [];
+
+if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
+    $searchName = mysqli_real_escape_string($conn, $_GET['search_name']);
+    $sql = "SELECT * FROM class_master WHERE class_name LIKE '%$searchName%'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $classData = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+}
+?>
+
+
+  <div class="container-fluid mt-5">
+    <h2 class="text-center mb-4">🔍 Search Sections</h2>
+
+    <!-- Search Form -->
+    <form method="GET" class="row mb-4">
+      <div class="col-lg-2 mr-5">
+        <input type="text" name="search_name" class="form-control" placeholder="Enter Class Name (e.g., First, Second)" required>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary  mt-2">Search</button>
+      </div>
+    </form>
+
+    <!-- Table to show result -->
+    <?php if (!empty($classData)) { ?>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+          <thead class="table-dark">
+            <tr>
+              <th>Class ID</th>
+              <th>Class Name</th>
+              <th>Class Section</th>
+              <th>Class Teacher</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($classData as $row) { ?>
+              <tr>
+                <td><?= $row['class_id'] ?></td>
+                <td><?= $row['class_name'] ?></td>
+                <td><?= $row['class_section'] ?></td>
+                <td><?= $row['class_teacher'] ?></td>
+              </tr>
+            <?php } ?>
+          </tbody>
         </table>
-    </div>
-</div>
+      </div>
+    <?php } elseif (isset($_GET['search_name'])) { ?>
+      <div class="alert alert-warning text-center">
+        No record found for class name "<strong><?= htmlspecialchars($_GET['search_name']) ?></strong>"
+      </div>
+    <?php } ?>
+  </div>
+</body>
+</html>
 
 
 
@@ -312,13 +259,6 @@ table {
 
 
 
-
-
-
-
-
-
-    
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -340,6 +280,5 @@ table {
     <script src="assets/js/dashboard.js"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
-
-</body>
+  </body>
 </html>

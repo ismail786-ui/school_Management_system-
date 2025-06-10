@@ -123,7 +123,7 @@
       </a>
       <div class="collapse" id="icons">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./section.php">Sections</a></li>
         </ul>
       </div>
     </li>
@@ -151,8 +151,7 @@
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
-
-
+           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
         </ul>
       </div>
     </li>
@@ -276,7 +275,7 @@ $conn->close();
               </div>
 </div>
 <!-- ------------------------------------------------------------------------------- -->
- e voluptas quibusdam quidem rerum. Molestias magni voluptate, nemo quae velit,oluptatem perspiciatis eos exercitationem vitae corrupti perferendis voluptate numquam! Aliquid sed odio blanditiis inventore praesentium perspiciatis officia optio aspernatur illum vitae aliquam laborum, aperiam, dolor culpa tempora earum libero animi quaerat quasi saepe deserunt quo ullam hic nobis. Minima, laboriosam? Aliquam id sit nostrum, consequuntur quibusdam ex doloribus rerum placeat exercitationem ipsa corrupti dolor dicta odit nemo quaerat debitis, quo ipsam voluptatibus corporis asperiores aspernatur? Consequatur magni impedit sequi. Sed possimus, sint quis perferendis veniam, earum quidem qui laborum placeat, tenetur sit sapiente. Eum suscipit ex vitae perspiciatis reiciendis accusamus unde. Aspernatur, distinctio. Non laboriosam sit libero quis labore cum fugit quaerat quas temporibus voluptate voluptatum, quos iste in nulla eligendi? Magnam excepturi labore recusandae deserunt, eum illo harum optio! Iste alias atque quis odio, vel ipsum minima expedita nisi eius voluptatem debitis consequatur quas, aspernatur quibusdam reiciendis blanditiis laborum enim est! Culpa eos quos aperiam sunt modi quae iste est perferendis hic voluptatum quas, praesentium perspiciatis nisi deleniti in reiciendis illo sapiente officia sint maiores odio saepe reprehenderit enim laboriosam! Velit fugit deleniti, repellat nesciunt quibusdam harum, odio dicta dolorem id esse ipsam? Aut praesentium cum a vero temporibus doloribus molestiae dolorum quam reprehenderit ipsum repellendus magnam qui doloremque, tempora sit possimus nisi incidunt, facilis dicta. Quo dolore sit adipisci ad illo quam?</p>
+  Molestias magni voluptate, nemo quae velit,oluptatem perspiciatis eos exercitationem vitae corrupti perferendis voluptate numquam! Aliquid sed odio blanditiis inventore praesentium perspiciatis officia optio aspernatur illum vitae aliquam laborum, aperiam, dolor culpa tempora earum libero animi quaerat quasi saepe deserunt quo ullam hic nobis. Minima, laboriosam? Aliquam id sit nostrum, consequuntur quibusdam ex doloribus rerum placeat exercitationem ipsa corrupti dolor dicta odit nemo quaerat debitis, quo ipsam voluptatibus corporis asperiores aspernatur? Consequatur magni impedit sequi. Sed possimus, sint quis perferendis veniam, earum quidem qui laborum placeat, tenetur sit sapiente. Eum suscipit ex vitae perspiciatis reiciendis accusamus unde. Aspernatur, distinctio. Non laboriosam sit libero quis labore cum fugit quaerat quas temporibus voluptate voluptatum, quos iste in nulla eligendi? Magnam excepturi labore recusandae deserunt, eum illo harum optio! Iste alias atque quis odio, vel ipsum minima expedita nisi eius voluptatem debitis consequatur quas, aspernatur quibusdam reiciendis blanditiis laborum enim est! Culpa eos quos aperiam sunt modi quae iste est perferendis hic voluptatum quas, praesentium perspiciatis nisi deleniti in reiciendis illo sapiente officia sint maiores odio saepe reprehenderit enim laboriosam! Velit fugit deleniti, repellat nesciunt quibusdam harum, odio dicta dolorem id esse ipsam? Aut praesentium cum a vero temporibus doloribus molestiae dolorum quam reprehenderit ipsum repellendus magnam qui doloremque, tempora sit possimus nisi incidunt, facilis dicta. Quo dolore sit adipisci ad illo quam?</p>
 <!--------------------------------------------------------------------------------------------------------->
                      <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
