@@ -17,7 +17,7 @@ if (isset($_POST['update'])) {
     $stu_mother   = $_POST['stu_mother'];
     $stu_father   = $_POST['stu_father'];
     $stu_mobile   = $_POST['stu_mobile'];
-    $stu_admission= $_POST['stu_admission'];
+   
 
 
 
@@ -34,9 +34,7 @@ if (isset($_POST['update'])) {
         stu_pincode = '$stu_pincode',
         stu_mother = '$stu_mother',
         stu_father = '$stu_father',
-        stu_mobile = '$stu_mobile',
-        stu_admission = '$stu_admission',
-        standard = '$standard',
+        stu_mobile = '$stu_mobile'
         WHERE stu_id = $id";
 
     if ($conn->query($sql) == TRUE) {
@@ -306,18 +304,6 @@ if (isset($_POST['update'])) {
 <!------------------------------------------------------------------------------------------------------------>
 <!--------------------Admission,Photo,certificate-------------------------->
           <div class="row mb-3">
-       
-            <div class="col-md-4">
-    <label class="form-label">Aadhar Card</label>
-    <input type="file" class="form-control" name="stu_aadhar">
-    <input type="hidden" name="old_stu_aadhar"  class="form-control" value="<?php echo $row['stu_aadhar']; ?>">
-  </div>
-          
-         <div class="col-md-4">
-    <label class="form-label">Student Photo</label>
-    <input type="file" class="form-control" name="stu_photo">
-    <input type="hidden" name="old_stu_photo" value="<?php echo $row['stu_photo']; ?>">
-  </div>
           <div class="col-md-4">
         <label for="stu_admission" class="form-label">Admission Date</label>
         <input type="date" class="form-control" id="stu_admission" name="stu_admission" value="<?php echo $row['stu_admission'] ?>" required>
@@ -331,46 +317,7 @@ if (isset($_POST['update'])) {
     // </script>
         </div>
 <!--------------------------------------------------------------------------------------------------------->
- <div class="row mb-3">
-  <div class="col-md-4">
-    <label for="standard" class="form-label ">School Standard</label>
-    <select id="standard" class="form-select text-dark p-3" name="standard" value="<?php echo $row['stu_standard'] ?>" onchange="toggleInputBox(this)">
-      <option selected disabled>Select</option>
-      <option value="Pre Kg" <?php if($row['stu_standard']=='Pre Kg') echo 'selected'; ?>>Pre Kg</option>
-       <option value="lkg" <?php if($row['stu_standard']=='lkg') echo 'selected'; ?>>LKG</option>
-       <option value="ukg" <?php if($row['stu_standard']=='ukg') echo 'selected'; ?>>UKG</option>
-      <option value="first" <?php if($row['stu_standard']=='first') echo 'selected'; ?>>First</option>
-       <option value="second" <?php if($row['stu_standard']=='second') echo 'selected'; ?>>Second</option>
-       <option value="third" <?php if($row['stu_standard']=='third') echo 'selected'; ?>>Third</option>
-       <option value="fourth" <?php if($row['stu_standard']=='fourth') echo 'selected'; ?>>Fourth</option>
-     <option value="fifth" <?php if($row['stu_standard']=='fifth') echo 'selected'; ?>>Fifth</option>
-       <option value="sixth" <?php if($row['stu_standard']=='sixth') echo 'selected'; ?>>Sixth</option>
-     <option value="seventh" <?php if($row['stu_standard']=='seventh') echo 'selected'; ?>>Seventh</option>
-      <option value="eighth" <?php if($row['stu_standard']=='eighth') echo 'selected'; ?>>Eighth</option>
-       <option value="ninth" <?php if($row['stu_standard']=='ninth') echo 'selected'; ?>>Ninth</option>
-       <option value="tenth" <?php if($row['stu_standard']=='tenth') echo 'selected'; ?>>Tenth</option>
-       <option value="eleventh" <?php if($row['stu_standard']=='eleventh') echo 'selected'; ?>>Eleventh</option>
-       <option value="twelfth" <?php if($row['stu_standard']=='twelfth') echo 'selected'; ?>>Twelfth</option>
-    </select>
-  </div>
 
-  <div class="col-md-4">
-    <div id="transferCertificate" style="display:none;">
-
-    <label class="form-label">Transfer Certificate</label>
-    <input type="file" class="form-control" name="transfercertificate">
-    <input type="hidden" name="old_transfercertificate" value="<?php echo $row['stu_tc']; ?>">
-  </div>
-
-    </div>
-    </div>
-        <div class="col-md-4">
-    <div id="markSheet" style="display:none;">
-    <label class="form-label">Marksheet</label>
-    <input type="file" class="form-control" name="marksheet">
-    <input type="hidden" name="old_marksheet" value="<?php echo $row['stu_marksheet']; ?>">
-    </div>
-  </div>
 <!---------------------------------------------------------------------------------------------------------------------------------------------->
     <!---Submit button -->
     <div class="col-lg-12 mt-5 text-center">

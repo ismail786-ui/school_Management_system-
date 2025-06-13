@@ -280,8 +280,8 @@ table {
                             <td>" . $row["emp_experience"] . "</td>
                             <td><a href='staff_files/" . $row["emp_ecertificate"] . "' download>Download</a></td>
                             <td>
-                                <a class='button editbutton' href='edit_employee.php?id=" . $row["id"] . "'>Edit</a>
-                                <a class='button deletebutton' href='delete_employee.php?id=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
+                                <a class='button editbutton' href='staff_uform.php?id=" . $row["id"] . "'>Edit</a>
+                                <a class='button deletebutton' href='staff_udelete.php?id=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
                             </td>
                         </tr>";
                     }

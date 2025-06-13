@@ -64,7 +64,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -80,7 +80,6 @@
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Subject</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
 
         </ul>
@@ -109,7 +108,6 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_detail.php">Detail</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
 
@@ -153,7 +151,6 @@
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Subject</a></li>
            <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
         </ul>
       </div>
@@ -166,129 +163,275 @@
     </li>
   </ul>
 </nav>
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome to Our School</h3>
-                    <h6 class="font-weight-normal mb-0">Have a Great Days !</h6>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<?php
+include 'conn.php';
+
+$search_term = isset($_GET['search_term']) ? trim($_GET['search_term']) : '';
+$show_table = false;
+
+$sql = "SELECT 
+            ef.emp_Name,
+            sm.sub_code,
+            sm.sub_name,
+            sm.sub_standard,
+            sm.sub_sec
+        FROM employee_form AS ef
+        JOIN sub_master AS sm ON ef.id = sm.id";
+
+if (!empty($search_term)) {
+    $show_table = true;
+    $safe_term = mysqli_real_escape_string($conn, $search_term);
+    if (is_numeric($search_term)) {
+        $sql .= " WHERE ef.id = '$safe_term'";
+    } else {
+        $sql .= " WHERE ef.emp_Name LIKE '%$safe_term%'";
+    }
+
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        die("Query Failed: " . mysqli_error($conn));
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h4 class="mb-4 text-center"> Subject Details</h4>
+
+  <!-- Search Form -->
+  <form method="GET" class="mb-4">
+    <div class="row">
+      <div class="col-md-2 mt-3">
+        <input type="text" name="search_term" class="form-control" placeholder="Search ID or Name" value="<?= htmlspecialchars($search_term) ?>">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-50 mt-3">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <?php if ($show_table): ?>
+    <table class="table table-bordered table-hover text-center">
+      <thead class="table-success">
+        <tr>
+          <th>Employee Name</th>
+          <th>Subject Name</th>
+          <th>Standard</th>
+          <th>Section</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>
+                        <td>{$row['emp_Name']}</td>
+                        <td>{$row['sub_name']}</td>
+                        <td>{$row['sub_standard']}</td>
+                        <td>{$row['sub_sec']}</td>
+                      </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='4'>No results found</td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+  <?php endif; ?>
 </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card tale-bg">
-                  <div class="card-people mt-auto">
-                    <img src="assets/images/dashboard/people.svg" alt="people">
-                    <div class="weather-info">
-                      <div class="d-flex">
-                        <div>
-                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun me-2"></i>31<sup>C</sup></h2>
-                        </div>
-                        <div class="ms-2">
-                          <h4 class="location font-weight-normal">Urapakkam</h4>
-                          <h6 class="font-weight-normal">Chennai</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               <?php
+</body>
+</html>
 
-      include './conn.php';
 
-// Fetch records
+         
 
-$sql = "SELECT COUNT(*) AS row_count FROM student_admission";
-$result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-$conn->close();
-?>
-              <div class="col-md-6 grid-margin transparent">
-                <div class="row">
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                      <div class="card-body">
-                        <p class="mb-4">Total Students</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["row_count"] ?></p>
-                        
-                      </div>
-                    </div>
-                  </div>
-                              <?php
 
-      include './conn.php';
 
-// Fetch records
 
-$sql = "SELECT COUNT(*) AS emp_count FROM employee_form";
-$result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-$conn->close();
-?>
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Teachers</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["emp_count"] ?></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Non Teachers</p>
-                        <p class="fs-30 mb-2">14</p>                   
-                      </div>
-                    </div>
-                  </div>
-                 
-<?php 
-include './conn.php';
-$sql = "SELECT COUNT(*) AS sch_class FROM class_master";
-$result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-$conn->close();
-?>
-                  <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                      <div class="card-body">
-                        <p class="mb-4">Classes</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["sch_class"] ?></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-</div>
-<!-- ------------------------------------------------------------------------------- -->
-  Molestias magni voluptate, nemo quae velit,oluptatem perspiciatis eos exercitationem vitae corrupti perferendis voluptate numquam! Aliquid sed odio blanditiis inventore praesentium perspiciatis officia optio aspernatur illum vitae aliquam laborum, aperiam, dolor culpa tempora earum libero animi quaerat quasi saepe deserunt quo ullam hic nobis. Minima, laboriosam? Aliquam id sit nostrum, consequuntur quibusdam ex doloribus rerum placeat exercitationem ipsa corrupti dolor dicta odit nemo quaerat debitis, quo ipsam voluptatibus corporis asperiores aspernatur? Consequatur magni impedit sequi. Sed possimus, sint quis perferendis veniam, earum quidem qui laborum placeat, tenetur sit sapiente. Eum suscipit ex vitae perspiciatis reiciendis accusamus unde. Aspernatur, distinctio. Non laboriosam sit libero quis labore cum fugit quaerat quas temporibus voluptate voluptatum, quos iste in nulla eligendi? Magnam excepturi labore recusandae deserunt, eum illo harum optio! Iste alias atque quis odio, vel ipsum minima expedita nisi eius voluptatem debitis consequatur quas, aspernatur quibusdam reiciendis blanditiis laborum enim est! Culpa eos quos aperiam sunt modi quae iste est perferendis hic voluptatum quas, praesentium perspiciatis nisi deleniti in reiciendis illo sapiente officia sint maiores odio saepe reprehenderit enim laboriosam! Velit fugit deleniti, repellat nesciunt quibusdam harum, odio dicta dolorem id esse ipsam? Aut praesentium cum a vero temporibus doloribus molestiae dolorum quam reprehenderit ipsum repellendus magnam qui doloremque, tempora sit possimus nisi incidunt, facilis dicta. Quo dolore sit adipisci ad illo quam?</p>
-<!--------------------------------------------------------------------------------------------------------->
-                     <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
-  </div>
-</footer>
-          <!-- partial -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <!-- partial -->
 </div>
         </div>
         <!-- main-panel ends -->
@@ -296,28 +439,6 @@ $conn->close();
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

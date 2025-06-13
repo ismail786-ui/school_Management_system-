@@ -28,8 +28,8 @@
 <!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <!-- partial -->
       <div class="container-fluid page-body-wrapper ">
-        <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
       <a class="nav-link" href="./index.php">
@@ -129,80 +129,124 @@
   </ul>
 </nav>
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-<div class="container-fluid ">
-<div class="row">
-    <div class="col-lg-12">
-<form method="POST">
-        <span>Enter Student ID :<input type="text" name="stu_id"></span>
-        <button type="submit" class="btn btn-info text-white" name="check">Check Details</button>
-    </form>
-</div>
-</div>
-
 
 
 <?php
+include "conn.php";
 
-include 'conn.php';
+$search_id = isset($_GET['stu_id']) ? trim($_GET['stu_id']) : '';
+$data = null;
 
-if (isset($_POST['check'])) {
-    $stu_id = $_POST['stu_id'];
+if (!empty($search_id)) {
+    $safe_id = mysqli_real_escape_string($conn, $search_id);
 
     $sql = "SELECT 
-                student_admission.stu_name,
-                student_admission.stu_standard,
-                class_master.class_name,
-                class_master.class_teacher,
-                class_master.class_section
+                sa.stu_id,
+                sa.stu_name,
+                cm.class_name,
+                cm.class_section,
+                cm.class_teacher
             FROM 
-                student_admission
+                student_admission AS sa
             JOIN 
-                class_master ON student_admission.class_id = class_master.class_id
+                class_master AS cm ON sa.class_id = cm.class_id
             WHERE 
-                student_admission.stu_id = '$stu_id'";
+                sa.stu_id = '$safe_id'";
+
     $result = mysqli_query($conn, $sql);
-    if ($row = mysqli_fetch_assoc($result)) {
-    ?>
-<!--------------------------------------------------------------------------------------------->
 
+    if ($result && mysqli_num_rows($result) > 0) {
+        $data = mysqli_fetch_assoc($result);
+    }
+}
+?>
 
- <!-- Student Details Table -->
-   <div class="container-fluid">
-     <div class="card shadow">
-    <div class="col">
-            <div class="card-header bg-info mt-3 text-white text-center">
-              <h5>Student Information</h5>
+<div class="container mt-5">
+    <h4 class="text-center mb-4"> Student Details</h4>
+
+    <!-- Search Form -->
+    <form method="GET" class="mb-4">
+        <div class="row g-2 justify-content-center">
+            <div class="col-md-4">
+                <input type="text" name="stu_id" class="form-control" placeholder="Enter Student ID" value="<?= htmlspecialchars($search_id) ?>" required>
             </div>
-            <div class="card-body ">
-              <table class="table table-bordered table-hover text-center">
-                <thead class="table-info">
-                  <tr>
-                    <th>Name</th>
-                    <th>Standard</th>
-                    <th>Section</th>
-                    <th>Class Teacher</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><?= $row['stu_name']; ?></td>
-                    <td><?= $row['stu_standard']; ?></td>
-                    <td><?= $row['class_section']; ?></td>
-                    <td><?= $row['class_teacher']; ?></td> 
-                  </tr>
-                </tbody>
-              </table>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
             </div>
-          </div>
+        </div>
+    </form>
+<!------------------------------------------------------------------------------------------------------------------------------->
+    <?php if ($data): ?>
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h5>Student Information</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="table-success">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Class</th>
+                            <th>Section</th>
+                            <th>Class Teacher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?= $data['stu_id']; ?></td>
+                            <td><?= $data['stu_name']; ?></td>
+                            <td><?= $data['class_name']; ?></td>
+                            <td><?= $data['class_section']; ?></td>
+                            <td><?= $data['class_teacher']; ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php elseif (!empty($search_id)): ?>
+      <div class="justify-content-center d-flex">   
+          <div class='alert alert-danger text-center  w-50 '>No student found with ID: <strong><?= htmlspecialchars($search_id) ?></strong></div>
+    <?php endif; ?>
 </div>
-          <?php
-      } else {
-          echo "<div class='alert alert-danger text-center m-3'>No student found with ID: <strong>$stu_id</strong></div>";
-      }
-  }
-  ?>
- 
- </div>
+    </div>
+
+
+
+
+
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
