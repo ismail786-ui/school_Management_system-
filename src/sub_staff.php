@@ -210,8 +210,8 @@ if (!empty($search_term)) {
 
   <!-- Search Form -->
   <form method="GET" class="mb-4">
-    <div class="row">
-      <div class="col-md-2 mt-3">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-2 mt-3 ">
         <input type="text" name="search_term" class="form-control" placeholder="Search ID or Name" value="<?= htmlspecialchars($search_term) ?>">
       </div>
       <div class="col-md-2">

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'conn.php';
 
 if (isset($_POST['login'])) {
@@ -10,21 +11,25 @@ if (isset($_POST['login'])) {
         $sql = "SELECT * FROM master_admin WHERE admin_user='$username' AND admin_password='$password'";
         $result = $conn->query($sql);
         if ($result->num_rows === 1) {
-            header("Location:./index.php");
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = 'admin';
+            header("Location: index.php");
             exit;
         } else {
-            echo "<script>alert('Invalid Admin Credentials');</script>";
+            echo "<script>alert('Invalid Admin');</script>";
         }
     }
 
     if ($user_type === 'employee') {
         $sql = "SELECT * FROM employee_login WHERE emp_user='$username' AND emp_pass='$password'";
         $result = $conn->query($sql);
-        if ($result->num_rows === 1) {
-            header("Location:emp_dashboard.php");
+        if ($result->num_rows == 1) {
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = 'employee';
+            header("Location: emp_dashboard.php");
             exit;
         } else {
-            echo "<script>alert('Invalid Employee Credentials');</script>";
+            echo "<script>alert('Invalid Employee');</script>";
         }
     }
 
@@ -32,16 +37,19 @@ if (isset($_POST['login'])) {
         $sql = "SELECT * FROM student_login WHERE stu_user='$username' AND stu_pass='$password'";
         $result = $conn->query($sql);
         if ($result->num_rows === 1) {
-            header("Location:stu_dashboard.php");
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = 'student';
+            header("Location: stu_dashboard.php");
             exit;
         } else {
-            echo "<script>alert('Invalid Student Credentials');</script>";
+            echo "<script>alert('Invalid Student');</script>";
         }
     }
 }
 
 $conn->close();
 ?>
+
 
 <!-- HTML START -->
 <!DOCTYPE html>

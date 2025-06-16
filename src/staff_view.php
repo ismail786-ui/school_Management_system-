@@ -246,6 +246,7 @@ table {
                     <th>Mother Name</th>
                     <th>Father Name</th>
                     <th>Mobile</th>
+                     <th>Major</th>
                     <th>Qualification</th>
                     <th>Photo</th>
                     <th>Aadhar Card</th>
@@ -273,6 +274,7 @@ table {
                             <td>" . $row["emp_mother"] . "</td>
                             <td>" . $row["emp_father"] . "</td>
                             <td>" . $row["emp_mobile"] . "</td>
+                            <td>" . $row["emp_major"] . "</td>
                             <td><a href='staff_files/" . $row["emp_qualification"] . "' download>Download</a></td>
                             <td><img src='staff_files/" . $row["emp_photo"] . "' alt='Photo' width='80'></td>
                             <td><a href='staff_files/" . $row["emp_aadhar"] . "' download>Download</a></td>
@@ -280,8 +282,8 @@ table {
                             <td>" . $row["emp_experience"] . "</td>
                             <td><a href='staff_files/" . $row["emp_ecertificate"] . "' download>Download</a></td>
                             <td>
-                                <a class='button editbutton' href='staff_uform.php?id=" . $row["id"] . "'>Edit</a>
-                                <a class='button deletebutton' href='staff_udelete.php?id=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
+                                <a class='button editbutton' href='staff_uform.php?update=" . $row["id"] . "'>Edit</a>
+                                <a class='button deletebutton' href='staff_udelete.php?delete=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
                             </td>
                         </tr>";
                     }

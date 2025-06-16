@@ -1,4 +1,7 @@
-      
+  <?php
+include 'auth.php';
+checkRole(['employee']);
+?>    
 <!DOCTYPE html>
 <html lang="en">
   <head>

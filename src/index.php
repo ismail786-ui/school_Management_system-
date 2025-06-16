@@ -1,3 +1,7 @@
+<?php
+include 'auth.php';
+checkRole(['admin']);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>School</title>
     <!-- plugins:css -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -23,7 +30,20 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <style type='text/css'> 
+      .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
+    .chart-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+    }
+  </style>
   </head>
+
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
     <div class="container-scroller">
@@ -126,6 +146,8 @@
       <div class="collapse" id="icons">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./section.php">Sections</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Subject</a></li>
+
         </ul>
       </div>
     </li>
@@ -167,40 +189,25 @@
   </ul>
 </nav>
 <!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome to Our School</h3>
-                    <h6 class="font-weight-normal mb-0">Have a Great Days !</h6>
-</div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card tale-bg">
-                  <div class="card-people mt-auto">
-                    <img src="assets/images/dashboard/people.svg" alt="people">
-                    <div class="weather-info">
-                      <div class="d-flex">
-                        <div>
-                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun me-2"></i>31<sup>C</sup></h2>
-                        </div>
-                        <div class="ms-2">
-                          <h4 class="location font-weight-normal">Urapakkam</h4>
-                          <h6 class="font-weight-normal">Chennai</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-               <?php
 
-      include './conn.php';
+
+<!-- ------------------------------------------------------------------------------- -->
+<div class="container mb-5"> 
+<div class="col-lg-12 col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+<div class="container py-5">
+  <!-- Dashboard Header -->
+  <div class="mb-4 text-center">
+    <h2>📊 Dashboard Overview</h2>
+    <p class="text-muted">School users and activity</p>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="row mb-4 text-center">
+    <div class="col-md-4 mb-3">
+      <div class="card p-4">
+        <h5>👩‍🎓 Students</h5>
+          <?php 
+           include './conn.php';
 
 // Fetch records
 
@@ -212,18 +219,13 @@ if ($result->num_rows > 0) {
 } 
 $conn->close();
 ?>
-              <div class="col-md-6 grid-margin transparent">
-                <div class="row">
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                      <div class="card-body">
-                        <p class="mb-4">Total Students</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["row_count"] ?></p>
-                        
-                      </div>
-                    </div>
-                  </div>
-                              <?php
+        <h2 class="text-primary"><?php echo  $row["row_count"] ?></h2>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card p-4">
+        <h5>👨‍🏫 Employees</h5>
+           <?php
 
       include './conn.php';
 
@@ -237,26 +239,13 @@ if ($result->num_rows > 0) {
 } 
 $conn->close();
 ?>
-                  <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Teachers</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["emp_count"] ?></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                      <div class="card-body">
-                        <p class="mb-4">Non Teachers</p>
-                        <p class="fs-30 mb-2">14</p>                   
-                      </div>
-                    </div>
-                  </div>
-                 
-<?php 
+        <h2 class="text-success"><?php echo  $row['emp_count'] ?></h2>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card p-4">
+        <h5>🛠️ Total Classes</h5>
+        <?php 
 include './conn.php';
 $sql = "SELECT COUNT(*) AS sch_class FROM class_master";
 $result = $conn->query($sql);
@@ -266,26 +255,91 @@ if ($result->num_rows > 0) {
 } 
 $conn->close();
 ?>
-                  <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                      <div class="card-body">
-                        <p class="mb-4">Classes</p>
-                        <p class="fs-30 mb-2"><?php echo  $row["sch_class"] ?></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <h2 class="text-danger"><?php echo  $row["sch_class"] ?></h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Chart -->
+  <div class="chart-card">
+    <h4 class="mb-4 text-center">📈 Monthly User Activity</h4>
+    <canvas id="overviewChart" height="100"></canvas>
+  </div>
 </div>
-<!-- ------------------------------------------------------------------------------- -->
-  Molestias magni voluptate, nemo quae velit,oluptatem perspiciatis eos exercitationem vitae corrupti perferendis voluptate numquam! Aliquid sed odio blanditiis inventore praesentium perspiciatis officia optio aspernatur illum vitae aliquam laborum, aperiam, dolor culpa tempora earum libero animi quaerat quasi saepe deserunt quo ullam hic nobis. Minima, laboriosam? Aliquam id sit nostrum, consequuntur quibusdam ex doloribus rerum placeat exercitationem ipsa corrupti dolor dicta odit nemo quaerat debitis, quo ipsam voluptatibus corporis asperiores aspernatur? Consequatur magni impedit sequi. Sed possimus, sint quis perferendis veniam, earum quidem qui laborum placeat, tenetur sit sapiente. Eum suscipit ex vitae perspiciatis reiciendis accusamus unde. Aspernatur, distinctio. Non laboriosam sit libero quis labore cum fugit quaerat quas temporibus voluptate voluptatum, quos iste in nulla eligendi? Magnam excepturi labore recusandae deserunt, eum illo harum optio! Iste alias atque quis odio, vel ipsum minima expedita nisi eius voluptatem debitis consequatur quas, aspernatur quibusdam reiciendis blanditiis laborum enim est! Culpa eos quos aperiam sunt modi quae iste est perferendis hic voluptatum quas, praesentium perspiciatis nisi deleniti in reiciendis illo sapiente officia sint maiores odio saepe reprehenderit enim laboriosam! Velit fugit deleniti, repellat nesciunt quibusdam harum, odio dicta dolorem id esse ipsam? Aut praesentium cum a vero temporibus doloribus molestiae dolorum quam reprehenderit ipsum repellendus magnam qui doloremque, tempora sit possimus nisi incidunt, facilis dicta. Quo dolore sit adipisci ad illo quam?</p>
+
+<script>
+const ctx = document.getElementById('overviewChart').getContext('2d');
+
+new Chart(ctx, {
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [
+      {
+        type: 'bar',
+        label: 'Students',
+        data: [100, 120, 140, 160, 180, 190],
+        backgroundColor: '#4e73df',
+        stack: 'users'
+      },
+      {
+        type: 'bar',
+        label: 'Employees',
+        data: [30, 32, 33, 35, 38, 40],
+        backgroundColor: '#1cc88a',
+        stack: 'users'
+      },
+      {
+        type: 'bar',
+        label: 'Admins',
+        data: [5, 6, 7, 8, 8, 9],
+        backgroundColor: '#e74a3b',
+        stack: 'users'
+      },
+      {
+        type: 'line',
+        label: 'Total Users',
+        data: [135, 158, 180, 203, 226, 239],
+        borderColor: '#f6c23e',
+        backgroundColor: 'rgba(246, 194, 62, 0.1)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#f6c23e',
+        yAxisID: 'y'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom'
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false
+      }
+    },
+    scales: {
+      x: {
+        stacked: true
+      },
+      y: {
+        stacked: true,
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+
+</div>
+
 <!--------------------------------------------------------------------------------------------------------->
                      <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
+  <div class="d-sm-flex justify-content-center">
+    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span>
   </div>
 </footer>
           <!-- partial -->

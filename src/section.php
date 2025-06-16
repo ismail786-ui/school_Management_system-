@@ -77,7 +77,7 @@ include 'conn.php';
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -195,16 +195,16 @@ if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
 ?>
 
 
-  <div class="container-fluid mt-5">
-    <h2 class="text-center mb-4">🔍 Search Sections</h2>
+  <div class="container-fluid mt-5 justify-content-center">
+    <h2 class="text-center mb-4">Search Sections</h2>
 
     <!-- Search Form -->
-    <form method="GET" class="row mb-4">
+    <form method="GET" class="row mb-4 justify-content-center">
       <div class="col-lg-2 mr-5">
         <input type="text" name="search_name" class="form-control" placeholder="Enter Class Name (e.g., First, Second)" required>
       </div>
       <div class="col-md-2">
-        <button type="submit" class="btn btn-primary  mt-2">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
       </div>
     </form>
 
