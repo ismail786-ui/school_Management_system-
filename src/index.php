@@ -1,7 +1,4 @@
-<?php
-include 'auth.php';
-checkRole(['admin']);
-?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

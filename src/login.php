@@ -26,7 +26,7 @@ if (isset($_POST['login'])) {
         if ($result->num_rows == 1) {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = 'employee';
-            header("Location: emp_dashboard.php");
+            header("Location: emp_d.php");
             exit;
         } else {
             echo "<script>alert('Invalid Employee');</script>";
@@ -39,7 +39,7 @@ if (isset($_POST['login'])) {
         if ($result->num_rows === 1) {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = 'student';
-            header("Location: stu_dashboard.php");
+            header("Location:studentd.php");
             exit;
         } else {
             echo "<script>alert('Invalid Student');</script>";

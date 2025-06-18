@@ -64,9 +64,9 @@ if (isset($_GET['sf_id'])) {
       <small>Date: <?= date('d M Y', strtotime($payment_date)) ?></small>
     </div>
     <div class="text-end">
-      <strong>ABC School</strong><br>
+      <strong>School</strong><br>
       123 School Lane<br>
-      City, State, ZIP
+      Chennai,TN,600053
     </div>
   </div>
 

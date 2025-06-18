@@ -1,18 +1,3 @@
-<?php
-include 'conn.php';
-
-// $classData = [];
-
-// if (isset($_GET['search_id']) && $_GET['search_id'] !== '') {
-//     $searchId = intval($_GET['search_id']);
-//     $sql = "SELECT * FROM class_master WHERE class_id = $searchId";
-//     $result = mysqli_query($conn, $sql);
-
-//     if ($result && mysqli_num_rows($result) > 0) {
-//         $classData = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//     }
-// }
-// ?>
 
 <!DOCTYPE html>
 <html>

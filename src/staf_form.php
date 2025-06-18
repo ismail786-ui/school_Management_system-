@@ -89,6 +89,12 @@ if (isset($_POST['emp_submit'])) {
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <style type="text/css">
+      select.form-select,
+      select.form-select option {
+      color: #212529 !important;
+     }
+    </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->

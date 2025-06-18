@@ -91,6 +91,15 @@ $conn->close();
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+     <style type="text/css">
+    .text-danger {
+      font-size: 0.875rem;
+    }
+select.form-select,
+select.form-select option {
+  color: #212529 !important; /* Bootstrap's default dark color */
+}
+  </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -232,203 +241,272 @@ $conn->close();
   </ul>
 </nav>
 <!----------------------------------------------Admission Form------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
- <div class="container mt-5">
-  <form method="POST" action="" enctype="multipart/form-data">
-    
-   <div class="row mb-3 justify-content-start">
-        
-                 <div class="col-md-4">
-           <label for="academic_year" class="form-label bg-primary  text-white p-2 rounded">Academic Year</label>
-            <select class="form-select p-3 text-dark p-3  text-white mb-3"  required id="academic_year"  name="academic_year" >
-              <option selected disabled>Select</option>
-              <option disabled value="2023-2024">2023-2024</option>
-              <option disabled value="2024-2025">2024-2025</option>
-              <option value="2025-2026">2025-2026</option>
-            </select>
-       
-        
-      </div>
-    <h2 class="text-center mb-5">Student Enrollment</h2>
-        <div class="row mb-3">
-          <div class="col-md-4">
-             <label for="stu_name" class="form-label">Full Name</label>
-          <input type="text" class="form-control p-3" id="stu_name" name="stu_name" required >
-          </div>   
-           <div class="col-md-4">
-            <label for="stu_mother" class="form-label">Mother Name</label>
-            <input type="text" class="form-control p-3" id="stu_mother" name="stu_mother" required>
-          </div>
-           <div class="col-md-4">
-            <label for="stu_pincode" class="form-label">Pincode</label>
-            <input type="text" class="form-control p-3" id="stu_pincode" required name="stu_pincode" maxlength="6" >
-          </div>
-        </div>     
-        <!--Age,Gender,Address -->
-<!---------------------------------------------------------------------------->
-         <div class="row mb-3">   
-         <div class="col-md-4">
-             <label for="stu_email" class="form-label">Email</label>
-          <input type="email" class="form-control p-3" id="stu_email" name="stu_email" required>
-          </div>
-         <div class="col-md-4">
-            <label for="stu_father" class="form-label">Father Name</label>
-            <input type="text" class="form-control p-3" id="stu_father" name="stu_father" required>
-          </div>
-          <div class="col-md-4">
-           <label for="stu_aadhar" class="form-label">Aadhar Card</label>
-          <input class="form-control p-3" type="file" id="stu_aadhar" required name="stu_aadhar"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-          </div>
-        </div>
-<!---------------------------------------------------------------------------->
-          <div class="row mb-3">
-            <div class="col-md-4">
-            <label for="stu_dob" class="form-label">Date of Birth</label>
-            <input type="date" class="form-control p-3" id="stu_dob" required name="stu_dob" >
-</div>      
-          <div class="col-md-4">
-            <label for="stu_mobile" class="form-label">Mobile Number</label>
-            <input type="text" class="form-control p-3" id="stu_mobile" name="stu_mobile"maxlength="10" required >
-          </div>
-          <div class="col-md-4">
-           <label for="stu_photo" class="form-label">Student Photo</label>
-          <input class="form-control p-3" type="file" id="stu_photo" name="stu_photo" required accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" >
-          </div>
-         
-          
-        </div>
-<!--------------------------------------------------------------------------------------------------------------->
-        <div class="row mb-3">
-           <div class="col-md-4">
-            <label for="stu_age" class="form-label">Age</label>
-            <input type="number" class="form-control p-3" id="stu_age" name="stu_age" max="50"required >
-          </div>
-         <div class="col-md-4">
-          <label for="stu_address" class="form-label">Address</label>
-          <input type="text" class="form-control p-3" id="stu_address" name="stu_address" required>
-          </div>
+<div class="container mt-5 mb-5">
+  <div class="bg-white p-5 shadow rounded text-black">
+    <h2 class="text-center mb-4">Student Enrollment</h2>
+    <form id="enrollmentForm" method="POST" enctype="multipart/form-data" novalidate>
+
+      <!-- Academic Year -->
+      <div class="row mb-3">
         <div class="col-md-4">
-        <label for="stu_admission" class="form-label">Admission Date</label>
-        <input type="date" class="form-control p-3" id="stu_admission" name="stu_admission" required>
+          <label for="academic_year" class="form-label">Academic Year</label>
+          <select class="form-select" id="academic_year" name="academic_year" required>
+            <option value="" disabled selected>Select</option>
+            <option value="2025-2026">2025-2026</option>
+          </select>
+          <div class="text-danger"></div>
+        </div>
       </div>
+
+      <!-- Name, Mother, Pincode -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="stu_name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="stu_name" name="stu_name" required>
+          <div class="text-danger"></div>
         </div>
-<!------------------------------------------------------------------------------------------------------------>
-<!--------------------Admission,Photo,certificate-------------------------->
-          <div class="row mb-3">
-               <div class="col-md-4">
-           <label for="stu_gender" class="form-label">Gender</label>
-            <select class="form-select p-3 text-dark p-3" id="stu_gender" name="stu_gender" required>
-              <option selected disabled>Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Others">Others</option>
-            </select>
-        </div>  
-         <div class="col-md-4">
-            <label for="stu_city" class="form-label">City</label>
-            <input type="text" class="form-control p-3" id="stu_city" name="stu_city" required>
-         </div>
-          <div class="col-md-4">
-           <label for="stu_community" class="form-label">Community</label>
-          <input class="form-control p-3" type="file" id="stu_community" name="stu_community"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-          </div>
-           
+        <div class="col-md-4">
+          <label for="stu_mother" class="form-label">Mother Name</label>
+          <input type="text" class="form-control" id="stu_mother" name="stu_mother" required>
+          <div class="text-danger"></div>
         </div>
-<!--------------------------------------------------------------------------------------------------------->
- <div class="row mb-3">
-     <div class="col-md-4">
-           <label for="stu_blood" class="form-label">Blood Group</label>
-           <input type="text" class="form-control p-3" id="stu_blood" name="stu_blood" required>
-        </div>  
-         <div class="col-md-4">
-            <label for="stu_state" class="form-label">State</label>
-            <input type="text" class="form-control p-3" id="stu_state" name="stu_state" required >
-          </div>
-            <div class="col-md-4">
-           <label for="stu_pan" class="form-label">Pancard</label>
-          <input class="form-control p-3" type="file" id="stu_pan" name="stu_pan"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-          </div>
+        <div class="col-md-4">
+          <label for="stu_pincode" class="form-label">Pincode</label>
+          <input type="text" class="form-control" id="stu_pincode" name="stu_pincode" pattern="\d{6}" maxlength="6" required>
+          <div class="text-danger"></div>
+        </div>
+      </div>
+
+      <!-- Email, Father, Aadhar -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="stu_email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="stu_email" name="stu_email" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_father" class="form-label">Father Name</label>
+          <input type="text" class="form-control" id="stu_father" name="stu_father" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_aadhar" class="form-label">Aadhar Card</label>
+          <input type="file" class="form-control" id="stu_aadhar" name="stu_aadhar" required accept=".pdf,.jpg,.jpeg,.png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+
+      <!-- DOB, Mobile, Photo -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="stu_dob" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="stu_dob" name="stu_dob" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_mobile" class="form-label">Mobile Number</label>
+          <input type="tel" class="form-control" id="stu_mobile" name="stu_mobile" required pattern="\d{10}">
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_photo" class="form-label">Student Photo</label>
+          <input type="file" class="form-control" id="stu_photo" name="stu_photo" required accept=".jpg,.jpeg,.png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+
+      <!-- Age, Address, Admission -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="stu_age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="stu_age" name="stu_age" max="50" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="stu_address" name="stu_address" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_admission" class="form-label">Admission Date</label>
+          <input type="date" class="form-control" id="stu_admission" name="stu_admission" required>
+          <div class="text-danger"></div>
+        </div>
+      </div>
+
+      <!-- Gender, City, Community -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="stu_gender" class="form-label">Gender</label>
+          <select class="form-select" id="stu_gender" name="stu_gender" required>
+            <option value="" disabled selected>Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Others</option>
+          </select>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_city" class="form-label">City</label>
+          <input type="text" class="form-control" id="stu_city" name="stu_city" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_community" class="form-label">Community Certificate</label>
+          <input type="file" class="form-control" id="stu_community" name="stu_community" accept=".pdf,.jpg,.jpeg,.png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+
+      <!-- Blood, State, PAN -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="stu_blood" class="form-label">Blood Group</label>
+          <input type="text" class="form-control" id="stu_blood" name="stu_blood" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_state" class="form-label">State</label>
+          <input type="text" class="form-control" id="stu_state" name="stu_state" required>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="stu_pan" class="form-label">PAN Card</label>
+          <input type="file" class="form-control" id="stu_pan" name="stu_pan" accept=".pdf,.jpg,.jpeg,.png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+
+      <!-- Standard -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="standard" class="form-label">School Standard</label>
+          <select class="form-select" id="standard" name="standard" required onchange="toggleInputBox(this)">
+            <option value="" disabled selected>Select</option>
+           <option value="pre kg">Pre Kg</option>
+           <option value="lkg">Lkg</option>
+           <option value="ukg">Ukg</option>
+           <option value="first">First</option>
+                <option value="second">Second</option>
+                <option value="third">Third</option>
+                <option value="fourth">Fourth</option>
+                <option value="fifth">Fifth</option>
+                <option value="sixth">Sixth</option>
+                <option value="seventh">Seventh</option>
+                <option value="eighth">Eighth</option>
+                <option value="ninth">Ninth</option>
+                <option value="tenth">Tenth</option>
+                <option value="eleventh">Eleventh</option>
+                <option value="twelfth">Twelfth</option>
+          </select>
+          <div class="text-danger"></div>
+        </div>
+        <!-- Transfer Certificate Upload -->
+  <div class="col-md-4"  id="transferCertificate" style="display: none;">
+    <label for="transfercertificate" class="form-label">Transfer Certificate</label>
+    <input type="file" class="form-control" id="transfercertificate" name="transfercertificate" accept=".pdf,.jpg,.jpeg,.png">
+    <div class="text-danger"></div>
 </div>
-<!------------------------------------------------------------------------------------------------------------------->
- <div class="row">
-    <div class="col-md-4">
-    <label for="standard" class="form-label ">School Standard</label>
-    <select id="standard" class="form-select text-dark p-3" name="standard" onchange="toggleInputBox(this)">
-      <option selected disabled>Select</option>
-      <option value="Pre Kg">Pre Kg</option>
-      <option value="Lkg">Lkg</option>
-      <option value="ukg">Ukg</option>
-      <option value="first">First</option>
-      <option value="second">Second</option>
-      <option value="third">Third</option>
-      <option value="fourth">Fourth</option>
-      <option value="fifth">Fifth</option>
-      <option value="sixth">Sixth</option>
-      <option value="seventh">Seventh</option>
-      <option value="eighth">Eighth</option>
-      <option value="ninth">Ninth</option>
-      <option value="tenth">Tenth</option>
-      <option value="eleventh">Eleventh</option>
-      <option value="twelfth">Twelfth</option>
-    </select>
-  </div>
-  <div class="col-md-4">
-    <div id="transferCertificate" style="display:none;">
-      <label for="transfercertificate" class="form-label">Transfer Certificate</label>
-      <input class="form-control" type="file" id="transfercertificate"  name="transfercertificate"accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-    </div>
-    </div>
-    <div class="col-md-4">
-    <div id="markSheet" style="display:none;">
+
+<!-- Marksheet Upload -->
+<div class="col-md-4 mb-3 " id="markSheet" style="display: none;">
     <label for="marksheet" class="form-label">Marksheet</label>
-    <input class="form-control" type="file" id="marksheet" name="marksheet"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-    </div>
+    <input type="file" class="form-control" id="marksheet" name="marksheet" accept=".pdf,.jpg,.jpeg,.png">
+    <div class="text-danger"></div>
+</div>
   </div>
-<!---------------------------------------------------------------------------------------------------------------------------------------------->
-    <!---Submit button -->
-    <div class="col-lg-12 mt-5 text-center">
-    <button type="submit" name="submit" class="btn btn-primary">Save</button>
-    <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button>
-    </div>  
-    
+
+      <!-- Submit Buttons -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary text-white">Submit</button>
+        <button type="reset" class="btn btn-danger text-white">Reset</button>
+      </div>
+
     </form>
-    </div>
   </div>
+</div>
 
+<!-- Validation Script -->
 <script>
-  function toggleInputBox(selectElement) {
-    const inputBox = document.getElementById("transferCertificate");
-    const additionalBox = document.getElementById("markSheet");
+  document.getElementById("enrollmentForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    let valid = true;
+    const form = e.target;
+    const fields = form.querySelectorAll("input, select");
+    
+    // Clear old errors
+    form.querySelectorAll(".text-danger").forEach(el => el.textContent = "");
 
-    const transferInput = document.getElementById("transfercertificate");
-    const marksheetInput = document.getElementById("marksheet");
+    fields.forEach(field => {
+      const errorDiv = field.parentElement.querySelector(".text-danger");
+      if (field.hasAttribute("required") && !field.value.trim()) {
+        errorDiv.textContent = "This field is required.";
+        valid = false;
+      } else if (field.name === "stu_email" && field.value) {
+        const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!pattern.test(field.value)) {
+          errorDiv.textContent = "Enter a valid email.";
+          valid = false;
+        }
+      } else if (field.name === "stu_mobile" && field.value) {
+        if (!/^\d{10}$/.test(field.value)) {
+          errorDiv.textContent = "Enter 10-digit mobile number.";
+          valid = false;
+        }
+      } else if (field.name === "stu_pincode" && field.value) {
+        if (!/^\d{6}$/.test(field.value)) {
+          errorDiv.textContent = "Enter 6-digit pincode.";
+          valid = false;
+        }
+      } else if (field.type === "file" && field.hasAttribute("required") && field.files.length === 0) {
+        errorDiv.textContent = "Please upload a file.";
+        valid = false;
+      }
+    });
 
-    const requiresTransfer = [
-      "ukg", "first", "second", "third", "fourth", "fifth",
-      "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
-    ];
-
-    const requiresAdditional = ["eleventh", "twelfth"];
-
-    const selectedValue = selectElement.value.toLowerCase();
-
-    // Toggle Transfer Certificate
-    if (requiresTransfer.includes(selectedValue)) {
-      inputBox.style.display = "block";
-      transferInput.setAttribute("required", "required");
-    } else {
-      inputBox.style.display = "none";
-      transferInput.removeAttribute("required");
+    if (valid) {
+      alert("Form submitted successfully!");
+      // form.submit(); // Uncomment this line when ready to submit to backend
     }
+  });
 
-    // Toggle Marksheet
-    if (requiresAdditional.includes(selectedValue)) {
-      additionalBox.style.display = "block";
-      marksheetInput.setAttribute("required", "required");
-    } else {
-      additionalBox.style.display = "none";
-      marksheetInput.removeAttribute("required");
-    }
+
+
+
+function toggleInputBox(selectElement) {
+  const inputBox = document.getElementById("transferCertificate");
+  const additionalBox = document.getElementById("markSheet");
+
+  const transferInput = document.getElementById("transfercertificate");
+  const marksheetInput = document.getElementById("marksheet");
+
+  const requiresTransfer = [
+    "ukg", "first", "second", "third", "fourth", "fifth",
+    "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
+  ];
+
+  const requiresAdditional = ["eleventh", "twelfth"];
+
+  const selectedValue = selectElement.value.toLowerCase();
+
+  // Toggle Transfer Certificate
+  if (requiresTransfer.includes(selectedValue)) {
+    inputBox.style.display = "block";
+    transferInput.setAttribute("required", "required");
+  } else {
+    inputBox.style.display = "none";
+    transferInput.removeAttribute("required");
   }
+
+  // Toggle Marksheet
+  if (requiresAdditional.includes(selectedValue)) {
+    additionalBox.style.display = "block";
+    marksheetInput.setAttribute("required", "required");
+  } else {
+    additionalBox.style.display = "none";
+    marksheetInput.removeAttribute("required");
+  }
+}
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

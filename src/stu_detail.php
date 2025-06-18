@@ -1,135 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>School</title>
-    <!-- plugins:css -->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="assets/vendors/feather/feather.css">
-    <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-  </head>
-  <body>
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-    <!-- partial -->
-      <div class="container-fluid page-body-wrapper ">
-      <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <ul class="nav position-fixed">
-    <li class="nav-item">
-      <a class="nav-link" href="./index.php">
-        <i class="bi bi-graph-up-arrow menu-icon"></i>
-            <span class="menu-title">Dashboard</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-        <i class="bi bi-person-fill menu-icon"></i>
-        <span class="menu-title">Admin</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-basic">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-        <i class="bi bi-people-fill menu-icon"></i>
-        <span class="menu-title">Teachers</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="form-elements">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-        <i class="bi bi-mortarboard-fill menu-icon"></i>
-        <span class="menu-title">Student</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="tables">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="bi  bi-bar-chart-fill menu-icon"></i>
-        <span class="menu-title">Classes</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./section.php">Sections</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-        <i class="bi bi-bus-front menu-icon"></i>
-        <span class="menu-title">Transport</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="auth">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Buses </a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title"> Report</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="error">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Emp Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-     <a class="nav-link" href="./login.php">
-        <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
-        <span class="menu-title">Logout</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Bootstrap & Icons -->
+   <link href="../asset./css/style_stu.css" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<style type="text/css">
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f9;
+    }
+    .sidebar {
+      width: 250px;
+      background: #343a40;
+      position: fixed;
+      height: 100%;
+      padding-top: 20px;
+      transition: all 0.3s ease;
+    }
+    .sidebar.collapsed {
+      margin-left: -250px;
+    }
+    .sidebar a {
+      color: #fff;
+      padding: 15px 20px;
+      display: block;
+      text-decoration: none;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background: #00d4ff;
+      color: #000;
+    }
+    .main {
+      margin-left: 250px;
+      transition: all 0.3s ease;
+      padding: 20px;
+    }
+    .main.expanded {
+      margin-left: 0;
+    }
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card-box {
+      padding: 20px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .toggle-btn {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        position: absolute;
+        z-index: 1000;
+      }
+      .toggle-btn {
+        display: inline-block;
+      }
+    }
+    </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h5 class="text-center text-white mb-4">Student Panel</h5>
+    <a href="#" class="active"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="./stu_detail.php"><i class="bi bi-person me-2"></i>Student Details</a>
+    <a href="syllabus_view.php"><i class="bi bi-book me-2"></i></i> Syllabus</a>
+    <a href="#"><i class="bi bi-calendar2-check me-2"></i>Question</a>
+    <a href="stu_payment.php"><i class="bi bi-cash me-2"></i> Payments</a>
+    <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main" id="mainContent">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light mb-4">
+      <div class="container-fluid">
+        <button class="btn btn-outline-dark toggle-btn" id="toggleBtn"><i class="bi bi-list"></i></button>
+        <h5 class="ms-3 mb-0">Student Dashboard</h5>
+      </div>
+    </nav>
+
+    <!-- Welcome Section -->
+    <!-- <div class="alert alert-info">
+      Welcome back, <strong>Aaliya Raja</strong>! | Class: 8th | Roll No: ST20252788
+    </div> -->
 
 <?php
 include "conn.php";
@@ -212,12 +176,31 @@ if (!empty($search_id)) {
     </div>
 
 
+   
+  <!-- Bootstrap and JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const toggleBtn = document.getElementById("toggleBtn");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.getElementById("mainContent");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+      main.classList.toggle("expanded");
+    });
+  </script>
+</body>
+</html>
+
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 
 
 
-?>
+
+
+
 
 
 

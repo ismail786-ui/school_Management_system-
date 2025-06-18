@@ -1,12 +1,8 @@
-<?php
-include './conn.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Student Question</title>
+  <title>Student Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Bootstrap & Icons -->
@@ -76,12 +72,12 @@ include './conn.php';
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <h5 class="text-center text-white mb-4">Student Panel</h5>
-    <a href="#" class="active"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="#" class=""><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
     <a href="./stu_detail.php"><i class="bi bi-person me-2"></i>Student Details</a>
-    <a href="syllabus_view.php"><i class="bi bi-book me-2"></i></i> Syllabus</a>
-    <a href="ques_view.php"><i class="bi bi-calendar2-check me-2"></i>Question</a>
+    <a href="./syllabus_view.php"><i class="bi bi-book me-2"></i></i> Syllabus</a>
+    <a href="./ques_view.php"><i class="bi bi-calendar2-check me-2"></i>Question</a>
     <a href="./stu_payment.php"><i class="bi bi-cash me-2"></i> Payments</a>
-    <a href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+    <a href="login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
   <!-- Main Content -->
@@ -94,71 +90,58 @@ include './conn.php';
       </div>
     </nav>
 
-  
+    <!-- Welcome Section -->
+    <div class="alert alert-info">
+      Welcome back, <strong>Aaliya Raja</strong>! | Class: 8th | Roll No: ST20252788
+    </div>
 
-<?php
-// Database connection
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-4">
+        <div class="card-box bg-success">
+          <h5>95%</h5>
+          <p>Attendance</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-box bg-primary">
+          <h5>₹2,000</h5>
+          <p>Last Payment</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-box bg-warning text-dark">
+          <h5>2</h5>
+          <p>Books Issued</p>
+        </div>
+      </div>
+    </div>
 
-include "./conn.php";
-
-// Fetch all question paper records
-$sql = "SELECT * FROM question_papers";
-$result = mysqli_query($conn, $sql);
-?>
-
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Model Question Papers </h2>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="table-secondary text-center">
-        <tr>
-          <th>Question_ID</th>
-          <th>Class Name</th>
-          <th>Subject</th>
-          <th>Year</th>
-          <th>Download</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <?php if (mysqli_num_rows($result) > 0): ?>
-          <?php while ($row = mysqli_fetch_assoc($result)): ?>
-            <tr>
-              <td><?= $row['q_id']; ?></td>
-              <td><?= $row['q_class_name']; ?></td>
-              <td><?= $row['q_subject_name']; ?></td>
-              <td><?= $row['q_year']; ?></td>
-              <td>
-                <a href="question_papers/<?= $row['q_files']; ?>" target="_blank" class="btn btn-primary ">Download</a>
-              </td>
-            </tr>
-          <?php endwhile; ?>
-        <?php else: ?>
-          <tr>
-            <td colspan="5">No records found</td>
-          </tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
+    <!-- Events and Homework -->
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card p-3">
+          <h5>📅 Upcoming Events</h5>
+          <ul>
+            <li>Math Test - 20 June</li>
+            <li>Science Fair - 25 June</li>
+            <li>Sports Day - 01 July</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="card p-3">
+          <h5>📘 Homework Due</h5>
+          <ul>
+            <li>English Essay - 18 June</li>
+            <li>Math Worksheet - 19 June</li>
+            <li>Science Project - 21 June</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-<!------------------------------------------------------------------------------------------------------------------------------->
-
-
-   
   <!-- Bootstrap and JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -173,56 +156,3 @@ $result = mysqli_query($conn, $sql);
   </script>
 </body>
 </html>
-
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<!-------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   

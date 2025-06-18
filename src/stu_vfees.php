@@ -205,10 +205,11 @@ $result = mysqli_query($conn, $sql);
               <td><?= $row['balance_amount']; ?></td>
               <td><?= $row['total_paid']; ?></td> 
               <td><?= $row['newbalance']; ?></td>
-              <td>      
+              <td>     
   <a class="btn btn-success text-white mb-1" href="stu_ufees.php?sfedit=<?= $row['sf_id']; ?>">Edit</a>
   <a class="btn btn-danger text-white mb-1" href="stu_dfees.php?sfdelete=<?= $row['sf_id']; ?>" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
-  <a class="btn btn-info text-white mb-1" href="invoice.php?sf_id=<?= $row['sf_id']; ?>" target="_blank">Invoice</a>
+  <a class="btn btn-secondary text-white mb-1" href="invoice.php?sf_id=<?= $row['sf_id']; ?>" target="_blank">Invoice</a>
+  <a class="btn btn-warning text-white mb-1" href="send_invoice.php?sf_id=<?= $row['sf_id']; ?>">Send Email</a>
 </td>
             </tr>
           <?php endwhile; ?>

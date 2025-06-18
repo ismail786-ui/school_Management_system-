@@ -231,7 +231,7 @@ if (isset($_POST['submit_fees'])) {
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="student_name" class="form-label">Name</label>
-            <input type="text" class="form-control p-2" id="student_name" name="student_name"  value="<?= $student_name ?>">
+            <input type="text" class="form-control p-2" id="student_name" name="student_name"  value="<?= $student_name ?>" Required>
           </div>
           <div class="col-md-6">
             <label for="student_email" class="form-label">Email</label>

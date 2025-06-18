@@ -3,29 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Staff Panel - Sidebar</title>
+  <title>Responsive Staff Panel</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f8f9fa;
     }
 
     .sidebar {
       width: 250px;
-      height: 100vh;
       background-color: #0d6efd;
       color: white;
+      height: 100vh;
       position: fixed;
       top: 0;
       left: 0;
       padding-top: 60px;
-      transition: all 0.3s;
+      transition: 0.3s;
     }
 
     .sidebar a {
@@ -40,27 +40,20 @@
     }
 
     .sidebar.collapsed {
-      width: 70px;
-    }
-
-    .sidebar.collapsed .nav-link-text {
-      display: none;
+      transform: translateX(-100%);
     }
 
     .main {
       margin-left: 250px;
       padding: 20px;
-      transition: all 0.3s;
+      transition: margin-left 0.3s;
     }
 
-    .main.collapsed {
-      margin-left: 70px;
+    .main.full {
+      margin-left: 0;
     }
 
     .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
       height: 60px;
       width: 100%;
       background-color: #0d6efd;
@@ -68,7 +61,10 @@
       display: flex;
       align-items: center;
       padding: 0 20px;
-      z-index: 999;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1050;
     }
 
     .toggle-btn {
@@ -78,8 +74,19 @@
       font-size: 1.5rem;
     }
 
-    .dashboard-cards .card {
-      border-radius: 12px;
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.show {
+        transform: translateX(0);
+        z-index: 1040;
+      }
+
+      .main {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
@@ -87,27 +94,25 @@
 
   <!-- Topbar -->
   <div class="topbar">
-    <button class="toggle-btn me-3" onclick="toggleSidebar()">
-      <i class="bi bi-list"></i>
-    </button>
-    <div><strong>School Staff Panel</strong></div>
+    <button class="toggle-btn me-3" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    <div><strong>Staff Panel</strong></div>
   </div>
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <a href="#"><i class="bi bi-house-door me-2"></i><span class="nav-link-text">Dashboard</span></a>
-    <a href="#"><i class="bi bi-people me-2"></i><span class="nav-link-text">Students</span></a>
-    <a href="#"><i class="bi bi-calendar-week me-2"></i><span class="nav-link-text">Timetable</span></a>
-    <a href="#"><i class="bi bi-bell me-2"></i><span class="nav-link-text">Notices</span></a>
-    <a href="#"><i class="bi bi-box-arrow-right me-2"></i><span class="nav-link-text">Logout</span></a>
+    <a href="#"><i class="bi bi-house-door me-2"></i> Dashboard</a>
+    <a href="sections.php"><i class="bi bi-people me-2"></i> Sections</a>
+    <a href="sub_staff.php"><i class="bi bi-book me-2"></i> Subject</a>
+    <a href="#"><i class="bi bi-calendar-week me-2"></i> Timetable</a>
+    <a href=""><i class="bi bi-bell me-2"></i>Staff Form</a>
+    <a href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
   <!-- Main Content -->
-  <div class="main" id="mainContent">
-    <div class="container-fluid mt-4 pt-4">
-
-      <div class="row dashboard-cards g-4">
-        <div class="col-md-4">
+  <div class="main pt-5" id="mainContent">
+    <div class="container-fluid pt-4">
+      <div class="row g-4 mt-3">
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="card text-bg-primary p-3">
             <div class="card-body">
               <h5 class="card-title">7 Classes</h5>
@@ -115,7 +120,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="card text-bg-success p-3">
             <div class="card-body">
               <h5 class="card-title">132 Students</h5>
@@ -123,7 +128,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="card text-bg-warning p-3 text-dark">
             <div class="card-body">
               <h5 class="card-title">96% Attendance</h5>
@@ -145,13 +150,19 @@
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Toggle Script -->
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('collapsed');
-      document.getElementById('mainContent').classList.toggle('collapsed');
+      const sidebar = document.getElementById("sidebar");
+      const main = document.getElementById("mainContent");
+
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle("show");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        main.classList.toggle("full");
+      }
     }
   </script>
 </body>
