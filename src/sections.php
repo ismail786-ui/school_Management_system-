@@ -117,7 +117,7 @@
   <div class="sidebar" id="sidebar">
     <a href="./emp_d.php"><i class="bi bi-house-door me-2"></i><span class="nav-link-text">Dashboard</span></a>
     <a href="./sections.php"><i class="bi bi-people me-2"></i><span class="nav-link-text">Sections</span></a>
-    <a href="#"><i class="bi bi-people me-2"></i><span class="nav-link-text">Subject</span></a>
+    <a href="sub_staff1.php"><i class="bi bi-people me-2"></i><span class="nav-link-text">Subject</span></a>
     <a href="#"><i class="bi bi-calendar-week me-2"></i><span class="nav-link-text">Timetable</span></a>
     <a href="#"><i class="bi bi-bell me-2"></i><span class="nav-link-text">Notices</span></a>
     <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i><span class="nav-link-text">Logout</span></a>
@@ -143,7 +143,6 @@
   <div class="main" id="mainContent">
     <div class="container-fluid">
       <h2 class="text-center searchtop ">Search Standard</h2>
-
       <!-- Search Form -->
       <form method="GET" class="row justify-content-center mb-4">
         <div class="col-5 col-sm-6 col-md-4 mb-2">
@@ -153,12 +152,11 @@
           <button type="submit" class="btn btn-primary w-100">Search</button>
         </div>
       </form>
-
       <!-- Table Result -->
       <?php if (!empty($classData)) { ?>
         <div class="table-responsive">
           <table class="table table-bordered table-striped text-center">
-            <thead class="table-warning ">
+            <thead class="table-success">
               <tr>
                 <th>Class ID</th>
                 <th>Class Name</th>

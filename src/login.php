@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
     if ($user_type === 'employee') {
         $sql = "SELECT * FROM employee_login WHERE emp_user='$username' AND emp_pass='$password'";
         $result = $conn->query($sql);
-        if ($result->num_rows == 1) {
+        if ($result->num_rows === 1) {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = 'employee';
             header("Location: emp_d.php");
@@ -39,7 +39,7 @@ if (isset($_POST['login'])) {
         if ($result->num_rows === 1) {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = 'student';
-            header("Location:studentd.php");
+            header("Location: studentd.php");
             exit;
         } else {
             echo "<script>alert('Invalid Student');</script>";
@@ -50,69 +50,105 @@ if (isset($_POST['login'])) {
 $conn->close();
 ?>
 
-
-<!-- HTML START -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #eaf2ff;
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 320px;
+      border: none;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    /* Username & password: dark border */
+    .form-control {
+      border: 1px solid #212529 !important;
+    }
+
+    /* Remove blue outline on input focus */
+    .form-control:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      border-color: #212529 !important;
+    }
+
+    /* Colored radio buttons when selected */
+    .btn-check:checked + .btn-outline-primary {
+      background-color: #0d6efd;
+      color: white;
+    }
+
+    .btn-check:checked + .btn-outline-success {
+      background-color: #198754;
+      color: white;
+    }
+
+    .btn-check:checked + .btn-outline-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    /* Remove glow/border for all buttons */
+    .btn {
+      box-shadow: none !important;
     }
   </style>
 </head>
 <body>
-  <div class="container mt-5 d-flex justify-content-center">
-    <div class="bg-white p-5 shadow rounded" style="width: 100%; max-width: 400px;">
-      <h3 class="text-center mb-4">Login</h3>
-      <!-- Radio buttons -->
+  <div class="container vh-100 d-flex align-items-center justify-content-center">
+    <div class="card">
+      <h4 class="text-center mb-4">Login</h4>
+
       <form method="POST" action="">
-         <div class="mb-4">
-    <label class="form-label">User Type</label><br>
-    <div class="form-check form-check-inline mt-3">
-      <input class="form-check-input" type="radio" name="user_type" id="admin" value="admin" required>
-      <label class="form-check-label" for="admin">Admin</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="user_type" id="employee" value="employee">
-      <label class="form-check-label" for="employee">Employee</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="user_type" id="student" value="student">
-      <label class="form-check-label" for="student">Student</label>
-    </div>
-  </div>
+        <!-- User Type -->
+        <div class="mb-3">
+          <label class="form-label d-block mb-2">User Type</label>
+          <div class="text-center">
+            <input type="radio" class="btn-check" name="user_type" id="admin" value="admin" required>
+            <label class="btn btn-outline-primary me-2" for="admin">Admin</label>
+
+            <input type="radio" class="btn-check" name="user_type" id="employee" value="employee" required>
+            <label class="btn btn-outline-success me-2" for="employee">Employee</label>
+
+            <input type="radio" class="btn-check" name="user_type" id="student" value="student" required>
+            <label class="btn btn-outline-danger" for="student">Student</label>
+          </div>
+        </div>
 
         <!-- Username -->
-       <div class="mb-3">
-    <label for="admin_username" class="form-label">Username</label>
-    <input type="text" class="form-control" id="admin_username" name="admin_username" required>
-  </div>
+        <div class="mb-3">
+          <label for="admin_username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="admin_username" name="admin_username" required>
+        </div>
 
-         <!-- Password -->
-  <div class="mb-3">
-    <label for="admin_password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="admin_password" name="admin_password" required>
-  </div>
-        <!-- Submit Button -->
-         <div class="d-grid">
-    <button type="submit" name="login" class="btn btn-primary">Login</button>
-  </div>
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="admin_password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="admin_password" name="admin_password" required>
+        </div>
+
+        <!-- Login Button -->
+        <div class="d-flex mb-3 justify-content-center">
+          <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
+        </div>
+
+        <!-- Sign Up -->
+        <div class="text-center">
+          <small>Don't have an account? <a href="#" class="text-decoration-none">Sign up</a></small>
+        </div>
       </form>
     </div>
   </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
