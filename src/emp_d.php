@@ -36,7 +36,8 @@
     }
 
     .sidebar a:hover {
-      background-color: #0b5ed7;
+      background-color: #00d4ff;
+      color:rgb(0,0,0);
     }
 
     .sidebar.collapsed {
@@ -100,12 +101,12 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <a href="#"><i class="bi bi-house-door me-2"></i> Dashboard</a>
+    <a href="emp_d.php"><i class="bi bi-house-door me-2"></i> Dashboard</a>
     <a href="sections.php"><i class="bi bi-people me-2"></i> Sections</a>
     <a href="sub_staff1.php"><i class="bi bi-book me-2"></i> Subject</a>
     <a href="./staff_timetable.php"><i class="bi bi-calendar-week me-2"></i> Timetable</a>
     <a href="./staff_attendance.php"><i class="bi bi-bell me-2"></i>Attendance</a>
-    <a href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+    <a href="login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
   <!-- Main Content -->

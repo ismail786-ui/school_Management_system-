@@ -52,7 +52,8 @@
     }
 
     .sidebar a:hover {
-      background-color: #0b5ed7;
+      background-color: #00d4ff;
+      color: rgb(0, 0, 0);
     }
 
     .main {
@@ -102,15 +103,14 @@
 </div>
 
 <!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <a href="./emp_d.php"><i class="bi bi-house-door me-2"></i>Dashboard</a>
-  <a href="./sections.php"><i class="bi bi-people me-2"></i>Sections</a>
-  <a href="#"><i class="bi bi-journal-text me-2"></i>Subject</a>
-  <a href="#"><i class="bi bi-calendar-week me-2"></i>Timetable</a>
-  <a href="#"><i class="bi bi-bell me-2"></i>Notices</a>
-  <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
-</div>
-
+  <div class="sidebar" id="sidebar">
+    <a href="emp_d.php"><i class="bi bi-house-door me-2"></i> Dashboard</a>
+    <a href="sections.php"><i class="bi bi-people me-2"></i> Sections</a>
+    <a href="sub_staff1.php"><i class="bi bi-book me-2"></i> Subject</a>
+    <a href="./staff_timetable.php"><i class="bi bi-calendar-week me-2"></i> Timetable</a>
+    <a href="./staff_attendance.php"><i class="bi bi-bell me-2"></i>Attendance</a>
+    <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+  </div>
 <!-- PHP Section -->
 <?php
 include 'conn.php';
@@ -145,26 +145,39 @@ if (!empty($search_term)) {
 
 <!-- Main Content -->
 <div class="main" id="mainContent">
-  <div class="container">
-    <h2 class="text-center mt- mb-3">Subject Details</h2>
+  <div class="container-fluid">
+    
+    <h2 class="text-center mb-3 mt-2 card-title ">Subject Details</h2>
 
     <!-- Search Form -->
-    <form method="GET" class="mb-4">
-      <div class="row justify-content-center">
-        <div class="col-12 col-sm-8 col-md-4 mb-2">
-          <input type="text" name="search_term" class="form-control" placeholder="Search ID or Name" value="<?= htmlspecialchars($search_term) ?>">
+    <form method="GET" class="d-flex justify-content-center flex-wrap gap-2 mt-2 ">
+      
+        <div class="col-auto">
+          <input 
+            type="text" 
+            name="search_term" 
+            class="form-control form-control-sm px-3 py-2" 
+          style="max-width: 180px;" 
+            placeholder="ID or Name" 
+            value="<?= htmlspecialchars($search_term) ?>"
+            required
+          >
         </div>
-        <div class="col-6 col-sm-4 col-md-2 mb-2">
-          <button type="submit" class="btn btn-primary w-100">Search</button>
+        <div class="col-auto">
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-sm px-4 py-2">Search</button>
         </div>
       </div>
     </form>
 
+
+
     <!-- Table -->
     <?php if ($show_table): ?>
-      <div class="table-responsive">
+      <div class="table-responsive mt-4">
         <table class="table table-bordered table-hover text-center align-middle">
-          <thead class="table-success">
+          <thead class="table-primary">
             <tr>
               <th>Employee Name</th>
               <th>Subject Name</th>

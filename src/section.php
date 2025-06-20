@@ -180,12 +180,12 @@ if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
 ?>
 
 
-  <div class="container-fluid mt-5 justify-content-center">
-    <h2 class="text-center mb-4">Search Sections</h2>
+  <div class="container-fluid mt-5 ">
+    <h2 class="text-center mb-4">Sections</h2>
 
     <!-- Search Form -->
     <form method="GET" class="row mb-4 justify-content-center">
-      <div class="col-lg-2 mr-5">
+      <div class="col-lg-2">
         <input type="text" name="search_name" class="form-control" placeholder="Enter Class Name (e.g., First, Second)" required>
       </div>
       <div class="col-md-2">
@@ -197,7 +197,7 @@ if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
     <?php if (!empty($classData)) { ?>
       <div class="table-responsive">
         <table class="table table-bordered table-striped text-center">
-          <thead class="table-dark">
+          <thead class="table-primary">
             <tr>
               <th>Class ID</th>
               <th>Class Name</th>

@@ -37,7 +37,8 @@
     }
 
     .sidebar a:hover {
-      background-color: #0b5ed7;
+      background-color:#00d4ff;
+      color:rgb(0,0,0);
     }
 
     .sidebar.collapsed {
@@ -79,12 +80,8 @@
       font-size: 1.5rem;
     }
 
-    .dashboard-cards .card {
-      border-radius: 12px;
-    }
-
     .searchtop {
-      margin-top: 90px;
+      margin-top: 60px;
     }
 
     @media (max-width: 768px) {
@@ -114,13 +111,13 @@
   </div>
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="./emp_d.php"><i class="bi bi-house-door me-2"></i><span class="nav-link-text">Dashboard</span></a>
-    <a href="./sections.php"><i class="bi bi-people me-2"></i><span class="nav-link-text">Sections</span></a>
-    <a href="sub_staff1.php"><i class="bi bi-people me-2"></i><span class="nav-link-text">Subject</span></a>
-    <a href="#"><i class="bi bi-calendar-week me-2"></i><span class="nav-link-text">Timetable</span></a>
-    <a href="#"><i class="bi bi-bell me-2"></i><span class="nav-link-text">Notices</span></a>
-    <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i><span class="nav-link-text">Logout</span></a>
+    <div class="sidebar" id="sidebar">
+    <a href="emp_d.php"><i class="bi bi-house-door me-2"></i> Dashboard</a>
+    <a href="sections.php"><i class="bi bi-people me-2"></i> Sections</a>
+    <a href="sub_staff1.php"><i class="bi bi-book me-2"></i> Subject</a>
+    <a href="./staff_timetable.php"><i class="bi bi-calendar-week me-2"></i> Timetable</a>
+    <a href="./staff_attendance.php"><i class="bi bi-bell me-2"></i>Attendance</a>
+    <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
   <?php
@@ -142,21 +139,25 @@
   <!-- Main Content -->
   <div class="main" id="mainContent">
     <div class="container-fluid">
-      <h2 class="text-center searchtop ">Search Standard</h2>
+      <h2 class="text-center searchtop">Search Standard</h2>
+
       <!-- Search Form -->
-      <form method="GET" class="row justify-content-center mb-4">
-        <div class="col-5 col-sm-6 col-md-4 mb-2">
-          <input type="text" name="search_name" class="form-control" placeholder="Enter Class Name (e.g., First)" required>
-        </div>
-        <div class="col-4 col-sm-4 col-md-2 mb-2">
-          <button type="submit" class="btn btn-primary w-100">Search</button>
-        </div>
+      <form method="GET" class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+        <input 
+          type="text" 
+          name="search_name" 
+          class="form-control form-control-sm px-3" 
+          placeholder="Enter Class Name (e.g., First)" 
+          style="max-width: 180px;" 
+          required >
+        <button type="submit" class="btn btn-primary btn-sm px-3 py-2">Search</button>
       </form>
+
       <!-- Table Result -->
       <?php if (!empty($classData)) { ?>
-        <div class="table-responsive">
+        <div class="table-responsive mt-4">
           <table class="table table-bordered table-striped text-center">
-            <thead class="table-success">
+            <thead class="table-primary">
               <tr>
                 <th>Class ID</th>
                 <th>Class Name</th>

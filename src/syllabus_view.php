@@ -1,211 +1,170 @@
-<?php
-include './conn.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Staff Panel</title>
 
-  <!-- Bootstrap & Icons -->
-   <link href="../asset./css/style_stu.css" type="text/css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<style type="text/css">
-    
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f6f9;
+      background-color: #f8f9fa;
     }
+
     .sidebar {
       width: 250px;
-      background: #343a40;
+      background-color: #0d6efd;
+      color: white;
+      height: 100vh;
       position: fixed;
-      height: 100%;
-      padding-top: 20px;
-      transition: all 0.3s ease;
+      top: 0;
+      left: 0;
+      padding-top: 60px;
+      transition: 0.3s;
     }
-    .sidebar.collapsed {
-      margin-left: -250px;
-    }
+
     .sidebar a {
-      color: #fff;
-      padding: 15px 20px;
+      color: white;
       display: block;
+      padding: 15px 20px;
       text-decoration: none;
     }
-    .sidebar a:hover, .sidebar a.active {
-      background: #00d4ff;
-      color: #000;
+
+    .sidebar a:hover {
+      background-color: #00d4ff;
+      color: black;
     }
+
+    .sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+
     .main {
       margin-left: 250px;
-      transition: all 0.3s ease;
       padding: 20px;
+      transition: margin-left 0.3s;
     }
-    .main.expanded {
+
+    .main.full {
       margin-left: 0;
     }
-    .navbar {
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    .topbar {
+      height: 60px;
+      width: 100%;
+      background-color: #0d6efd;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1050;
     }
-    .card-box {
-      padding: 20px;
-      border-radius: 10px;
-      color: #fff;
-    }
+
     .toggle-btn {
-      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
     }
+
     @media (max-width: 768px) {
       .sidebar {
-        position: absolute;
-        z-index: 1000;
+        transform: translateX(-100%);
       }
-      .toggle-btn {
-        display: inline-block;
+
+      .sidebar.show {
+        transform: translateX(0);
+        z-index: 1040;
+      }
+
+      .main {
+        margin-left: 0;
       }
     }
-    </style>
+  </style>
 </head>
 <body>
 
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="toggle-btn me-3" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    <div><strong>Student Panel</strong></div>
+  </div>
+
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <h5 class="text-center text-white mb-4">Student Panel</h5>
-    <a href="#" class="active"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
-    <a href="./stu_detail.php"><i class="bi bi-person me-2"></i>Student Details</a>
-    <a href="./syllabus_view.php"><i class="bi bi-book me-2"></i></i> Syllabus</a>
-    <a href="./ques_view.php"><i class="bi bi-calendar2-check me-2"></i>Question</a>
-    <a href="#"><i class="bi bi-cash me-2"></i> Payments</a>
-    <a href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+    <a href="studentd.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="./stu_detail.php"><i class="bi bi-person me-2"></i> Student Details</a>
+    <a href="./syllabus_view.php"><i class="bi bi-book me-2"></i> Syllabus</a>
+    <a href="./ques_view.php"><i class="bi bi-calendar2-check me-2"></i> Question</a>
+    <a href="./stu_payment.php"><i class="bi bi-cash me-2"></i> Payments</a>
+    <a href="login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
   <!-- Main Content -->
   <div class="main" id="mainContent">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light mb-4">
-      <div class="container-fluid">
-        <button class="btn btn-outline-dark toggle-btn" id="toggleBtn"><i class="bi bi-list"></i></button>
-        <h5 class="ms-3 mb-0">Student Dashboard</h5>
+    <div class="container mt-5 pt-4">
+      <h2 class="text-center mb-4">Student Syllabus</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center align-middle">
+          <thead class="table-success">
+            <tr>
+              <th>Syllabus Id</th>
+              <th>Standard</th>
+              <th>Subject</th>
+              <th>Year</th>
+              <th>File</th>
+              <th>Syllabus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              include './conn.php';
+              $query = "SELECT * FROM syllabus_table ORDER BY sy_id DESC";
+              $result = mysqli_query($conn, $query);
+              if (mysqli_num_rows($result) > 0) {
+                $count = 1;
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo "<tr>
+                          <td>{$count}</td>
+                          <td>{$row['sy_standard']}</td>
+                          <td>{$row['sy_subject']}</td>
+                          <td>{$row['sy_year']}</td>
+                          <td>{$row['sy_syllabus']}</td>
+                          <td><a class='btn btn-success' href='syllabus_papers/{$row['sy_syllabus']}' download>Download</a></td>
+                        </tr>";
+                  $count++;
+                }
+              } else {
+                echo "<tr><td colspan='6'>No syllabus found.</td></tr>";
+              }
+            ?>
+          </tbody>
+        </table>
       </div>
-    </nav>
-
-    <!-- Welcome Section -->
-    <!-- <div class="alert alert-info">
-      Welcome back, <strong>Aaliya Raja</strong>! | Class: 8th | Roll No: ST20252788
-    </div> -->
-
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Student Syllabus</h2>
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped text-center align-middle">
-        <thead class="table-success">
-          <tr>
-            <th>#</th>
-            <th>Standard</th>
-            <th>Subject</th>
-            <th>Year</th>
-            <th>File</th>
-            <th>Syllabus</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $query = "SELECT * FROM syllabus_table ORDER BY sy_id DESC";
-          $result = mysqli_query($conn, $query);
-          if (mysqli_num_rows($result) > 0) {
-            $count = 1;
-            while ($row = mysqli_fetch_assoc($result)) {
-              echo "<tr>
-                      <td>{$count}</td>
-                      <td>{$row['sy_standard']}</td>
-                      <td>{$row['sy_subject']}</td>
-                      <td>{$row['sy_year']}</td>
-                      <td>{$row['sy_syllabus']}</td>
-                      <td><a class='btn btn-success' href='syllabus_papers/{$row['sy_syllabus']}' download>Download</a></td>
-                    </tr>";
-              $count++;
-            }
-          } else {
-            echo "<tr><td colspan='6'>No syllabus found.</td></tr>";
-          }
-          ?>
-        </tbody>
-      </table>
     </div>
   </div>
 
-<!------------------------------------------------------------------------------------------------------------------------------->
-
-
-   
-  <!-- Bootstrap and JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Scripts -->
   <script>
-    const toggleBtn = document.getElementById("toggleBtn");
-    const sidebar = document.getElementById("sidebar");
-    const main = document.getElementById("mainContent");
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const main = document.getElementById("mainContent");
 
-    toggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("collapsed");
-      main.classList.toggle("expanded");
-    });
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle("show");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        main.classList.toggle("full");
+      }
+    }
   </script>
 </body>
-</html>
-
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<!-------------------------------------------------------------------------------------------------------------------------------------------------------------->
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/vendors/chart.js/chart.umd.js"></script>
-    <script src="assets/vendors/datatables.net/jquery.dataTables.js"></script>
-    <!-- <script src="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script> -->
-    <script src="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
-    <script src="assets/js/dataTables.select.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/template.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="assets/js/dashboard.js"></script>
-    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
-    <!-- End custom js for this page-->
-  </body>
 </html>

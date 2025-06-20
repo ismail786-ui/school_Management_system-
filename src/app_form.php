@@ -1,9 +1,12 @@
 <?php
 include "./conn.php";
 
-$upload_dir = "uploads/"; // make sure this folder exists and is writable
+$upload_dir = "uploads/"; // Make sure this folder exists and is writable (chmod 755 or 777)
 
 if (isset($_POST['submit'])) {
+    // Debugging print
+    // echo "<pre>"; print_r($_POST); print_r($_FILES); echo "</pre>"; exit();
+
     // FORM FIELDS
     $academic_year = $_POST['academic_year'];
     $stu_name = $_POST['stu_name'];
@@ -21,14 +24,16 @@ if (isset($_POST['submit'])) {
     $stu_admission = $_POST['stu_admission'];
     $stu_standard = $_POST['standard'];
     $stu_blood = $_POST['stu_blood'];
-    // $academic_year = $_POST['academic_year'];
+
     // UPLOAD FUNCTION
     function uploadFile($key) {
         global $upload_dir;
         if (isset($_FILES[$key]) && $_FILES[$key]['error'] === 0) {
             $filename = time() . '_' . basename($_FILES[$key]['name']);
-            move_uploaded_file($_FILES[$key]['tmp_name'], $upload_dir . $filename);
-            return $filename;
+            $targetPath = $upload_dir . $filename;
+            if (move_uploaded_file($_FILES[$key]['tmp_name'], $targetPath)) {
+                return $filename;
+            }
         }
         return '';
     }
@@ -48,21 +53,22 @@ if (isset($_POST['submit'])) {
         stu_admission, stu_standard, stu_blood,
         stu_aadhar, stu_photo, stu_community, stu_pan, stu_tc, stu_marksheet, academic_year
     ) VALUES (
-         '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender',
+        '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender',
         '$stu_address', '$stu_city', '$stu_state', '$stu_pincode', '$stu_mother', '$stu_father', '$stu_mobile',
         '$stu_admission', '$stu_standard', '$stu_blood',
-        '$file_aadhar', '$file_photo', '$file_community', '$file_pan', '$file_tc', '$file_marksheet','$academic_year'
+        '$file_aadhar', '$file_photo', '$file_community', '$file_pan', '$file_tc', '$file_marksheet', '$academic_year'
     )";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Data saved successfully.');</script>";
+        echo "<script>alert('Data saved successfully.'); window.location.href='app_form.php';</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        die("Error inserting record: " . $conn->error);
     }
 }
 
 $conn->close();
 ?>
+
 
 
 
@@ -418,7 +424,7 @@ select.form-select option {
 
       <!-- Submit Buttons -->
       <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary text-white">Submit</button>
+        <button type="submit" name="submit" class="btn btn-primary text-white">Submit</button>
         <button type="reset" class="btn btn-danger text-white">Reset</button>
       </div>
 
@@ -428,47 +434,46 @@ select.form-select option {
 
 <!-- Validation Script -->
 <script>
-  document.getElementById("enrollmentForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    let valid = true;
-    const form = e.target;
-    const fields = form.querySelectorAll("input, select");
-    
-    // Clear old errors
-    form.querySelectorAll(".text-danger").forEach(el => el.textContent = "");
+ document.getElementById("enrollmentForm").addEventListener("submit", function (e) {
+  const form = e.target;
+  let valid = true;
+  const fields = form.querySelectorAll("input, select");
 
-    fields.forEach(field => {
-      const errorDiv = field.parentElement.querySelector(".text-danger");
-      if (field.hasAttribute("required") && !field.value.trim()) {
-        errorDiv.textContent = "This field is required.";
-        valid = false;
-      } else if (field.name === "stu_email" && field.value) {
-        const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-        if (!pattern.test(field.value)) {
-          errorDiv.textContent = "Enter a valid email.";
-          valid = false;
-        }
-      } else if (field.name === "stu_mobile" && field.value) {
-        if (!/^\d{10}$/.test(field.value)) {
-          errorDiv.textContent = "Enter 10-digit mobile number.";
-          valid = false;
-        }
-      } else if (field.name === "stu_pincode" && field.value) {
-        if (!/^\d{6}$/.test(field.value)) {
-          errorDiv.textContent = "Enter 6-digit pincode.";
-          valid = false;
-        }
-      } else if (field.type === "file" && field.hasAttribute("required") && field.files.length === 0) {
-        errorDiv.textContent = "Please upload a file.";
+
+  form.querySelectorAll(".text-danger").forEach(el => el.textContent = "");
+
+  fields.forEach(field => {
+    const errorDiv = field.parentElement.querySelector(".text-danger");
+    if (field.hasAttribute("required") && !field.value.trim()) {
+      errorDiv.textContent = "This field is required.";
+      valid = false;
+    } else if (field.name === "stu_email" && field.value) {
+      const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!pattern.test(field.value)) {
+        errorDiv.textContent = "Enter a valid email.";
         valid = false;
       }
-    });
-
-    if (valid) {
-      alert("Form submitted successfully!");
-      // form.submit(); // Uncomment this line when ready to submit to backend
+    } else if (field.name === "stu_mobile" && field.value) {
+      if (!/^\d{10}$/.test(field.value)) {
+        errorDiv.textContent = "Enter 10-digit mobile number.";
+        valid = false;
+      }
+    } else if (field.name === "stu_pincode" && field.value) {
+      if (!/^\d{6}$/.test(field.value)) {
+        errorDiv.textContent = "Enter 6-digit pincode.";
+        valid = false;
+      }
+    } else if (field.type === "file" && field.hasAttribute("required") && field.files.length === 0) {
+      errorDiv.textContent = "Please upload a file.";
+      valid = false;
     }
   });
+
+  if (!valid) {
+    e.preventDefault(); 
+  }
+});
+
 
 
 

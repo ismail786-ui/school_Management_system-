@@ -1,78 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Staff Panel</title>
 
-  <!-- Bootstrap & Icons -->
-   <link href="../asset./css/style_stu.css" type="text/css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<style type="text/css">
-    
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f6f9;
+      background-color: #f8f9fa;
     }
+
     .sidebar {
       width: 250px;
-      background: #343a40;
+      background-color: #0d6efd;
+      color: white;
+      height: 100vh;
       position: fixed;
-      height: 100%;
-      padding-top: 20px;
-      transition: all 0.3s ease;
+      top: 0;
+      left: 0;
+      padding-top: 60px;
+      transition: 0.3s;
     }
-    .sidebar.collapsed {
-      margin-left: -250px;
-    }
+
     .sidebar a {
-      color: #fff;
-      padding: 15px 20px;
+      color: white;
       display: block;
+      padding: 15px 20px;
       text-decoration: none;
     }
-    .sidebar a:hover, .sidebar a.active {
-      background: #00d4ff;
-      color: #000;
+
+    .sidebar a:hover {
+      background-color: #00d4ff;
+      color:rgb(0,0,0);
     }
+
+    .sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+
     .main {
       margin-left: 250px;
-      transition: all 0.3s ease;
       padding: 20px;
+      transition: margin-left 0.3s;
     }
-    .main.expanded {
+
+    .main.full {
       margin-left: 0;
     }
-    .navbar {
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    .topbar {
+      height: 60px;
+      width: 100%;
+      background-color: #0d6efd;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1050;
     }
-    .card-box {
-      padding: 20px;
-      border-radius: 10px;
-      color: #fff;
-    }
+
     .toggle-btn {
-      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
     }
+
     @media (max-width: 768px) {
       .sidebar {
-        position: absolute;
-        z-index: 1000;
+        transform: translateX(-100%);
       }
-      .toggle-btn {
-        display: inline-block;
+
+      .sidebar.show {
+        transform: translateX(0);
+        z-index: 1040;
+      }
+
+      .main {
+        margin-left: 0;
       }
     }
-    </style>
+  </style>
 </head>
 <body>
 
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="toggle-btn me-3" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    <div><strong>Student Panel</strong></div>
+  </div>
+
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <h5 class="text-center text-white mb-4">Student Panel</h5>
-    <a href="#" class=""><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="studentd.php" class=""><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
     <a href="./stu_detail.php"><i class="bi bi-person me-2"></i>Student Details</a>
     <a href="./syllabus_view.php"><i class="bi bi-book me-2"></i></i> Syllabus</a>
     <a href="./ques_view.php"><i class="bi bi-calendar2-check me-2"></i>Question</a>
@@ -80,79 +109,25 @@
     <a href="login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
-  <!-- Main Content -->
-  <div class="main" id="mainContent">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light mb-4">
-      <div class="container-fluid">
-        <button class="btn btn-outline-dark toggle-btn" id="toggleBtn"><i class="bi bi-list"></i></button>
-        <h5 class="ms-3 mb-0">Student Dashboard</h5>
-      </div>
-    </nav>
 
-    <!-- Welcome Section -->
-    <div class="alert alert-info">
-      Welcome back, <strong>Aaliya Raja</strong>! | Class: 8th | Roll No: ST20252788
-    </div>
 
-    <!-- Stats Cards -->
-    <div class="row g-4 mb-4">
-      <div class="col-md-4">
-        <div class="card-box bg-success">
-          <h5>95%</h5>
-          <p>Attendance</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card-box bg-primary">
-          <h5>₹2,000</h5>
-          <p>Last Payment</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card-box bg-warning text-dark">
-          <h5>2</h5>
-          <p>Books Issued</p>
-        </div>
-      </div>
-    </div>
+ 
 
-    <!-- Events and Homework -->
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="card p-3">
-          <h5>📅 Upcoming Events</h5>
-          <ul>
-            <li>Math Test - 20 June</li>
-            <li>Science Fair - 25 June</li>
-            <li>Sports Day - 01 July</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-6 mb-4">
-        <div class="card p-3">
-          <h5>📘 Homework Due</h5>
-          <ul>
-            <li>English Essay - 18 June</li>
-            <li>Math Worksheet - 19 June</li>
-            <li>Science Project - 21 June</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Bootstrap JS -->
 
-  <!-- Bootstrap and JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Toggle Script -->
   <script>
-    const toggleBtn = document.getElementById("toggleBtn");
-    const sidebar = document.getElementById("sidebar");
-    const main = document.getElementById("mainContent");
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const main = document.getElementById("mainContent");
 
-    toggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("collapsed");
-      main.classList.toggle("expanded");
-    });
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle("show");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        main.classList.toggle("full");
+      }
+    }
   </script>
 </body>
 </html>
