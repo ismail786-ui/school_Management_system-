@@ -239,7 +239,7 @@ if (isset($_POST['emp_submit'])) {
  
  <div class="container mt-5 mb-5 ">
     <div class="bg-white p-5 shadow rounded text-black">
-      <h2 class="mb-4 text-center">Employee Enrollment</h2>
+      <h2 class="mb-4 text-center">Teachers Enrollment</h2>
       <form action="" method="POST" enctype="multipart/form-data" class="formcolor">
        <!-- Name and Email -->
         <div class="row mb-3">

@@ -1,74 +1,51 @@
 <?php
+include 'conn.php'; // Include your database connection
 
-include './conn.php';
+$message = "";
 
-// Fetch records
-$sql = "SELECT * FROM employee_form";
-$result = $conn->query($sql);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $bus_number      = $_POST['bus_number'];
+    $plate_number    = $_POST['plate_number'];
+    $from_route      = $_POST['from_route'];
+    $to_route        = $_POST['to_route'];
+    $driver_name     = $_POST['driver_name'];
+    $conductor_name  = $_POST['conductor_name'];
+    $driver_contact  = $_POST['driver_contact'];
+    $capacity        = $_POST['capacity'];
+
+    // Basic validation (optional)
+    if (!preg_match('/^\d{10}$/', $driver_contact)) {
+        $message = "<div class='alert alert-danger'>Driver contact must be a 10-digit number.</div>";
+    } else {
+        // Insert into database
+        $sql = "INSERT INTO bus_form (
+                    bus_number, plate_number, from_route, to_route,
+                    driver_name, conductor_name, driver_contact, capacity
+                ) VALUES (
+                    '$bus_number', '$plate_number', '$from_route', '$to_route',
+                    '$driver_name', '$conductor_name', '$driver_contact', '$capacity'
+                )";
+
+        if (mysqli_query($conn, $sql)) {
+            $message = "<div class='alert alert-success'>Transport details saved successfully.</div>";
+        } else {
+            $message = "<div class='alert alert-danger'>Error: " . mysqli_error($conn) . "</div>";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Employee Records</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        img {
-            max-width: 100px;
-            height: auto;
-        }
-
-        .editbutton.button {
-            padding: 5px 10px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .editbutton.button:hover {
-            background-color: #218838;
-        }
-          .deletebutton.button {
-            padding: 5px 10px;
-            background-color:rgb(231, 0, 0);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .deletebutton.button:hover{
-            background-color:rgb(168, 33, 33);
-        }
-        
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-}
-table {
-    white-space: nowrap;
-}
-    </style>
-</head>
-<body>
-
-
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>School</title>
     <!-- plugins:css -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -86,7 +63,20 @@ table {
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <style type='text/css'> 
+      .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
+    .chart-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+    }
+  </style>
   </head>
+
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
     <div class="container-scroller">
@@ -140,11 +130,9 @@ table {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="">Students</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Staffs</a></li>
+         
         </ul>
       </div>
     </li>
@@ -157,36 +145,25 @@ table {
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="bi bi-mortarboard-fill menu-icon"></i>
-        <span class="menu-title">Student</span>
+        <span class="menu-title">Students</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
 
-        </ul>
-      </div>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="bi  bi-bar-chart-fill menu-icon"></i>
-        <span class="menu-title">Classes</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
         </ul>
       </div>
     </li>
@@ -198,7 +175,7 @@ table {
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href=""> Buses </a></li>
         </ul>
       </div>
     </li>
@@ -210,11 +187,12 @@ table {
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Emp Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
       </div>
     </li>
@@ -226,68 +204,79 @@ table {
     </li>
   </ul>
 </nav>
-<!--------------------------------------------------Retrive Form---------------------------------------------------------------------->
-<div class="container">
-     <h2 class="text-center">Teachers Details </h2>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>DOB</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Pincode</th>
-                    <th>Mother Name</th>
-                    <th>Father Name</th>
-                    <th>Mobile</th>
-                     <th>Major</th>
-                    <th>Photo</th>               
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                            <td>" . $row["id"] . "</td>
-                            <td>" . $row["emp_Name"] . "</td>
-                            <td>" . $row["emp_email"] . "</td>
-                            <td>" . $row["emp_dob"] . "</td>
-                            <td>" . $row["emp_age"] . "</td>
-                            <td>" . $row["emp_gender"] . "</td>
-                            <td>" . $row["emp_address"] . "</td>
-                            <td>" . $row["emp_city"] . "</td>
-                            <td>" . $row["emp_state"] . "</td>
-                            <td>" . $row["emp_pincode"] . "</td>
-                            <td>" . $row["emp_mother"] . "</td>
-                            <td>" . $row["emp_father"] . "</td>
-                            <td>" . $row["emp_mobile"] . "</td>
-                            <td>" . $row["emp_major"] . "</td>
-                            <td><img src='staff_files/" . $row["emp_photo"] . "' alt='Photo' width='80'></td>                  
-                            <td>
-                                <a class='button editbutton' href='staff_uform.php?update=" . $row["id"] . "'>Edit</a>
-                                <a class='button deletebutton' href='staff_udelete.php?delete=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
-                            </td>
-                        </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='20'>No records found.</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <div class="container mt-4">
+    <h3 class="mb-4 text-center">🚌 School Bus Form</h3>
+    <div class="row justify-content-center">
+    <div class="col-md-6">
+    <?php if (isset($message)) echo $message; ?>
     </div>
+    </div>
+
+  <div class="d-flex justify-content-center">
+    <form method="POST" class="p-4 border rounded shadow-sm bg-light" style="max-width: 720px; width: 100%;">
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Bus Number</label>
+          <input type="text" name="bus_number" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Plate Number</label>
+          <input type="text" name="plate_number" class="form-control" required>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">From Route</label>
+          <input type="text" name="from_route" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">To Route</label>
+          <input type="text" name="to_route" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Driver Name</label>
+          <input type="text" name="driver_name" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Conductor Name</label>
+          <input type="text" name="conductor_name" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Driver Contact</label>
+          <input type="text" name="driver_contact" class="form-control" placeholder="10-digit mobile" pattern="\d{10}" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Student Capacity</label>
+          <input type="number" name="capacity" class="form-control" min="1" required>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center gap-2">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="bus_view.php" class="btn btn-outline-warning">View</a>
+      </div>
+    </form>
+  </div>
 </div>
 
 
 
+<!--------------------------------------------------------------------------------------------------------->
+        
+
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
 
 
 
@@ -310,7 +299,16 @@ table {
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -332,6 +330,5 @@ table {
     <script src="assets/js/dashboard.js"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
-
-</body>
+  </body>
 </html>

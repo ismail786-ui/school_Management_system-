@@ -112,20 +112,15 @@ $conn->close();
 
       <form method="POST" action="">
         <!-- User Type -->
-        <div class="mb-3">
-          <label class="form-label d-block mb-2">User Type</label>
-          <div class="text-center">
-            <input type="radio" class="btn-check" name="user_type" id="admin" value="admin" required>
-            <label class="btn btn-outline-primary me-2" for="admin">Admin</label>
-
-            <input type="radio" class="btn-check" name="user_type" id="employee" value="employee" required>
-            <label class="btn btn-outline-success me-2" for="employee">Employee</label>
-
-            <input type="radio" class="btn-check" name="user_type" id="student" value="student" required>
-            <label class="btn btn-outline-danger" for="student">Student</label>
-          </div>
-        </div>
-
+       <div class="mb-3">
+  <label for="user_type" class="form-label">Role</label>
+  <select class="form-select" id="user_type" name="user_type" required>
+    <option value="" disabled selected>Select Role</option>
+    <option value="admin">Admin</option>
+    <option value="employee">Employee</option>
+    <option value="student">Student</option>
+  </select>
+</div>
         <!-- Username -->
         <div class="mb-3">
           <label for="admin_username" class="form-label">Username</label>

@@ -1,74 +1,26 @@
 <?php
+include 'conn.php';
 
-include './conn.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Your attendance saving logic here (if any)
 
-// Fetch records
-$sql = "SELECT * FROM employee_form";
-$result = $conn->query($sql);
+    // After submitting, force reload without POST data
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Employee Records</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        img {
-            max-width: 100px;
-            height: auto;
-        }
-
-        .editbutton.button {
-            padding: 5px 10px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .editbutton.button:hover {
-            background-color: #218838;
-        }
-          .deletebutton.button {
-            padding: 5px 10px;
-            background-color:rgb(231, 0, 0);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .deletebutton.button:hover{
-            background-color:rgb(168, 33, 33);
-        }
-        
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-}
-table {
-    white-space: nowrap;
-}
-    </style>
-</head>
-<body>
-
-
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>School</title>
     <!-- plugins:css -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -77,6 +29,7 @@ table {
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -85,7 +38,7 @@ table {
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="assets/images/favicon.png"/>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -140,11 +93,8 @@ table {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
         </ul>
       </div>
     </li>
@@ -157,36 +107,24 @@ table {
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="bi bi-mortarboard-fill menu-icon"></i>
-        <span class="menu-title">Student</span>
+        <span class="menu-title">Students</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
-
-        </ul>
-      </div>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="bi  bi-bar-chart-fill menu-icon"></i>
-        <span class="menu-title">Classes</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
+          <li class="nav-item"><a class="nav-link" href="">Attendance</a>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
       </div>
     </li>
@@ -210,11 +148,12 @@ table {
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Emp Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
       </div>
     </li>
@@ -226,64 +165,92 @@ table {
     </li>
   </ul>
 </nav>
-<!--------------------------------------------------Retrive Form---------------------------------------------------------------------->
-<div class="container">
-     <h2 class="text-center">Teachers Details </h2>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>DOB</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Pincode</th>
-                    <th>Mother Name</th>
-                    <th>Father Name</th>
-                    <th>Mobile</th>
-                     <th>Major</th>
-                    <th>Photo</th>               
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                            <td>" . $row["id"] . "</td>
-                            <td>" . $row["emp_Name"] . "</td>
-                            <td>" . $row["emp_email"] . "</td>
-                            <td>" . $row["emp_dob"] . "</td>
-                            <td>" . $row["emp_age"] . "</td>
-                            <td>" . $row["emp_gender"] . "</td>
-                            <td>" . $row["emp_address"] . "</td>
-                            <td>" . $row["emp_city"] . "</td>
-                            <td>" . $row["emp_state"] . "</td>
-                            <td>" . $row["emp_pincode"] . "</td>
-                            <td>" . $row["emp_mother"] . "</td>
-                            <td>" . $row["emp_father"] . "</td>
-                            <td>" . $row["emp_mobile"] . "</td>
-                            <td>" . $row["emp_major"] . "</td>
-                            <td><img src='staff_files/" . $row["emp_photo"] . "' alt='Photo' width='80'></td>                  
-                            <td>
-                                <a class='button editbutton' href='staff_uform.php?update=" . $row["id"] . "'>Edit</a>
-                                <a class='button deletebutton' href='staff_udelete.php?delete=" . $row["id"] . "' onclick=\"return confirm('Are you sure you want to delete this record?');\">Delete</a>
-                            </td>
-                        </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='20'>No records found.</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+
+
+  <!-- Main Content -->
+<div class="col-md-10">
+        <div class="container mt-4">
+          <h3 class="mb-4">Mark Attendance</h3>
+          <form method="GET" action="">
+            <div class="row mb-4">
+              <div class="col-md-2">
+                <label for="search_class" class="form-label">Select Class:</label>
+              <input type="text" name="search_class" id="search_class" class="form-control"
+ placeholder="e.g. 11-A" required value="">
+
+
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+          <?php
+          if (isset($_GET['search_class'])) {
+            $class = $_GET['search_class'];
+            $result = $conn->query("SELECT * FROM students WHERE class='$class'");
+            if ($result->num_rows > 0) {
+          ?>
+<form method="POST" action="student_submitattendance.php">
+  <input type="hidden" name="staff_name" value="Shankar">
+  <input type="hidden" name="class" value="<?= htmlspecialchars($class) ?>">
+
+  <div class="mb-3">
+    <label><strong>Date:</strong></label>
+    <input type="date" name="attendance_date" id="attendance_date" class="form-control w-25" required>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Student Name</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>OT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php $i = 0; while ($row = $result->fetch_assoc()) { ?>
+        <tr>
+          <td class="text-start">
+            <input type="hidden" name="students[<?= $i ?>][id]" value="<?= $row['id'] ?>">
+            <input type="hidden" name="students[<?= $i ?>][name]" value="<?= $row['name'] ?>">
+            <?= htmlspecialchars($row['name']) ?>
+          </td>
+          <td>
+            <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Present" class="attendance-checkbox" checked data-index="<?= $i ?>">
+
+          </td>
+          <td>
+           <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Absent" class="attendance-checkbox" data-index="<?= $i ?>">
+
+          </td>
+          <td>
+            <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="OT" class="attendance-checkbox" data-index="<?= $i ?>">
+
+          </td>
+        </tr>
+        <?php $i++; } ?>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-end mt-3">
+    <a href="student_viewattendance.php" class="btn btn-warning text-white">View Attendance</a>
+    <button type="submit" class="btn btn-success text-white">Submit Attendance</button>
+  </div>
+</form>
+          <?php
+            } else {
+              echo "<div class='alert alert-danger'>No students found for class <strong>" . htmlspecialchars($class) . "</strong>.</div>";
+            }
+          }
+          ?>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 
@@ -298,19 +265,34 @@ table {
 
 
 
+  
 
 
 
 
+<script>
+  // This ensures only one checkbox per row can be checked
+  document.querySelectorAll('.attendance-checkbox').forEach((checkbox) => {
+    checkbox.addEventListener('click', function () {
+      const index = this.getAttribute('data-index');
+      const allCheckboxes = document.querySelectorAll('.attendance-checkbox[data-index="' + index + '"]');
+      allCheckboxes.forEach(cb => {
+        if (cb !== this) cb.checked = false;
+      });
+    });
+  });
+
+  // Optional: Auto-fill today's date
+  const today = new Date().toISOString().split('T')[0];
+  const dateInput = document.getElementById("attendance_date");
+  if (dateInput) {
+    dateInput.setAttribute("min", today);
+    dateInput.setAttribute("max", today);
+    dateInput.value = today;
+  }
+</script>
 
 
-
-
-
-
-
-
-    
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -332,6 +314,11 @@ table {
     <script src="assets/js/dashboard.js"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
-
-</body>
+  </body>
 </html>
+
+
+
+
+
+
