@@ -67,8 +67,17 @@ table {
 </head>
 <body>
 
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>School</title>
     <!-- plugins:css -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -77,6 +86,7 @@ table {
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -85,7 +95,17 @@ table {
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="assets/images/favicon.png"/>
+    
+     <style type="text/css">
+    .text-danger {
+      font-size: 0.875rem;
+    }
+    select.form-select,
+    select.form-select option {
+  color: #212529 !important; /* Bootstrap's default dark color */
+}
+  </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -140,11 +160,8 @@ table {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Syllabus</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
         </ul>
       </div>
     </li>
@@ -157,36 +174,24 @@ table {
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="bi bi-mortarboard-fill menu-icon"></i>
-        <span class="menu-title">Student</span>
+        <span class="menu-title">Students</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
-
-        </ul>
-      </div>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="bi  bi-bar-chart-fill menu-icon"></i>
-        <span class="menu-title">Classes</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Sections</a></li>
+          <li class="nav-item"><a class="nav-link" href="student_attendance.php">Attendance</a>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
       </div>
     </li>
@@ -198,7 +203,7 @@ table {
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./bus_form.php"> Buses </a></li>
         </ul>
       </div>
     </li>
@@ -210,11 +215,12 @@ table {
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Stud Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Emp Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
       </div>
     </li>

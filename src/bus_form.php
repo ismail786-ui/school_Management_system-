@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -62,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-    <style type='text/css'> 
+    <link rel="shortcut icon" href="assets/images/favicon.png"/>
+      <style type='text/css'> 
       .card {
       border: none;
       border-radius: 12px;
@@ -75,8 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       border-radius: 12px;
     }
   </style>
-  </head>
+  
 
+  </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
     <div class="container-scroller">
@@ -130,9 +131,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">Staffs</a></li>
-         
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
         </ul>
       </div>
     </li>
@@ -160,10 +160,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
+          <li class="nav-item"><a class="nav-link" href="">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
-
         </ul>
       </div>
     </li>
@@ -204,6 +203,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </li>
   </ul>
 </nav>
+
+
+
+
 <!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <div class="container mt-4">
     <h3 class="mb-4 text-center">🚌 School Bus Form</h3>
