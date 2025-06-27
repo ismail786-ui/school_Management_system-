@@ -59,7 +59,7 @@ $conn->close();
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #f8f9fa;
+      background-color:rgba(222, 228, 234, 0.97);
       font-family: 'Segoe UI', sans-serif;
     }
 
@@ -80,6 +80,11 @@ $conn->close();
     .form-control:focus {
       outline: none !important;
       box-shadow: none !important;
+      border-color: #212529 !important;
+    }
+    .form-select:focus{
+      outline:none !important;
+       box-shadow: none !important;
       border-color: #212529 !important;
     }
 

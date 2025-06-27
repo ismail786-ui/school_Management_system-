@@ -136,7 +136,7 @@ table {
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -165,6 +165,8 @@ table {
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
+    
         </ul>
       </div>
     </li>
@@ -207,7 +209,7 @@ table {
           <li class="nav-item"> <a class="nav-link" href="">Student View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -242,12 +244,9 @@ table {
                     <th>Mother Name</th>
                     <th>Father Name</th>
                     <th>Mobile</th>
-                    <th>Aadhar</th>
                     <th>Photo</th>
                     <th>Admission Date</th>
                     <th>Standard</th>
-                    <th>Transfer Certificate</th>
-                    <th>Marksheet</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -269,12 +268,9 @@ table {
             <td>" . $row["stu_mother"] . "</td>
             <td>" . $row["stu_father"] . "</td>
             <td>" . $row["stu_mobile"] . "</td>
-            <td><a href='uploads/" . $row["stu_aadhar"] . "' download>Download</a></td>
             <td><img src='uploads/" . $row["stu_photo"] . "' alt='Photo' width='80'></td>
             <td>" . $row["stu_admission"] . "</td>
             <td>" . $row["stu_standard"] . "</td>
-            <td><a href='uploads/" . $row["stu_tc"] . "' download>Download</a></td>
-            <td><a href='uploads/" . $row["stu_marksheet"] . "' download>Download</a></td>
             <td><a href='app_uform.php?update=" . $row["stu_id"] . "' class='btn btn-success text-white  editbutton'>Edit</a>
             <a href='app_dform.php?delete=" . $row["stu_id"] . "' class='btn btn-danger deletebutton text-white'>Delete</a></td>
 

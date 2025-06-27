@@ -18,10 +18,10 @@
   <!-- Filter Form -->
   <form method="GET" class="mb-4">
     <div class="row g-3 align-items-center">
-      <div class="col-md-4">
+      <div class="col-md-2">
         <input type="text" name="class_filter" class="form-control" placeholder="Enter Class (e.g. 10-A)" value="<?= isset($_GET['class_filter']) ? htmlspecialchars($_GET['class_filter']) : '' ?>">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-2">
         <input type="date" name="date_filter" class="form-control" value="<?= isset($_GET['date_filter']) ? $_GET['date_filter'] : '' ?>">
       </div>
       <div class="col-md-4 d-flex gap-2">

@@ -109,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -151,7 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -165,8 +167,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </li>
   </ul>
 </nav>
-
-
   <!-- Main Content -->
 <div class="col-md-10">
         <div class="container mt-4">
@@ -176,9 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="col-md-2">
                 <label for="search_class" class="form-label">Select Class:</label>
               <input type="text" name="search_class" id="search_class" class="form-control"
- placeholder="e.g. 11-A" required value="">
-
-
+              placeholder="e.g. 11-A" required value="">
               </div>
               <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -202,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="table-responsive">
     <table class="table table-bordered text-center">
-      <thead class="table-dark">
+      <thead class="table-primary">
         <tr>
           <th>Student Name</th>
           <th>Present</th>
@@ -252,20 +250,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
 
 

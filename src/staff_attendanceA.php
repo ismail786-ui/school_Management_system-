@@ -1,36 +1,18 @@
 <?php
-include 'conn.php'; // Include your database connection
+include 'conn.php';
 
-$message = "";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $staff_id = $_POST['staff_id'];
+    $status = $_POST['status'];
+    $date = date('Y-m-d');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $bus_number      = $_POST['bus_number'];
-    $plate_number    = $_POST['plate_number'];
-    $from_route      = $_POST['from_route'];
-    $to_route        = $_POST['to_route'];
-    $driver_name     = $_POST['driver_name'];
-    $conductor_name  = $_POST['conductor_name'];
-    $driver_contact  = $_POST['driver_contact'];
-    $capacity        = $_POST['capacity'];
-
-    // Basic validation (optional)
-    if (!preg_match('/^\d{10}$/', $driver_contact)) {
-        $message = "<div class='alert alert-danger'>Driver contact must be a 10-digit number.</div>";
+    $check = mysqli_query($conn, "SELECT * FROM staff_attendance WHERE staff_id='$staff_id' AND date='$date'");
+    if (mysqli_num_rows($check) == 0) {
+        $query = "INSERT INTO staff_attendance (staff_id, date, status) VALUES ('$staff_id', '$date', '$status')";
+        mysqli_query($conn, $query);
+        $msg = "Attendance marked successfully!";
     } else {
-        // Insert into database
-        $sql = "INSERT INTO bus_form (
-                    bus_number, plate_number, from_route, to_route,
-                    driver_name, conductor_name, driver_contact, capacity
-                ) VALUES (
-                    '$bus_number', '$plate_number', '$from_route', '$to_route',
-                    '$driver_name', '$conductor_name', '$driver_contact', '$capacity'
-                )";
-
-        if (mysqli_query($conn, $sql)) {
-            $message = "<div class='alert alert-success'>Transport details saved successfully.</div>";
-        } else {
-            $message = "<div class='alert alert-danger'>Error: " . mysqli_error($conn) . "</div>";
-        }
+        $msg = "Already marked for today.";
     }
 }
 ?>
@@ -63,20 +45,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png"/>
-      <style type='text/css'> 
-      .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style type="text/css">
+    .chart-container {
+      width: 400px;
+      height: 400px;
+      margin: auto;
     }
-    .chart-card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
     }
   </style>
-  
-
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -147,7 +128,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Attendance</a></li>
+          
         </ul>
       </div>
     </li>
@@ -161,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Attendance</a>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
@@ -175,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href=""> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href="bus_form.php"> Buses </a></li>
         </ul>
       </div>
     </li>
@@ -190,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
@@ -209,73 +191,149 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-    <div class="container mt-4">
-    <h3 class="mb-4 text-center">🚌 School Bus Form</h3>
-    <div class="row justify-content-center">
-    <div class="col-md-6">
-    <?php if (isset($message)) echo $message; ?>
-    </div>
-    </div>
 
-  <div class="d-flex justify-content-center">
-    <form method="POST" class="p-4 border rounded shadow-sm bg-light" style="max-width: 720px; width: 100%;">
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Bus Number</label>
-          <input type="text" name="bus_number" class="form-control" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Plate Number</label>
-          <input type="text" name="plate_number" class="form-control" required>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">From Route</label>
-          <input type="text" name="from_route" class="form-control" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">To Route</label>
-          <input type="text" name="to_route" class="form-control" required>
-        </div>
+
+
+
+
+<!-- Main content centered -->
+<div class="d-flex justify-content-center align-items-start vw-100 vh-100 bg-light">
+  <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
+    <h2 class="card-title text-center mb-3">Mark Attendance</h2>
+
+    <?php if (isset($msg)) echo "<div class='alert alert-info text-center'>$msg</div>"; ?>
+
+    <form method="POST" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="staff_id" class="form-label">Staff ID</label>
+        <input type="text" name="staff_id" id="staff_id" class="form-control" required>
+        <div class="invalid-feedback">Please enter Staff ID.</div>
       </div>
 
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Driver Name</label>
-          <input type="text" name="driver_name" class="form-control" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Conductor Name</label>
-          <input type="text" name="conductor_name" class="form-control" required>
-        </div>
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select name="status" id="status" class="form-select" required>
+          <option class="text-dark" disabled>Select</option>
+          <option class="text-dark">Present</option>
+          <option class="text-dark">Absent</option>
+          <option class="text-dark">Leave</option>
+        </select>
+        <div class="invalid-feedback">Please select a status.</div>
       </div>
 
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Driver Contact</label>
-          <input type="text" name="driver_contact" class="form-control" placeholder="10-digit mobile" pattern="\d{10}" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Student Capacity</label>
-          <input type="number" name="capacity" class="form-control" min="1" required>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center gap-2">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="bus_view.php" class="btn  text-white btn-warning">View</a>
+      <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-primary w-50 me-2">Mark</button>
+        <a href="staff_attendanceAV.php" class="btn btn-success w-50 text-white">View</a>
       </div>
     </form>
   </div>
 </div>
 
+<!-- Bootstrap JS -->
+<script>
+  // Bootstrap validation
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>
 
 
-<!--------------------------------------------------------------------------------------------------------->
-        
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+  <div class="d-sm-flex justify-content-center">
+    <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span> -->
+  </div>
+</footer>
+          <!-- partial -->
+</div>
         </div>
         <!-- main-panel ends -->
       </div>
@@ -291,29 +349,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

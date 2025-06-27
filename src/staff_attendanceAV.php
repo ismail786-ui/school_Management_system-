@@ -1,39 +1,14 @@
 <?php
-include 'conn.php'; // Include your database connection
+include 'conn.php';
 
-$message = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $bus_number      = $_POST['bus_number'];
-    $plate_number    = $_POST['plate_number'];
-    $from_route      = $_POST['from_route'];
-    $to_route        = $_POST['to_route'];
-    $driver_name     = $_POST['driver_name'];
-    $conductor_name  = $_POST['conductor_name'];
-    $driver_contact  = $_POST['driver_contact'];
-    $capacity        = $_POST['capacity'];
-
-    // Basic validation (optional)
-    if (!preg_match('/^\d{10}$/', $driver_contact)) {
-        $message = "<div class='alert alert-danger'>Driver contact must be a 10-digit number.</div>";
-    } else {
-        // Insert into database
-        $sql = "INSERT INTO bus_form (
-                    bus_number, plate_number, from_route, to_route,
-                    driver_name, conductor_name, driver_contact, capacity
-                ) VALUES (
-                    '$bus_number', '$plate_number', '$from_route', '$to_route',
-                    '$driver_name', '$conductor_name', '$driver_contact', '$capacity'
-                )";
-
-        if (mysqli_query($conn, $sql)) {
-            $message = "<div class='alert alert-success'>Transport details saved successfully.</div>";
-        } else {
-            $message = "<div class='alert alert-danger'>Error: " . mysqli_error($conn) . "</div>";
-        }
-    }
-}
+$result = mysqli_query($conn, "
+  SELECT staff_attendance.*, staff_timetable.staff_name 
+  FROM staff_attendance 
+  JOIN staff_timetable ON staff_attendance.staff_id = staff_timetable.staff_id 
+  ORDER BY staff_attendance.date DESC
+");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -63,20 +38,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png"/>
-      <style type='text/css'> 
-      .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-    }
-    .chart-card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-    }
-  </style>
-  
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .attendance-card {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        .attendance-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -147,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -161,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Attendance</a>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
@@ -175,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href=""> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href="bus_form.php"> Buses </a></li>
         </ul>
       </div>
     </li>
@@ -190,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
@@ -205,135 +178,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </li>
   </ul>
 </nav>
-
-
-
-
-<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-    <div class="container mt-4">
-    <h3 class="mb-4 text-center">🚌 School Bus Form</h3>
-    <div class="row justify-content-center">
-    <div class="col-md-6">
-    <?php if (isset($message)) echo $message; ?>
+   
+</head>
+<body>
+<div class="container mt-5 ">
+    <!-- Header with Button -->
+    <div class="card bg-primary">
+        <div class="d-flex justify-content-between align-items-center my-2 mx-3">
+        <h2 class=" card-title text-white p-1">Staff Attendance Report</h2>
+        <a href="staff_attendanceA.php" class="btn btn-warning px-3 ">Add Attendance</a>
     </div>
     </div>
 
-  <div class="d-flex justify-content-center">
-    <form method="POST" class="p-4 border rounded shadow-sm bg-light" style="max-width: 720px; width: 100%;">
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Bus Number</label>
-          <input type="text" name="bus_number" class="form-control" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Plate Number</label>
-          <input type="text" name="plate_number" class="form-control" required>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">From Route</label>
-          <input type="text" name="from_route" class="form-control" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">To Route</label>
-          <input type="text" name="to_route" class="form-control" required>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Driver Name</label>
-          <input type="text" name="driver_name" class="form-control" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Conductor Name</label>
-          <input type="text" name="conductor_name" class="form-control" required>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Driver Contact</label>
-          <input type="text" name="driver_contact" class="form-control" placeholder="10-digit mobile" pattern="\d{10}" required>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Student Capacity</label>
-          <input type="number" name="capacity" class="form-control" min="1" required>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center gap-2">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="bus_view.php" class="btn  text-white btn-warning">View</a>
-      </div>
-    </form>
-  </div>
+    <!-- Attendance Cards -->
+    <div class="row g-3 mt-3">
+        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+            <div class="col-md-4">
+                <div class="card attendance-card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <?= htmlspecialchars($row['staff_name']) ?>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Date:</strong> <?= htmlspecialchars($row['date']) ?></p>
+                        <p><strong>Staff ID:</strong> <?= htmlspecialchars($row['staff_id']) ?></p>
+                        <p><strong>Status:</strong> 
+                          <span class="badge <?= $row['status'] === 'Present' ? 'bg-success' : 'bg-danger' ?>">
+                            <?= htmlspecialchars($row['status']) ?>
+                          </span>
+                        </p>
+                        <p><strong>Timestamp:</strong> <?= htmlspecialchars($row['timestamp']) ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
 </div>
 
-
-
-<!--------------------------------------------------------------------------------------------------------->
-        
-
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/vendors/chart.js/chart.umd.js"></script>
-    <script src="assets/vendors/datatables.net/jquery.dataTables.js"></script>
-    <!-- <script src="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script> -->
-    <script src="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
-    <script src="assets/js/dataTables.select.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/template.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="assets/js/dashboard.js"></script>
-    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
-    <!-- End custom js for this page-->
-  </body>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

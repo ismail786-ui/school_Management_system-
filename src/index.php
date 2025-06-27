@@ -1,4 +1,14 @@
+<?php
+include 'conn.php';
 
+// Count queries
+$students = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM student_admission"))['total'];
+$teachers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM 	employee_form"))['total'];
+$staff = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM class_master"))['total'];
+
+// Pass to JavaScript
+$data = [$students, $teachers, $staff];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,16 +38,17 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png"/>
-      <style type='text/css'> 
-      .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style type="text/css">
+    .chart-container {
+      width: 400px;
+      height: 400px;
+      margin: auto;
     }
-    .chart-card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
     }
   </style>
   </head>
@@ -110,6 +121,7 @@
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -123,7 +135,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Attendance</a>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
@@ -152,7 +164,8 @@
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -196,7 +209,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } 
-$conn->close();
+
 ?>
         <h2 class="text-primary"><?php echo  $row["row_count"] ?></h2>
       </div>
@@ -216,7 +229,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } 
-$conn->close();
+
 ?>
         <h2 class="text-success"><?php echo  $row['emp_count'] ?></h2>
       </div>
@@ -234,82 +247,53 @@ if ($result->num_rows > 0) {
 } 
 $conn->close();
 ?>
-        <h2 class="text-danger"><?php echo  $row["sch_class"] ?></h2>
+        <h2 class="text-warning"><?php echo  $row["sch_class"] ?></h2>
+      </div>
+    </div>
+  </div>
+  <!----------------------------------------------------------------------------->
+
+ <div class="container mt-5">
+    <!-- <h4 class="mb-4 text-center">Admin Panel</h4> -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card text-center p-4">
+          <h5 class="mb-3">Overall Count</h5>
+          <div class="chart-container">
+            <canvas id="circleChart"></canvas>
+          </div>
+          <div class="mt-5">
+            <span class="badge bg-primary">Students: <?= $students ?></span>
+            <span class="badge bg-success">Teachers: <?= $teachers ?></span>
+            <span class="badge bg-warning ">Classes: <?= $staff ?></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Overview Chart -->
-  <div class="chart-card">
-    <h4 class="mb-4 text-center">📈 Monthly User Activity</h4>
-    <canvas id="overviewChart" height="100"></canvas>
-  </div>
-</div>
 
-<script>
-const ctx = document.getElementById('overviewChart').getContext('2d');
-
-new Chart(ctx, {
-  data: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        type: 'bar',
-        label: 'Students',
-        data: [100, 120, 140, 160, 180, 190],
-        backgroundColor: '#4e73df',
-        stack: 'users'
+   <script>
+    const ctx = document.getElementById('circleChart').getContext('2d');
+    const circleChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Students', 'Teachers', 'Classes'],
+        datasets: [{
+          data: <?= json_encode($data) ?>,
+          backgroundColor: ['#0d6efd', '#198754', '#ffc107'], // blue, green, yellow
+          borderWidth: 1
+        }]
       },
-      {
-        type: 'bar',
-        label: 'Employees',
-        data: [30, 32, 33, 35, 38, 40],
-        backgroundColor: '#1cc88a',
-        stack: 'users'
-      },
-      {
-        type: 'bar',
-        label: 'Admins',
-        data: [5, 6, 7, 8, 8, 9],
-        backgroundColor: '#e74a3b',
-        stack: 'users'
-      },
-      {
-        type: 'line',
-        label: 'Total Users',
-        data: [135, 158, 180, 203, 226, 239],
-        borderColor: '#f6c23e',
-        backgroundColor: 'rgba(246, 194, 62, 0.1)',
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: '#f6c23e',
-        yAxisID: 'y'
+      options: {
+        cutout: '60%',
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: { enabled: true }
+        }
       }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom'
-      },
-      tooltip: {
-        mode: 'index',
-        intersect: false
-      }
-    },
-    scales: {
-      x: {
-        stacked: true
-      },
-      y: {
-        stacked: true,
-        beginAtZero: true
-      }
-    }
-  }
-});
-</script>
+    });
+  </script>
 
 </div>
 
@@ -318,7 +302,7 @@ new Chart(ctx, {
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
   <div class="d-sm-flex justify-content-center">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span>
+    <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span> -->
   </div>
 </footer>
           <!-- partial -->

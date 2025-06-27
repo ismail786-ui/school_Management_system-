@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+      <!-- Add Bootstrap Icons CSS if not already included -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
@@ -69,7 +71,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -98,6 +100,7 @@
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -140,7 +143,8 @@
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="">Fees View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -172,16 +176,14 @@ $result = mysqli_query($conn, $sql);
       <thead class="table-secondary text-center">
         <tr>
           <th>ID</th>
+          <th>Stu_id</th>
           <th>Name</th>
-          <th>Email</th>
           <th>Standard</th>
           <th>Fees Type</th>
           <th>Payment Date</th>
           <th>Payment Mode</th>
           <th>Amount (₹)</th>
           <th>Student Paid (₹)</th>
-          <th>Balance (Old) (₹)</th>
-          <th>Total Paid (₹)</th>
           <th>Remaining Amount (₹)</th>
           <th>Actions</th>
         </tr>
@@ -191,22 +193,25 @@ $result = mysqli_query($conn, $sql);
           <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <tr>
               <td><?= $row['sf_id']; ?></td>
+               <td><?= $row['stu_id']; ?></td>
               <td><?= htmlspecialchars($row['student_name']); ?></td>
-              <td><?= htmlspecialchars($row['student_email']); ?></td>
               <td><?= $row['standard']; ?></td>
               <td><?= $row['fees_type']; ?></td>
               <td><?= $row['payment_date']; ?></td>
               <td><?= $row['payment_mode']; ?></td>
               <td><?= $row['amount']; ?></td>
               <td><?= $row['student_paid']; ?></td>
-              <td><?= $row['balance_amount']; ?></td>
-              <td><?= $row['total_paid']; ?></td> 
               <td><?= $row['newbalance']; ?></td>
               <td>     
-  <a class="btn btn-success text-white mb-1" href="stu_ufees.php?sfedit=<?= $row['sf_id']; ?>">Edit</a>
-  <a class="btn btn-danger text-white mb-1" href="stu_dfees.php?sfdelete=<?= $row['sf_id']; ?>" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
-  <a class="btn btn-secondary text-white mb-1" href="invoice.php?sf_id=<?= $row['sf_id']; ?>" target="_blank">Invoice</a>
-  <a class="btn btn-warning text-white mb-1" href="send_invoice.php?sf_id=<?= $row['sf_id']; ?>">Send Email</a>
+ 
+
+<!-- Action Buttons with Icons Only -->
+  <a class="btn btn-success text-white mb-1" href="stu_ufees.php?sfedit=<?= $row['sf_id']; ?>" title="Edit">
+  <i class="bi bi-pencil-square"></i></a>
+  <a class="btn btn-primary text-white mb-1" href="invoice.php?sf_id=<?= $row['sf_id']; ?>" target="_blank" title="View Invoice">
+  <i class="bi bi-receipt"></i></a>
+  <a class="btn btn-warning text-white mb-1" href="send_invoice.php?sf_id=<?= $row['sf_id']; ?>" title="Send Email">
+  <i class="bi bi-envelope-fill"></i></a>
 </td>
             </tr>
           <?php endwhile; ?>

@@ -61,6 +61,9 @@ if (isset($_POST['update_fees'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>School</title>
     <!-- plugins:css -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -69,6 +72,7 @@ if (isset($_POST['update_fees'])) {
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -77,15 +81,12 @@ if (isset($_POST['update_fees'])) {
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-    <style rel="stylesheet">
-    body {
-       background-color: #f0f2f5; /* light gray background */
-    }
+    <link rel="shortcut icon" href="assets/images/favicon.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </style>
   </head>
   <body>
-<!--------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------navbar start--------------------------------------------------------------------->
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -97,7 +98,7 @@ if (isset($_POST['update_fees'])) {
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success m-2 '>Application Form</h4>
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -105,7 +106,9 @@ if (isset($_POST['update_fees'])) {
         <h2><i class="bi bi-person-circle menu-icon"></i></h2>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="./login.php">
+          <!-- <a href="./login.php" class="dropdown-item">
+          <i class="bi bi-person-fill"></i>Admin</a> -->
+          <a class="dropdown-item text-dark" href="./login.php">
           <i class="bi bi-box-arrow-right"></i> Logout </a>
         </div>
       </li>
@@ -122,9 +125,9 @@ if (isset($_POST['update_fees'])) {
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="index.php">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
+               <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
@@ -135,11 +138,8 @@ if (isset($_POST['update_fees'])) {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Classes</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
         </ul>
       </div>
     </li>
@@ -151,37 +151,26 @@ if (isset($_POST['update_fees'])) {
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="bi bi-mortarboard-fill menu-icon"></i>
-        <span class="menu-title">Student</span>
+        <span class="menu-title">Students</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Fees</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">View Form</a></li>
-
-        </ul>
-      </div>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="bi  bi-bar-chart-fill menu-icon"></i>
-        <span class="menu-title">Classes</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Section</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
       </div>
     </li>
@@ -193,116 +182,129 @@ if (isset($_POST['update_fees'])) {
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href="bus_form.php"> Buses </a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-     <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+      <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title"> Report</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="./login.php">
+     <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>
     </li>
   </ul>
 </nav>
+
+
 <!----------------------------------------------------------------------------------------------------------->
+<div class="container mt-5 vh-100">
+  <?php 
+  include 'conn.php';
 
-<div class="container mt-5">
-<?php 
-include 'conn.php';
+  if (isset($_GET['sfedit'])) {
+      $id = intval($_GET['sfedit']); // sanitize input
 
-if (isset($_GET['sfedit'])) {
-    $id = intval($_GET['sfedit']); // sanitize input
+      $sql = "SELECT * FROM student_fees WHERE sf_id = $id";
+      $result = mysqli_query($conn, $sql);
 
-    $sql = "SELECT * FROM student_fees WHERE sf_id = $id";
-    $result = mysqli_query($conn, $sql);
+      if (mysqli_num_rows($result) > 0) {
+          while($row = mysqli_fetch_assoc($result)) {
+  ?>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="text-center mb-4">Update Fees Form</h2>
+      <form method="POST" action="" class="border p-4 rounded bg-white shadow-sm">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Name</label>
+            <input type="text" name="student_name" class="form-control" value="<?= $row['student_name']; ?>" required>
+          </div>
+          <div class="col-md-6">
+            <label>Email</label>
+            <input type="email" name="student_email" class="form-control" value="<?= $row['student_email']; ?>" required>
+          </div>
+        </div>
 
-    if ( mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            // your form output goes here
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Standard</label>
+            <input type="text" name="standard" class="form-control" value="<?= $row['standard']; ?>" required>
+          </div>
+          <div class="col-md-6">
+            <label>Fees Type</label>
+            <input type="text" name="fees_type" class="form-control" value="<?= $row['fees_type']; ?>" required>
+          </div>
+        </div>
 
-?>
-<h3 class="text-center mb-4">Update Fees Payment</h3>
-<form method="POST" action="">
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label>Name</label>
-      <input type="text" name="student_name" class="form-control" value="<?= $row['student_name']; ?>" required>
-    </div>
-    <div class="col-md-6">
-      <label>Email</label>
-      <input type="email" name="student_email" class="form-control" value="<?= $row['student_email']; ?>" required>
-    </div>
-  </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Total Fees (₹)</label>
+            <input type="number" id="total_fees" class="form-control" value="15000" readonly>
+            <input type="hidden" name="amount" value="15000">
+          </div>
+          <div class="col-md-6">
+            <label>Paid Amount (₹)</label>
+            <input type="number" id="paid_so_far" name="student_paid" class="form-control" value="<?= $row['student_paid']; ?>" readonly>
+          </div>
+        </div>
 
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label>Standard</label>
-      <input type="text" name="standard" class="form-control" value="<?= $row['standard']; ?>" required>
-    </div>
-    <div class="col-md-6">
-      <label>Fees Type</label>
-      <input type="text" name="fees_type" class="form-control" value="<?= $row['fees_type']; ?>" required>
-    </div>
-  </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Payment Date</label>
+          <input type="date" name="payment_date" class="form-control" value="<?= $row['payment_date']; ?>" required>
 
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label>Total Fees (₹)</label>
-      <input type="number" id="total_fees" class="form-control" value="15000" readonly>
-      <input type="hidden" name="amount" value="15000">
-    </div>
-    <div class="col-md-6">
-      <label>Paid Amount So Far (₹)</label>
-      <input type="number" id="paid_so_far" name="student_paid" class="form-control" value="<?= $row['student_paid']; ?>" readonly>
-    </div>
-  </div>
+           
+           
+          </div>
+          <div class="col-md-6">
+            <label>Payment Mode</label>
+            <input type="text" name="payment_mode" class="form-control" value="<?= $row['payment_mode']; ?>" required>
+          </div>
+        </div>
 
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label>Payment Date</label>
-      <input type="date" name="payment_date" class="form-control" value="<?= $row['payment_date']; ?>" required>
-    </div>
-    <div class="col-md-6">
-      <label>Payment Mode</label>
-      <input type="text" name="payment_mode" class="form-control" value="<?= $row['payment_mode']; ?>" required>
-    </div>
-  </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Remaining Balance (₹)</label>
+            <input type="number" id="new_balance" class="form-control" value="" readonly>
+            <input type="hidden" name="payment_balance" id="payment_balance" value="<?= $row['balance_amount']; ?>">
+          </div>
+          <div class="col-md-6">
+            <label>New Pay Amount (₹)</label>
+            <input type="number" name="pay_amount" id="pay_amount" class="form-control" max="15000" required>
+          </div>
+        </div>
 
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label>Remaining Balance (₹)</label>
-      <input type="number" id="new_balance" class="form-control" value="" readonly>
-    <input type="hidden" name="payment_balance" id="payment_balance" value="<?= $row['balance_amount'] ?>">
+        <div class="text-center">
+          <button type="submit" name="update_fees" class="btn btn-success text-white px-4">Update</button>
+          <button type="button" class="btn btn-warning text-white px-4"><a href="./stu_vfees.php" class="text-white text-decoration-none">View</a></button>
+        </div>
+      </form>
     </div>
-    <div class="col-md-6">
-      <label>New Pay Amount (₹)</label>
-      <input type="number" name="pay_amount"  id="pay_amount" class="form-control" max="15000" required>
-    </div>
-  </div>
-
-  <div class="text-center">
-    <button type="submit" name="update_fees" class="btn btn-success text-white mb-3">Update</button>
   </div>
   <?php 
+          }
+      }
   }
-}
-}
-?>
-</form>
+  ?>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

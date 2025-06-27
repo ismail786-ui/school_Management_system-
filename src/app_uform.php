@@ -82,7 +82,7 @@ if (isset($_POST['update'])) {
   </head>
   <body>
 <!----------------------------------------Navbar Start------------------------------------------------------------------------------------------------------------------------------------>
-    <div class="container-scroller">
+   <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
@@ -93,7 +93,7 @@ if (isset($_POST['update'])) {
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Application Form</h4>
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -113,16 +113,16 @@ if (isset($_POST['update'])) {
     </button>
   </div>
 </nav>
-<!---------------------------------------------------------------------------------------------------------------->
-    <!-- partial -->
+<!----------------------------------------------Start bar------------------------------------------------------------------>
+      <!-- partial -->
       <div class="container-fluid page-body-wrapper ">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
-   <li class="nav-item">
-      <a class="nav-link" href="index.php">
+    <li class="nav-item">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
+               <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
@@ -133,11 +133,8 @@ if (isset($_POST['update'])) {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Accountant</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Students</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Staffs</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Classes</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
         </ul>
       </div>
     </li>
@@ -148,38 +145,27 @@ if (isset($_POST['update'])) {
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="form-elements">
-       <ul class="nav flex-column sub-menu">
+        <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
-          <li class="nav-item"><a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./staff_attendance.php">Attendance</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="bi bi-mortarboard-fill menu-icon"></i>
-        <span class="menu-title">Student</span>
+        <span class="menu-title">Students</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Information</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_form.php">Syllabus</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">View Form</a></li>
-
-        </ul>
-      </div>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="bi  bi-bar-chart-fill menu-icon"></i>
-        <span class="menu-title">Classes</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Section</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
       </div>
     </li>
@@ -191,7 +177,7 @@ if (isset($_POST['update'])) {
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href="bus_form.php"> Buses </a></li>
         </ul>
       </div>
     </li>
@@ -203,19 +189,25 @@ if (isset($_POST['update'])) {
       </a>
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+          <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="./login.php">
+     <a class="nav-link" href="./login.php">
         <i class="bi bi-box-arrow-right menu-icon text-dark"></i>
         <span class="menu-title">Logout</span>
       </a>
     </li>
   </ul>
 </nav>
+
 <!----------------------------------------------Admission Form------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
  
 <div class="container mt-5 mb-5 ">
@@ -355,4 +347,27 @@ if (isset($_POST['update'])) {
 <!-- ------------------------------------------------------------------------------- -->
 <!--------------------------------------------------------------------------------------------------------->
                
-        </div>
+     
+
+
+    <!-- plugins:js -->
+    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="assets/vendors/chart.js/chart.umd.js"></script>
+    <script src="assets/vendors/datatables.net/jquery.dataTables.js"></script>
+    <!-- <script src="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script> -->
+    <script src="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
+    <script src="assets/js/dataTables.select.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/template.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
+    <!-- End custom js for this page-->
