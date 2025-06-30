@@ -29,7 +29,7 @@
 <body>
 
 <div class="card">
-  <h1 class="mb-4 text-success">Invoice Successfully Sent Your mail..</h1>
+  <h1 class="mb-4 text-success">Invoice Successfully Sent Student mail..</h1>
   <p>This is your official confirmation. Thanks for joining Pearlsys School newsletter / invoice system.</p>
   <p>Check your inbox for your invoice. You may also return to the <a href="index.php">Home</a>.</p>
 </div>

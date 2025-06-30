@@ -110,7 +110,7 @@
     <a href="login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
   </div>
 
-  <!-- Main Content -->
+<!-- Main Content -->
   <div class="main" id="mainContent">
     <?php
     include "conn.php";
@@ -119,7 +119,7 @@
 
     if (!empty($search_id)) {
         $id = mysqli_real_escape_string($conn, $search_id);
-        $sql = "SELECT sa.stu_id, sa.stu_name, cm.class_name, cm.class_section, cm.class_teacher
+        $sql = "SELECT sa.stu_id, sa.stu_name,sa.stu_admission,sa.stu_blood,cm.class_name, cm.class_section, cm.class_teacher
                 FROM student_admission sa
                 JOIN class_master cm ON sa.class_id = cm.class_id
                 WHERE sa.stu_id = '$id'";
@@ -147,12 +147,14 @@
 
       <div class="d-flex justify-content-center">
         <?php if ($data): ?>
-          <div class="card col-md-9">
+          <div class="card col-md-12">
             <div class="card-header bg-success text-white">Student Information</div>
             <div class="card-body">
               <table class="table table-bordered">
                 <tr><th>ID</th><td><?= $data['stu_id'] ?></td></tr>
+                <tr><th>Admission Date</th><td><?= $data['stu_admission'] ?></td></tr>
                 <tr><th>Name</th><td><?= $data['stu_name'] ?></td></tr>
+                <tr><th>Blood Group</th><td><?= $data['stu_blood'] ?></td></tr>
                 <tr><th>Class</th><td><?= $data['class_name'] ?></td></tr>
                 <tr><th>Section</th><td><?= $data['class_section'] ?></td></tr>
                 <tr><th>Class Teacher</th><td><?= $data['class_teacher'] ?></td></tr>
@@ -165,6 +167,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Sidebar Toggle Script -->
   <script>

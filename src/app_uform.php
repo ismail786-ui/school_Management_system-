@@ -47,7 +47,6 @@ if (isset($_POST['update'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,6 +55,9 @@ if (isset($_POST['update'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>School</title>
     <!-- plugins:css -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -64,25 +66,33 @@ if (isset($_POST['update'])) {
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
-    <!-- End plugin css for this page  -->
+    <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-     <!--Internal Stylesheet-->
-     <style rel="stylesheet">
-    body {
-       background-color: #f0f2f5; /* light gray background */
+    <link rel="shortcut icon" href="assets/images/favicon.png"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style type="text/css">
+    .chart-container {
+      width: 400px;
+      height: 400px;
+      margin: auto;
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
     }
   </style>
   </head>
   <body>
-<!----------------------------------------Navbar Start------------------------------------------------------------------------------------------------------------------------------------>
-   <div class="container-scroller">
+<!------------------------------------------navbar start--------------------------------------------------------------------->
+    <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
@@ -120,7 +130,7 @@ if (isset($_POST['update'])) {
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="./index.php">
+      <a class="nav-link" href="">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -133,8 +143,8 @@ if (isset($_POST['update'])) {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_detailA.php">Student Details</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
         </ul>
       </div>
     </li>
@@ -146,10 +156,10 @@ if (isset($_POST['update'])) {
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendance.php">Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -190,10 +200,11 @@ if (isset($_POST['update'])) {
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Teacher Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -208,7 +219,8 @@ if (isset($_POST['update'])) {
   </ul>
 </nav>
 
-<!----------------------------------------------Admission Form------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
  
 <div class="container mt-5 mb-5 ">
     <div class="bg-white p-5 shadow rounded text-black">
@@ -322,6 +334,34 @@ if (isset($_POST['update'])) {
     <?php
   }}
   ?>
+
+
+
+<!--------------------------------------------------------------------------------------------------------->
+                     <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+  <div class="d-sm-flex justify-content-center">
+    <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span> -->
+  </div>
+</footer>
+          <!-- partial -->
+</div>
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+
+
+
+
+
+
+
 <script>
   function toggleInputBox(selectElement) {
     const inputBox = document.getElementById("transferCertificate");
@@ -346,8 +386,28 @@ if (isset($_POST['update'])) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- ------------------------------------------------------------------------------- -->
 <!--------------------------------------------------------------------------------------------------------->
-               
      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!-- plugins:js -->
@@ -371,3 +431,8 @@ if (isset($_POST['update'])) {
     <script src="assets/js/dashboard.js"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
+  </body>
+</html>
+
+
+<!----------------------------------------------Admission Form------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

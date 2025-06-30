@@ -93,8 +93,8 @@
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_detailA.php">Student Details</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Teacher Details</a></li>
         </ul>
       </div>
     </li>
@@ -106,11 +106,10 @@
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">Class Teacher</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
-
+          <li class="nav-item"> <a class="nav-link" href="">Teacher Details</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -124,8 +123,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="student_attendance.php">Student Attendance</a>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
@@ -152,9 +150,11 @@
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceview.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Teacher Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -214,16 +214,16 @@ if (!empty($search_term)) {
 </head>
 <body>
 <div class="container mt-5">
-  <h4 class="mb-4 text-center col-lg-11"> Subject Details</h4>
+  <h4 class="mb-2 text-center col-lg-11"> Teacher Details</h4>
 
   <!-- Search Form -->
-  <form method="GET" class="mb-4">
+  <form method="GET" class="mb-2">
     <div class="row d-flex justify-content-center">
-      <div class="col-md-2 mt-3 ">
+      <div class="col-md-2 mt-3">
         <input type="text" name="search_term" class="form-control" placeholder="Search ID or Name" value="<?= htmlspecialchars($search_term) ?>">
       </div>
       <div class="col-md-2">
-        <button type="submit" class="btn btn-primary w-50 mt-3">Search</button>
+        <button type="submit" class="btn btn-primary w-50 mt-3 mb-3">Search</button>
       </div>
     </div>
   </form>

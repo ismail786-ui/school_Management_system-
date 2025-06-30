@@ -147,7 +147,7 @@ if (!empty($search_term)) {
 <div class="main" id="mainContent">
   <div class="container-fluid">
     
-    <h2 class="text-center mb-3 mt-2 card-title ">Subject Details</h2>
+    <h2 class="text-center mb-3 mt-2 card-title ">Teacher Details</h2>
 
     <!-- Search Form -->
     <form method="GET" class="d-flex justify-content-center flex-wrap gap-2 mt-2 ">

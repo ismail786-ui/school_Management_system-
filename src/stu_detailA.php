@@ -1,21 +1,3 @@
-<?php
-include 'conn.php';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $staff_id = $_POST['staff_id'];
-    $status = $_POST['status'];
-    $date = date('Y-m-d');
-
-    $check = mysqli_query($conn, "SELECT * FROM staff_attendance WHERE staff_id='$staff_id' AND date='$date'");
-    if (mysqli_num_rows($check) == 0) {
-        $query = "INSERT INTO staff_attendance (staff_id, date, status) VALUES ('$staff_id', '$date', '$status')";
-        mysqli_query($conn, $query);
-        $msg = "Attendance marked successfully!";
-    } else {
-        $msg = "Already marked for today.";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,17 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png"/>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style type="text/css">
-    .chart-container {
-      width: 400px;
-      height: 400px;
-      margin: auto;
+      <style type='text/css'> 
+      .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
     }
-    .card {
-      border-radius: 1rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    .chart-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
     }
   </style>
   </head>
@@ -112,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./stu_detailA.php">Student Details</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Student Details</a></li>
+          <li class="nav-item"> <a class="nav-link" href="sub_staff.php">Teacher Details</a></li>
         </ul>
       </div>
     </li>
@@ -127,8 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
-             <li class="nav-item"> <a class="nav-link" href="">Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Teacher Details</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -169,7 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
@@ -189,66 +171,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </nav>
 
 
+<!---------------------------------------Start bar------------------------------------------------------------------>
+  
+<?php
+include 'conn.php';
+$search_id = $_GET['stu_id'] ?? '';
+$data = null;
 
+if (!empty($search_id)) {
+    $id = mysqli_real_escape_string($conn, $search_id);
+    $sql = "SELECT sa.stu_id, sa.stu_name, sa.stu_admission, sa.stu_blood, sa.stu_dob, cm.class_name, cm.class_section, cm.class_teacher
+            FROM student_admission sa
+            JOIN class_master cm ON sa.class_id = cm.class_id
+            WHERE sa.stu_id = '$id'";
+    $result = mysqli_query($conn, $sql);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $data = mysqli_fetch_assoc($result);
+    } else {
+        $error = "No student found.";
+    }
+}
+?>
 
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-5">
 
+      <!-- Top Section: Title + Home Button -->
+      <div class="d-flex  justify-content-start align-items-center">
+        <h3 class="mb-0 ml-2">Search Student</h3>
+</div>
+      <!-- Search Form -->
+      <form method="GET" class="row g-2 mb-2 p-3">
+        <div class="col-md-4">
+          <input type="text" name="stu_id" class="form-control p-2 gx-2" placeholder="Enter Student ID" value="<?= htmlspecialchars($search_id ?? '') ?>" required>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-primary w-75  p-2 ">Search</button>
+        </div>
+      </form>
+      <!-- Result Card -->
+      <?php if (isset($data) && $data): ?>
+        <div class="card shadow-sm mt-4">
+          <div class="card-header bg-success text-white">Student Information</div>
+          <div class="card-body">
+            <table class="table table-bordered mb-0">
+              <tr><th>ID</th><td><?= $data['stu_id'] ?></td></tr>
+              <tr><th>Admission Date</th><td><?= $data['stu_admission'] ?></td></tr>
+              <tr><th>Name</th><td><?= $data['stu_name'] ?></td></tr>
+              <tr><th>Date of Birth</th><td><?= $data['stu_dob'] ?></td></tr>
+              <tr><th>Blood Group</th><td><?= $data['stu_blood'] ?></td></tr>
+              <tr><th>Class</th><td><?= $data['class_name'] ?></td></tr>
+              <tr><th>Section</th><td><?= $data['class_section'] ?></td></tr>
+              <tr><th>Class Teacher</th><td><?= $data['class_teacher'] ?></td></tr>
+            </table>
+          </div>
+        </div>
+      <?php elseif (!empty($search_id)): ?>
+        <div class="alert alert-danger text-center mt-4">No record found for ID: <?= htmlspecialchars($search_id) ?></div>
+      <?php endif; ?>
 
-
-
-<!-- Main content centered -->
-<div class="d-flex justify-content-center align-items-start vw-100 vh-100 bg-light">
-  <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
-    <h2 class="card-title text-center mb-3">Mark Attendance</h2>
-
-    <?php if (isset($msg)) echo "<div class='alert alert-info text-center'>$msg</div>"; ?>
-
-    <form method="POST" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="staff_id" class="form-label">Staff ID</label>
-        <input type="text" name="staff_id" id="staff_id" class="form-control" required>
-        <div class="invalid-feedback">Please enter Staff ID.</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select name="status" id="status" class="form-select" required>
-          <option class="text-dark" disabled>Select</option>
-          <option class="text-dark">Present</option>
-          <option class="text-dark">Absent</option>
-          <option class="text-dark">Leave</option>
-        </select>
-        <div class="invalid-feedback">Please select a status.</div>
-      </div>
-
-      <div class="d-flex justify-content-between mt-4">
-        <button type="submit" class="btn btn-primary w-50 me-2">Mark</button>
-        <a href="staff_attendanceAV.php" class="btn btn-success w-50 text-white">View</a>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
+<!------------------------------------------------------------------------------------------------------------------------------------------->
 
-<!-- Bootstrap JS -->
-<script>
-  // Bootstrap validation
-  (() => {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  })();
-</script>
 
 
+</body>
+</html>
 
 
+         
 
 
 
@@ -324,14 +318,109 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-               <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-  <div class="d-sm-flex justify-content-center">
-    <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span> -->
-  </div>
-</footer>
-          <!-- partial -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <!-- partial -->
 </div>
         </div>
         <!-- main-panel ends -->
@@ -348,7 +437,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-    
+
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -372,3 +461,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- End custom js for this page-->
   </body>
 </html>
+

@@ -101,7 +101,7 @@ if (isset($_POST['submit_fees'])) {
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
-    <div class="container-scroller">
+   <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
@@ -152,8 +152,8 @@ if (isset($_POST['submit_fees'])) {
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_detailA.php">Student Details</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
         </ul>
       </div>
     </li>
@@ -165,10 +165,10 @@ if (isset($_POST['submit_fees'])) {
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -182,7 +182,7 @@ if (isset($_POST['submit_fees'])) {
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="student_attendance.php">Attendance</a>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
@@ -209,10 +209,11 @@ if (isset($_POST['submit_fees'])) {
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Teacher Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -226,7 +227,6 @@ if (isset($_POST['submit_fees'])) {
     </li>
   </ul>
 </nav>
-
 
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
  <!-- School Fees Payment Form (Centered) -->
@@ -243,7 +243,7 @@ if (isset($_POST['submit_fees'])) {
             <input type="number" class="form-control p-2" id="stu_id" name="stu_id" value="<?= $stu_id ?>">
           </div>
           <div class="col-md-2 d-flex align-items-end">
-            <button type="submit" name="get_student" class="btn btn-info text-white w-100 p-2">Search</button>
+            <button type="submit" name="get_student" class="btn btn-info text-white w-100 p-2 " Required>Search</button>
           </div>
         </div>
 
@@ -251,11 +251,11 @@ if (isset($_POST['submit_fees'])) {
         <div class="row mb-3">
           <div class="col-md-4">
             <label for="student_name" class="form-label">Student Name</label>
-            <input type="text" class="form-control p-2" id="student_name" name="student_name" value="<?= $student_name ?>">
+            <input type="text" class="form-control p-2" id="student_name"  name="student_name" value="<?= $student_name ?>">
           </div>
           <div class="col-md-4">
             <label for="standard" class="form-label">Standard</label>
-            <input type="text" class="form-control p-2" id="standard" name="standard" value="<?= $standard ?>">
+            <input type="text" class="form-control p-2" id="standard"  name="standard" value="<?= $standard ?>">
           </div>
         </div>
 
@@ -263,14 +263,14 @@ if (isset($_POST['submit_fees'])) {
         <div class="row mb-3">
           <div class="col-md-4">
             <label for="fees_type" class="form-label">Fees Type</label>
-            <select class="form-select p-2" id="fees_type" name="fees_type">
+            <select class="form-select p-2" id="fees_type" name="fees_type" Required>
               <option selected disabled>Select</option>
               <option class="text-dark" value="Tuition">School</option>
             </select>
           </div>
           <div class="col-md-4">
             <label for="payment_mode" class="form-label">Payment Mode</label>
-            <select class="form-select p-2" id="payment_mode" name="payment_mode">
+            <select class="form-select p-2" id="payment_mode" name="payment_mode" Required>
               <option selected disabled>Select</option>
               <option value="Cash" class="text-dark">Cash</option>
               <option value="Card" class="text-dark">Card</option>
@@ -284,11 +284,11 @@ if (isset($_POST['submit_fees'])) {
         <div class="row mb-3">
           <div class="col-md-4">
             <label for="amount" class="form-label">Total Amount (₹)</label>
-            <input type="number" class="form-control p-2" id="amount" name="amount" value="<?= $school_fees ?>">
+            <input type="number" class="form-control p-2" id="amount"  name="amount" value="<?= $school_fees ?>">
           </div>
           <div class="col-md-4">
             <label for="payment_date" class="form-label">Payment Date</label>
-            <input type="date" class="form-control p-2" id="payment_date" name="payment_date">
+            <input type="date" class="form-control p-2"  id="payment_date" name="payment_date">
             <script>
               const d = new Date();
               document.getElementById("payment_date").min = d.toISOString().split("T")[0];
@@ -300,11 +300,11 @@ if (isset($_POST['submit_fees'])) {
         <div class="row mb-3">
           <div class="col-md-4">
             <label for="student_paid" class="form-label">Paid Amount (₹)</label>
-            <input type="number" class="form-control p-2" id="student_paid" name="student_paid" max="15000">
+            <input type="number" class="form-control p-2"  id="student_paid" name="student_paid" max="15000">
           </div>
           <div class="col-md-4">
             <label for="balance" class="form-label">Balance (₹)</label>
-            <input type="number" class="form-control p-2" id="balance" name="balance" readonly>
+            <input type="number" class="form-control p-2"  id="balance" name="balance" readonly>
           </div>
         </div>
 

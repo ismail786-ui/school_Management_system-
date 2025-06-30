@@ -141,6 +141,7 @@
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
           <li class="nav-item"> <a class="nav-link" href="">Fees View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>

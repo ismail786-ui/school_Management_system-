@@ -1,13 +1,11 @@
 <?php
 include "./conn.php";
 
-$upload_dir = "uploads/"; // Make sure this folder exists and is writable (chmod 755 or 777)
+$upload_dir = "uploads/"; // Make sure this folder exists and is writable
 
 if (isset($_POST['submit'])) {
-    // Debugging print
-    // echo "<pre>"; print_r($_POST); print_r($_FILES); echo "</pre>"; exit();
 
-    // FORM FIELDS
+    // Get all form data
     $academic_year = $_POST['academic_year'];
     $stu_name = $_POST['stu_name'];
     $stu_email = $_POST['stu_email'];
@@ -24,8 +22,9 @@ if (isset($_POST['submit'])) {
     $stu_admission = $_POST['stu_admission'];
     $stu_standard = $_POST['standard'];
     $stu_blood = $_POST['stu_blood'];
+    $school_fees = $_POST['school_fees'];
 
-    // UPLOAD FUNCTION
+    // Upload file function
     function uploadFile($key) {
         global $upload_dir;
         if (isset($_FILES[$key]) && $_FILES[$key]['error'] === 0) {
@@ -38,32 +37,40 @@ if (isset($_POST['submit'])) {
         return '';
     }
 
-    // FILE UPLOADS
-    $file_aadhar = uploadFile('stu_aadhar');
-    $file_photo = uploadFile('stu_photo');
-    $file_community = uploadFile('stu_community');
-    $file_pan = uploadFile('stu_pan');
-    $file_tc = uploadFile('transfercertificate');
-    $file_marksheet = uploadFile('marksheet');
+    // Handle file uploads
+    $file_aadhar     = uploadFile('stu_aadhar');
+    $file_photo      = uploadFile('stu_photo');
+    $file_community  = uploadFile('stu_community');
+    $file_pan        = uploadFile('stu_pan');
+    $file_tc         = uploadFile('transfercertificate');
+    $file_marksheet  = uploadFile('marksheet');
 
-    // SQL INSERT QUERY
-    $sql = "INSERT INTO student_admission (
+    // Step 1: Insert data without student_id (it will be added after)
+    $insert = "INSERT INTO student_admission (
         stu_name, stu_email, stu_dob, stu_age, stu_gender,
-        stu_address, stu_city, stu_state, stu_pincode, stu_mother, stu_father, stu_mobile,
-        stu_admission, stu_standard, stu_blood,
-        stu_aadhar, stu_photo, stu_community, stu_pan, stu_tc, stu_marksheet, academic_year
+        stu_address, stu_city, stu_state, stu_pincode,
+        stu_mother, stu_father, stu_mobile, stu_admission,
+        stu_standard, stu_blood, stu_aadhar, stu_photo,
+        stu_community, stu_pan, stu_tc, stu_marksheet,
+        academic_year, school_fees
     ) VALUES (
         '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender',
-        '$stu_address', '$stu_city', '$stu_state', '$stu_pincode', '$stu_mother', '$stu_father', '$stu_mobile',
-        '$stu_admission', '$stu_standard', '$stu_blood',
-        '$file_aadhar', '$file_photo', '$file_community', '$file_pan', '$file_tc', '$file_marksheet', '$academic_year'
+        '$stu_address', '$stu_city', '$stu_state', '$stu_pincode',
+        '$stu_mother', '$stu_father', '$stu_mobile', '$stu_admission',
+        '$stu_standard', '$stu_blood', '$file_aadhar', '$file_photo',
+        '$file_community', '$file_pan', '$file_tc', '$file_marksheet',
+        '$academic_year', '$school_fees'
     )";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Data saved successfully.'); window.location.href='app_form.php';</script>";
-    } else {
-        die("Error inserting record: " . $conn->error);
-    }
+   if ($conn->query($insert) === TRUE) {
+    $last_id = $conn->insert_id; 
+
+    $student_id = 'PEA' . str_pad($last_id, 3, '0', STR_PAD_LEFT); 
+
+    $conn->query("UPDATE student_admission SET student_id = '$student_id' WHERE stu_id = $last_id");
+
+    echo "<script>alert('Student saved with ID: $student_id');";
+}
 }
 
 $conn->close();
@@ -144,8 +151,7 @@ $conn->close();
   </div>
 </nav>
 <!----------------------------------------------Start bar------------------------------------------------------------------>
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper ">
+ <div class="container-fluid page-body-wrapper ">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
@@ -163,8 +169,8 @@ $conn->close();
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">S</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./stu_detailA.php">Student Details</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
         </ul>
       </div>
     </li>
@@ -176,10 +182,10 @@ $conn->close();
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Staff Form</a></li>
+          <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Class Teacher</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -193,7 +199,7 @@ $conn->close();
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
-          <li class="nav-item"><a class="nav-link" href="student_attendance.php">Attendance</a>
+          <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
@@ -207,7 +213,7 @@ $conn->close();
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="./bus_form.php"> Buses </a></li>
+          <li class="nav-item"> <a class="nav-link" href="bus_form.php"> Buses </a></li>
         </ul>
       </div>
     </li>
@@ -220,10 +226,11 @@ $conn->close();
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Staff View</a></li>
+           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Staff Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Teacher Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
