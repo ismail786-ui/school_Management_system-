@@ -194,12 +194,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form method="POST" action="student_submitattendance.php">
   <input type="hidden" name="staff_name" value="Shankar">
   <input type="hidden" name="class" value="<?= htmlspecialchars($class) ?>">
-
   <div class="mb-3">
     <label><strong>Date:</strong></label>
     <input type="date" name="attendance_date" id="attendance_date" class="form-control w-25" required>
   </div>
-
   <div class="table-responsive">
     <table class="table table-bordered text-center">
       <thead class="table-primary">
@@ -220,15 +218,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </td>
           <td>
             <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Present" class="attendance-checkbox" checked data-index="<?= $i ?>">
-
           </td>
           <td>
            <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Absent" class="attendance-checkbox" data-index="<?= $i ?>">
-
           </td>
           <td>
             <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="OT" class="attendance-checkbox" data-index="<?= $i ?>">
-
           </td>
         </tr>
         <?php $i++; } ?>

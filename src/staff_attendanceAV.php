@@ -1,12 +1,29 @@
 <?php
 include 'conn.php';
 
-$result = mysqli_query($conn, "
-  SELECT staff_attendance.*, staff_timetable.staff_name 
-  FROM staff_attendance 
-  JOIN staff_timetable ON staff_attendance.staff_id = staff_timetable.staff_id 
-  ORDER BY staff_attendance.date DESC
-");
+// Get filters
+$filterId = $_GET['staff_id'] ?? '';
+$filterDate = $_GET['attendance_date'] ?? '';
+
+// Build query
+$query = "
+  SELECT ta.id, ta.staff_id, ef.emp_Name AS staff_name, ta.date, ta.status, ta.timestamp
+  FROM teacher_attendance ta
+  JOIN employee_form ef ON ta.staff_id = ef.id
+  WHERE 1 = 1
+";
+
+if (!empty($filterId)) {
+  $filterIdEsc = mysqli_real_escape_string($conn, $filterId);
+  $query .= " AND ta.staff_id = '$filterIdEsc'";
+}
+if (!empty($filterDate)) {
+  $filterDateEsc = mysqli_real_escape_string($conn, $filterDate);
+  $query .= " AND ta.date = '$filterDateEsc'";
+}
+
+$query .= " ORDER BY ta.date DESC";
+$result = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +33,24 @@ $result = mysqli_query($conn, "
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>School</title>
+      <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      max-width: 800px;
+      margin: auto;
+      margin-top: 50px;
+      padding: 30px;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .badge { font-size: 0.9rem; }
+    .filter-label { font-weight: 600; }
+  </style>
     <!-- plugins:css -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Chart.js -->
@@ -39,17 +74,6 @@ $result = mysqli_query($conn, "
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        .attendance-card {
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-        }
-        .attendance-card:hover {
-            transform: scale(1.02);
-        }
-    </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -63,8 +87,8 @@ $result = mysqli_query($conn, "
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-       <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
+       <a class="nav-link m-4 text-white " href="./staf_form.php">
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Teacher Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -120,7 +144,7 @@ $result = mysqli_query($conn, "
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
-             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
+             <li class="nav-item"> <a class="nav-link" href="">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -161,11 +185,11 @@ $result = mysqli_query($conn, "
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
-          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Teacher Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Teacher Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
@@ -180,43 +204,158 @@ $result = mysqli_query($conn, "
   </ul>
 </nav>
 
-   
-</head>
-<body>
-<div class="container mt-5 ">
-    <!-- Header with Button -->
-    <div class="card bg-primary">
-        <div class="d-flex justify-content-between align-items-center my-2 mx-3">
-        <h2 class=" card-title text-white p-1">Staff Attendance Report</h2>
-        <a href="staff_attendanceA.php" class="btn btn-warning px-3 ">Add Attendance</a>
-    </div>
-    </div>
 
-    <!-- Attendance Cards -->
-    <div class="row g-3 mt-3">
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-            <div class="col-md-4">
-                <div class="card attendance-card border-primary">
-                    <div class="card-header bg-primary text-white">
-                        <?= htmlspecialchars($row['staff_name']) ?>
-                    </div>
-                    <div class="card-body">
-                        <p><strong>Date:</strong> <?= htmlspecialchars($row['date']) ?></p>
-                        <p><strong>Staff ID:</strong> <?= htmlspecialchars($row['staff_id']) ?></p>
-                        <p><strong>Status:</strong> 
-                          <span class="badge <?= $row['status'] === 'Present' ? 'bg-success' : 'bg-danger' ?>">
-                            <?= htmlspecialchars($row['status']) ?>
-                          </span>
-                        </p>
-                        <p><strong>Timestamp:</strong> <?= htmlspecialchars($row['timestamp']) ?></p>
-                    </div>
-                </div>
-            </div>
-        <?php } ?>
+<!--------------------------------------------------------------------------------------------------------------------------------------->
+<div class="container mt-5 col-md-8">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Teacher Attendance Report</h2>
+    <a href="staff_attendanceA.php" class="btn btn-warning">Add Attendance</a>
+  </div>
+
+  <!-- FILTER FORM -->
+  <form method="GET" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <label for="staff_id" class="form-label filter-label">Staff ID:</label>
+      <input type="number" name="staff_id" id="staff_id" class="form-control"
+             placeholder="Enter staff ID"
+             value="<?= htmlspecialchars($filterId) ?>">
     </div>
+    <div class="col-md-3">
+      <label for="attendance_date" class="form-label filter-label">Date:</label>
+      <input type="date" name="attendance_date" id="attendance_date" class="form-control"
+             value="<?= htmlspecialchars($filterDate) ?>">
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary me-2">Search</button>
+      <a href="staff_attendanceAV.php" class="btn btn-secondary text-white">Reset</a>
+    </div>
+  </form>
+
+  <!-- Attendance Table -->
+  <?php if (mysqli_num_rows($result) > 0): ?>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped text-center">
+        <thead class="table-primary">
+          <tr>
+            <th>Staff ID</th>
+            <th>Staff Name</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <tr>
+              <td><?= $row['staff_id'] ?></td>
+              <td><?= htmlspecialchars($row['staff_name']) ?></td>
+              <td><?= $row['date'] ?></td>
+              <td>
+                <?php
+                if ($row['status'] === 'Present') {
+                  echo "<span class='rounded bg-success px-3 py-2 text-white'>Present</span>";
+                } elseif ($row['status'] === 'Absent') {
+                  echo "<span class='rounded bg-danger px-3 py-2 text-white'>Absent</span>";
+                } elseif ($row['status'] === 'OT') {
+                  echo "<span class='rounded bg-warning px-4 py-2 text-white'>OT</span>";
+                } else {
+                  echo htmlspecialchars($row['status']);
+                }
+                ?>
+              </td>
+              <td><?= $row['timestamp'] ?></td>
+            </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    </div>
+  <?php else: ?>
+    <div class="alert alert-warning">No attendance records found.</div>
+  <?php endif; ?>
 </div>
 
-<!-- Bootstrap JS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--------------------------------------------------------------------------------------------------------->
+                     <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+  <div class="d-sm-flex justify-content-center">
+    <!-- <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2025 All rights reserved.</span> -->
+  </div>
+</footer>
+          <!-- partial -->
+</div>
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

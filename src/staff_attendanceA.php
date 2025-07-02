@@ -1,21 +1,29 @@
 <?php
 include 'conn.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $staff_id = $_POST['staff_id'];
-    $status = $_POST['status'];
-    $date = date('Y-m-d');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $date = $_POST['attendance_date'] ?? date('Y-m-d');
+  $teachers = $_POST['staff'];
 
-    $check = mysqli_query($conn, "SELECT * FROM staff_attendance WHERE staff_id='$staff_id' AND date='$date'");
+  foreach ($teachers as $teacher) {
+    if (!isset($teacher['attendance'])) continue;
+
+    $staff_id = $teacher['id'];
+    $staff_name = $teacher['name'];
+    $status = is_array($teacher['attendance']) ? $teacher['attendance'][0] : $teacher['attendance'];
+
+    $check = mysqli_query($conn, "SELECT * FROM teacher_attendance WHERE staff_id='$staff_id' AND date='$date'");
     if (mysqli_num_rows($check) == 0) {
-        $query = "INSERT INTO staff_attendance (staff_id, date, status) VALUES ('$staff_id', '$date', '$status')";
-        mysqli_query($conn, $query);
-        $msg = "Attendance marked successfully!";
-    } else {
-        $msg = "Already marked for today.";
+      $sql = "INSERT INTO teacher_attendance (staff_id, staff_name, date, status)
+              VALUES ('$staff_id', '$staff_name', '$date', '$status')";
+      mysqli_query($conn, $sql);
     }
+  }
+
+  echo "<script>alert('Attendance saved successfully!'); window.location='staff_attendanceAV.php';</script>";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,18 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- endinject -->
     <link rel="shortcut icon" href="assets/images/favicon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style type="text/css">
-    .chart-container {
-      width: 400px;
-      height: 400px;
-      margin: auto;
-    }
-    .card {
-      border-radius: 1rem;
-      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
-    }
-  </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -71,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-       <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
+       <a class="nav-link m-4 text-white " href="./staf_form.php">
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Teacher Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -169,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="collapse" id="error">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="./app_vform.php">Student View</a></li>
-           <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./standard.php">Standard View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
@@ -188,62 +184,119 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </ul>
 </nav>
 
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      max-width: 800px;
+      margin: auto;
+      margin-top: 50px;
+      padding: 30px;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
 
+<div class="container">
+  <div class="card col-md-8">
+    <h3 class="mb-4 text-center text-primary">Mark Teacher Attendance</h3>
 
-
-
-
-
-
-<!-- Main content centered -->
-<div class="d-flex justify-content-center align-items-start vw-100 vh-100 bg-light">
-  <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
-    <h2 class="card-title text-center mb-3">Mark Attendance</h2>
-
-    <?php if (isset($msg)) echo "<div class='alert alert-info text-center'>$msg</div>"; ?>
-
-    <form method="POST" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="staff_id" class="form-label">Staff ID</label>
-        <input type="text" name="staff_id" id="staff_id" class="form-control" required>
-        <div class="invalid-feedback">Please enter Staff ID.</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select name="status" id="status" class="form-select" required>
-          <option class="text-dark" disabled>Select</option>
-          <option class="text-dark">Present</option>
-          <option class="text-dark">Absent</option>
-          <option class="text-dark">Leave</option>
-        </select>
-        <div class="invalid-feedback">Please select a status.</div>
-      </div>
-
-      <div class="d-flex justify-content-between mt-4">
-        <button type="submit" class="btn btn-primary w-50 me-2">Mark</button>
-        <a href="staff_attendanceAV.php" class="btn btn-success w-50 text-white">View</a>
+    <!-- Search Form -->
+    <form method="GET" action="">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <label for="search" class="form-label">ID or Name:</label>
+          <input type="text" name="search" id="search" class="form-control" placeholder="e.g. 101 "
+                 required value="<?= $_GET['search'] ?? '' ?>">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
       </div>
     </form>
+
+    <?php
+    if (!$_POST && isset($_GET['search'])) {
+      $search = mysqli_real_escape_string($conn, $_GET['search']);
+      $result = $conn->query("SELECT * FROM employee_form WHERE id LIKE '$search' OR emp_Name LIKE '$search'");
+
+      if ($result->num_rows > 0) {
+    ?>
+
+    <!-- Attendance Form -->
+    <form method="POST" action="">
+      <input type="hidden" name="attendance_date" value="<?= date('Y-m-d') ?>">
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Date:</label>
+        <input type="date" name="attendance_date" class="form-control w-25" value="<?= date('Y-m-d') ?>" readonly>
+      </div>
+
+      <div class="table-responsive mb-3">
+        <table class="table table-bordered text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Staff Name</th>
+              <th>Present</th>
+              <th>Absent</th>
+              <th>OT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $i = 0; while ($row = $result->fetch_assoc()) { ?>
+            <tr>
+              <td class="text-start">
+                <input type="hidden" name="staff[<?= $i ?>][id]" value="<?= $row['id'] ?>">
+                <input type="hidden" name="staff[<?= $i ?>][name]" value="<?= htmlspecialchars($row['emp_Name']) ?>">
+                <?= htmlspecialchars($row['emp_Name']) ?>
+              </td>
+              <td>
+                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Present" class="form-check-input attendance-checkbox" checked data-index="<?= $i ?>">
+              </td>
+              <td>
+                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Absent" class="form-check-input attendance-checkbox" data-index="<?= $i ?>">
+              </td>
+              <td>
+                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="OT" class="form-check-input attendance-checkbox" data-index="<?= $i ?>">
+              </td>
+            </tr>
+            <?php $i++; } ?>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-center gap-2">
+        <button type="submit" class="btn btn-primary text-white">Submit</button>
+
+        <a href="staff_attendanceAV.php" class="btn btn-warning text-white">View</a>
+      </div>
+    </form>
+
+    <?php
+      } else {
+        echo "<div class='alert alert-danger mt-3'>No staff found for <strong>" . htmlspecialchars($search) . "</strong>.</div>";
+      }
+    }
+    ?>
   </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script>
-  // Bootstrap validation
-  (() => {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
+  document.querySelectorAll('.attendance-checkbox').forEach(cb => {
+    cb.addEventListener('change', function () {
+      const index = this.dataset.index;
+      if (this.checked) {
+        document.querySelectorAll(`.attendance-checkbox[data-index="${index}"]`).forEach(box => box.checked = false);
+        this.checked = true;
+      }
     });
-  })();
+  });
 </script>
 
 
@@ -261,70 +314,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               <!-- content-wrapper ends -->
+<!--------------------------------------------------------------------------------------------------------->
+                     <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
   <div class="d-sm-flex justify-content-center">
@@ -348,7 +339,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

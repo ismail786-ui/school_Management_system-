@@ -219,23 +219,20 @@ if ($result->num_rows > 0) {
       <div class="card p-4">
         <h5>👨‍🏫 Employees</h5>
            <?php
-
       include './conn.php';
 
 // Fetch records
-
 $sql = "SELECT COUNT(*) AS emp_count FROM employee_form";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } 
-
 ?>
         <h2 class="text-success"><?php echo  $row['emp_count'] ?></h2>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-2">
       <div class="card p-4">
         <h5>🛠️ Total Classes</h5>
         <?php 
@@ -254,8 +251,7 @@ $conn->close();
   </div>
   <!----------------------------------------------------------------------------->
 
- <div class="container mt-5">
-    <!-- <h4 class="mb-4 text-center">Admin Panel</h4> -->
+ <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card text-center p-4">

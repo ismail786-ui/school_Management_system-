@@ -310,7 +310,7 @@ if (isset($_POST['update'])) {
           <div class="row mb-3">
           <div class="col-md-4">
         <label for="stu_admission" class="form-label">Admission Date</label>
-        <input type="date" class="form-control" id="stu_admission" name="stu_admission" value="<?php echo $row['stu_admission'] ?>" required>
+        <input type="date" class="form-control" id="stu_admission" name="stu_admission" value="<?php echo $row['stu_admission'] ?>">
       </div>
       <script>
     // Get today's date in YYYY-MM-DD format

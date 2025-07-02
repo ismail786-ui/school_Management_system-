@@ -44,7 +44,6 @@ $result = mysqli_query($conn, "
                         <?= htmlspecialchars($row['staff_name']) ?>
                     </div>
                     <div class="card-body">
-                        <p><strong>Date:</strong> <?= htmlspecialchars($row['date']) ?></p>
                         <p><strong>Staff ID:</strong> <?= htmlspecialchars($row['staff_id']) ?></p>
                         <p><strong>Status:</strong> 
                           <span class="badge <?= $row['status'] === 'Present' ? 'bg-success' : 'bg-danger' ?>">

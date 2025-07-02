@@ -1,19 +1,26 @@
 <?php
 include 'conn.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $staff_id = $_POST['staff_id'];
-    $status = $_POST['status'];
-    $date = date('Y-m-d');
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $date = $_POST['attendance_date'] ?? date('Y-m-d');
+  $teachers = $_POST['staff'];
 
-    $check = mysqli_query($conn, "SELECT * FROM staff_attendance WHERE staff_id='$staff_id' AND date='$date'");
+  foreach ($teachers as $teacher) {
+    if (!isset($teacher['attendance'])) continue;
+
+    $staff_id = $teacher['id'];
+    $staff_name = $teacher['name'];
+    $status = is_array($teacher['attendance']) ? $teacher['attendance'][0] : $teacher['attendance'];
+
+    $check = mysqli_query($conn, "SELECT * FROM teacher_attendance WHERE staff_id='$staff_id' AND date='$date'");
     if (mysqli_num_rows($check) == 0) {
-        $query = "INSERT INTO staff_attendance (staff_id, date, status) VALUES ('$staff_id', '$date', '$status')";
-        mysqli_query($conn, $query);
-        $msg = "Attendance marked successfully!";
-    } else {
-        $msg = "Already marked for today.";
+      $sql = "INSERT INTO teacher_attendance (staff_id, staff_name, date, status)
+              VALUES ('$staff_id', '$staff_name', '$date', '$status')";
+      mysqli_query($conn, $sql);
     }
+  }
+
+  echo "<script>alert('Attendance saved successfully!'); window.location='staff_attendanceAV.php';</script>";
 }
 ?>
 
@@ -26,105 +33,99 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f8f9fa;
-    }
+    * {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+}
 
-    .topbar {
-      height: 60px;
-      background-color: #0d6efd;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1050;
-    }
+.topbar {
+  height: 60px;
+  background-color: #0d6efd;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+}
 
-    .sidebar {
-      width: 250px;
-      background-color: #0d6efd;
-      color: white;
-      height: 100vh;
-      position: fixed;
-      top: 60px;
-      left: 0;
-      padding-top: 20px;
-      transition: transform 0.3s ease;
-      z-index: 1040;
-    }
+.sidebar {
+  width: 250px;
+  background-color: #0d6efd;
+  color: white;
+  height: 100vh;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  padding-top: 20px;
+  transition: transform 0.3s ease;
+  z-index: 1040;
+}
 
-    .sidebar a {
-      color: white;
-      display: block;
-      padding: 15px 20px;
-      text-decoration: none;
-    }
+.sidebar a {
+  color: white;
+  display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+}
 
-    .sidebar a:hover {
-      background-color:#00d4ff;
-      color:rgb(0,0,0);
-    }
+.sidebar a:hover {
+  background-color: #00d4ff;
+  color: rgb(0, 0, 0);
+}
 
-    .sidebar.collapsed {
-      transform: translateX(-100%);
-    }
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
 
-    .main {
-      margin-left: 250px;
-      padding: 80px 20px;
-      transition: margin-left 0.3s ease;
-    }
+/* Content wrapper with sidebar space */
+.main-content {
+  margin-left: 250px;
+  padding: 80px 20px 20px;
+  transition: margin-left 0.3s ease;
+}
 
-    .main.full {
-      margin-left: 0;
-    }
+/* When sidebar is collapsed */
+.sidebar.collapsed + .main-content {
+  margin-left: 0;
+}
 
-    .toggle-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-    }
+.toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+}
 
-    /* Compact input */
-    input.form-control-sm,
-    select.form-select-sm {
-      font-size: 12px;
-      padding: 2px 6px !important;
-      height: 28px !important;
-    }
+.form-control:focus,
+.form-select:focus {
+  border-color: black !important;
+  box-shadow: none !important;
+}
 
-    /* Remove blue focus border */
-    .form-control:focus,
-    .form-select:focus {
-      border-color: black !important;
-      box-shadow: none !important;
-    }
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
 
-    .card-compact {
-      width: 100%;
-      max-width: 320px;
-      padding: 10px;
-    }
+  .sidebar.show {
+    transform: translateX(0);
+  }
 
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
 
-      .sidebar.show {
-        transform: translateX(0);
-      }
-
-      .main {
-        margin-left: 0 !important;
-      }
-    }
   </style>
 </head>
 <body>
@@ -136,82 +137,112 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="emp_d.php"><i class="bi bi-house-door me-2"></i> Dashboard</a>
-    <a href="sections.php"><i class="bi bi-people me-2"></i> Sections</a>
-    <a href="sub_staff1.php"><i class="bi bi-book me-2"></i> Subject</a>
-    <a href="./staff_timetable.php"><i class="bi bi-calendar-week me-2"></i> Timetable</a>
-    <a href="./staff_attendance.php"><i class="bi bi-bell me-2"></i>Attendance</a>
-    <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
-  </div>
+<div class="sidebar" id="sidebar">
+  <a href="emp_d.php"><i class="bi bi-house-door me-2"></i> Dashboard</a>
+  <a href="sections.php"><i class="bi bi-people me-2"></i> Sections</a>
+  <a href="sub_staff1.php"><i class="bi bi-book me-2"></i> Subject</a>
+  <a href="./staff_timetable.php"><i class="bi bi-calendar-week me-2"></i> Timetable</a>
+  <a href="./staff_attendance.php"><i class="bi bi-bell me-2"></i> Attendance</a>
+  <a href="./login.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
 </div>
 
-<!-- Main Content -->
-<div class="main" id="mainContent">
-  <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card card-compact shadow-sm">
-      <div class="card-body">
-        <h4 class="card-title text-center mb-2">Mark Attendance</h4>
+<!-- Centered Content -->
+ <!-- Main Content Wrapper -->
+<div class="main-content">
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="card col-12 col-md-7 p-4 shadow">
+    <h3 class="mb-4 text-center text-primary">Mark Teacher Attendance</h3>
 
-       <?php if (isset($msg)) echo "<div class='fs-5 text-center fw-semibold bg-danger text-white mb-2'>$msg</div>"; ?>
-
-
-        <form method="POST" class="needs-validation" novalidate>
-          <div class="mb-2">
-            <label for="staff_id" class="form-label mb-1 small">Staff ID</label>
-            <input type="text" name="staff_id" id="staff_id" class="form-control form-control-sm border border-dark" required>
-            <div class="invalid-feedback">Please enter Staff ID.</div>
-          </div>
-
-          <div class="mb-2">
-            <label for="status" class="form-label mb-1 small">Status</label>
-            <select name="status" id="status" class="form-select form-select-sm border border-dark" required>
-              <option value="">Select</option>
-              <option>Present</option>
-              <option>Absent</option>
-              <option>Leave</option>
-            </select>
-            <div class="invalid-feedback">Please select status.</div>
-          </div>
-
-          <div class="text-center mt-3">
-            <button type="submit" class="btn btn-sm btn-primary px-3 py-2">Mark</button>
-            <button type="submit" class="btn btn-sm btn-success px-3 py-2 "><a href="./staff_attendanceview.php" class='text-white'style="text-decoration:none">View</a></button>
-          </div>
-        </form>
+    <!-- Search Form -->
+    <form method="GET" action="">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <label for="search" class="form-label">ID or Name:</label>
+          <input type="text" name="search" id="search" class="form-control" placeholder="e.g. 101" required value="<?= $_GET['search'] ?? '' ?>">
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
       </div>
-    </div>
+    </form>
+
+    <?php
+    if (!$_POST && isset($_GET['search'])) {
+      $search = mysqli_real_escape_string($conn, $_GET['search']);
+      $result = $conn->query("SELECT * FROM employee_form WHERE id LIKE '$search' OR emp_Name LIKE '$search'");
+
+      if ($result->num_rows > 0) {
+    ?>
+
+    <!-- Attendance Form -->
+    <form method="POST" action="">
+      <input type="hidden" name="attendance_date" value="<?= date('Y-m-d') ?>">
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Date:</label>
+        <input type="date" name="attendance_date" class="form-control w-25" value="<?= date('Y-m-d') ?>" readonly>
+      </div>
+
+      <div class="table-responsive mb-3">
+        <table class="table table-bordered text-center">
+          <thead class="table-info">
+            <tr>
+              <th>Staff Name</th>
+              <th>Present</th>
+              <th>Absent</th>
+              <th>OT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $i = 0; while ($row = $result->fetch_assoc()) { ?>
+            <tr>
+              <td class="text-start">
+                <input type="hidden" name="staff[<?= $i ?>][id]" value="<?= $row['id'] ?>">
+                <input type="hidden" name="staff[<?= $i ?>][name]" value="<?= htmlspecialchars($row['emp_Name']) ?>">
+                <?= htmlspecialchars($row['emp_Name']) ?>
+              </td>
+              <td><input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Present" class="form-check-input attendance-checkbox" checked data-index="<?= $i ?>"></td>
+              <td><input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Absent" class="form-check-input attendance-checkbox" data-index="<?= $i ?>"></td>
+              <td><input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="OT" class="form-check-input attendance-checkbox" data-index="<?= $i ?>"></td>
+            </tr>
+            <?php $i++; } ?>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-center gap-2">
+        <button type="submit" class="btn btn-primary text-white">Submit</button>
+        <a href="staff_attendanceAV.php" class="btn btn-warning text-white">View</a>
+      </div>
+    </form>
+
+    <?php
+      } else {
+        echo "<div class='alert alert-danger mt-3'>No staff found for <strong>" . htmlspecialchars($search) . "</strong>.</div>";
+      }
+    }
+    ?>
   </div>
 </div>
 
-<!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const main = document.getElementById("mainContent");
-    if (window.innerWidth <= 768) {
-      sidebar.classList.toggle("show");
-    } else {
-      sidebar.classList.toggle("collapsed");
-      main.classList.toggle("full");
-    }
-  }
-
-  // Bootstrap validation
-  (() => {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
+  // Only allow one checkbox to be selected per staff
+  document.querySelectorAll('.attendance-checkbox').forEach(cb => {
+    cb.addEventListener('change', function () {
+      const index = this.dataset.index;
+      if (this.checked) {
+        document.querySelectorAll(`.attendance-checkbox[data-index="${index}"]`).forEach(box => box.checked = false);
+        this.checked = true;
+      }
     });
-  })();
+  });
+
+
+  function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  sidebar.classList.toggle("collapsed");
+}
 </script>
+
 </body>
 </html>

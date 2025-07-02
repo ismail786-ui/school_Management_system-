@@ -110,8 +110,8 @@ if (isset($_POST['emp_submit'])) {
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-       <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
+       <a class="nav-link m-4 text-white " href="">
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Teacher Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
@@ -119,8 +119,6 @@ if (isset($_POST['emp_submit'])) {
         <h2><i class="bi bi-person-circle menu-icon"></i></h2>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <!-- <a href="./login.php" class="dropdown-item">
-          <i class="bi bi-person-fill"></i>Admin</a> -->
           <a class="dropdown-item text-dark" href="./login.php">
           <i class="bi bi-box-arrow-right"></i> Logout </a>
         </div>
@@ -403,10 +401,7 @@ if (isset($_POST['emp_submit'])) {
                      <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
-  </div>
+
 </footer>
           <!-- partial -->
 </div>

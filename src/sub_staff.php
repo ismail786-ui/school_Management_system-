@@ -52,8 +52,8 @@
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-       <a class="nav-link m-4 text-white " href="./app_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
+       <a class="nav-link m-4 text-white " href="./staf_form.php">
+        <h4 class='p-2 bg-success ml-5 mt-2 '> Teacher Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
