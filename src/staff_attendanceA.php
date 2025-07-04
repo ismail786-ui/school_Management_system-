@@ -30,7 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>School</title>
+        <link rel="shortcut icon" href="../src./assets/images/ps.png" type="image/png">
+    <link href="../src./assets/images/ps.png" rel="apple-touch-icon">
+    <title>Staff Attendance</title>
     <!-- plugins:css -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Chart.js -->
@@ -52,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
@@ -61,7 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-     <h3 class="navbar-brand brand-logo me-5 ">School</h3>
+     <h3 class="navbar-brand brand-logo me-5 ">
+        <img class="logo-image" src="../src./assets/images/ps.png" width="50" alt="Logo"><span class="text-success">Pearlsys</span> </h3>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

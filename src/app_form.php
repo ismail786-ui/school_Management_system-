@@ -124,7 +124,8 @@ $conn->close();
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-     <h3 class="navbar-brand brand-logo me-5 ">School</h3>
+     <h3 class="navbar-brand brand-logo me-5 ">
+        <img class="logo-image" src="../src./assets/images/ps.png" width="50" alt="Logo"><span class="text-success">Pearlsys</span> </h3>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->

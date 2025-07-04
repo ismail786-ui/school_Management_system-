@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Filter Students by Standard</title>
+  <link rel="shortcut icon" href="../src./assets/images/ps.png" type="image/png">
+  <link href="../src./assets/images/ps.png" rel="apple-touch-icon">
+  <title>Student Standard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>

@@ -32,7 +32,9 @@ $result = mysqli_query($conn, $query);
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>School</title>
+    <link rel="shortcut icon" href="../src./assets/images/ps.png" type="image/png">
+    <link href="../src./assets/images/ps.png" rel="apple-touch-icon">
+    <title>Staff Attendance View</title>
       <style>
     body {
       background-color: #f8f9fa;
@@ -72,7 +74,6 @@ $result = mysqli_query($conn, $query);
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>

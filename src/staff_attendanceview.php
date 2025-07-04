@@ -2,10 +2,10 @@
 include 'conn.php';
 
 $result = mysqli_query($conn, "
-  SELECT staff_attendance.*, staff_timetable.staff_name 
-  FROM staff_attendance 
-  JOIN staff_timetable ON staff_attendance.staff_id = staff_timetable.staff_id 
-  ORDER BY staff_attendance.date DESC
+  SELECT t1.*, t2.staff_name 
+  FROM teacher_attendance AS t1
+  JOIN teacher_attendance AS t2 ON t1.staff_id = t2.staff_id
+  ORDER BY t1.date DESC
 ");
 ?>
 
