@@ -166,7 +166,7 @@ function alert($msg) {
           <li class="nav-item"> <a class="nav-link" href="./app_form.php">Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_fees.php">Fees</a></li>
           <li class="nav-item"><a class="nav-link" href="./student_attendance.php">Attendance</a>
-          <li class="nav-item"> <a class="nav-link" href="./syllabus_upload.php">Syllabus Upload</a></li>
+          <li class="nav-item"> <a class="nav-link" href="">Syllabus Upload</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_upload.php">Question Upload</a></li>
         </ul>
       </div>

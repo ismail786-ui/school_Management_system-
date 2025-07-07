@@ -101,8 +101,6 @@ $result = $conn->query($sql);
 table {
     white-space: nowrap;
 }
-
-}
   </style>
   </head>
   <body>

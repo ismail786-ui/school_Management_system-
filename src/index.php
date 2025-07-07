@@ -298,7 +298,8 @@ $conn->close();
 </div>
 
 <!--------------------------------------------------------------------------------------------------------->
-                     <!-- content-wrapper ends -->
+
+<!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
   <div class="d-sm-flex justify-content-center">
@@ -316,6 +317,10 @@ $conn->close();
 
 
 
+
+
+  </div>
+</div>                   
 
 
 
