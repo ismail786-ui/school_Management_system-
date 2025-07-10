@@ -359,7 +359,8 @@ $conn->close();
         </div>
         <div class="col-md-4">
           <label for="stu_community" class="form-label">Community Certificate</label>
-          <input type="file" class="form-control" id="stu_community" name="stu_community" accept=".pdf,.jpg,.jpeg,.png">
+        <input type="file" class="form-control" id="stu_community" name="stu_community" accept=".pdf,.jpg,.jpeg,.png" required>
+
           <div class="text-danger"></div>
         </div>
       </div>
@@ -368,8 +369,19 @@ $conn->close();
       <div class="row mb-3">
         <div class="col-md-4">
           <label for="stu_blood" class="form-label">Blood Group</label>
-          <input type="text" class="form-control" id="stu_blood" name="stu_blood" required>
-          <div class="text-danger"></div>
+<select class="form-select" id="stu_blood" name="stu_blood" required>
+  <option value="">Select </option>
+  <option value="A+">A+</option>
+  <option value="A-">A−</option>
+  <option value="B+">B+</option>
+  <option value="B-">B−</option>
+  <option value="O+">O+</option>
+  <option value="O-">O−</option>
+  <option value="AB+">AB+</option>
+  <option value="AB-">AB−</option>
+</select>
+<div class="text-danger" id="bloodError"></div>
+
         </div>
         <div class="col-md-4">
           <label for="stu_state" class="form-label">State</label>
@@ -378,7 +390,8 @@ $conn->close();
         </div>
         <div class="col-md-4">
           <label for="stu_pan" class="form-label">PAN Card</label>
-          <input type="file" class="form-control" id="stu_pan" name="stu_pan" accept=".pdf,.jpg,.jpeg,.png">
+         <input type="file" class="form-control" id="stu_pan" name="stu_pan" accept=".pdf,.jpg,.jpeg,.png" required>
+
           <div class="text-danger"></div>
         </div>
       </div>
@@ -389,21 +402,21 @@ $conn->close();
           <label for="standard" class="form-label">School Standard</label>
           <select class="form-select" id="standard" name="standard" required onchange="toggleInputBox(this)">
             <option value="" disabled selected>Select</option>
-           <option value="pre kg">Pre Kg</option>
-           <option value="lkg">Lkg</option>
-           <option value="ukg">Ukg</option>
-           <option value="first">First</option>
-                <option value="second">Second</option>
-                <option value="third">Third</option>
-                <option value="fourth">Fourth</option>
-                <option value="fifth">Fifth</option>
-                <option value="sixth">Sixth</option>
-                <option value="seventh">Seventh</option>
-                <option value="eighth">Eighth</option>
-                <option value="ninth">Ninth</option>
-                <option value="tenth">Tenth</option>
-                <option value="eleventh">Eleventh</option>
-                <option value="twelfth">Twelfth</option>
+            <option value="pre kg">Pre KG</option>
+            <option value="lkg">LKG</option>
+            <option value="ukg">UKG</option>
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+            <option value="VI">VI</option>
+            <option value="VII">VII</option>
+            <option value="VIII">VIII</option>
+            <option value="IX">IX</option>
+            <option value="X">X</option>
+            <option value="XI">XI</option>
+            <option value="XII">XII</option>
           </select>
           <div class="text-danger"></div>
         </div>
@@ -439,12 +452,12 @@ $conn->close();
   let valid = true;
   const fields = form.querySelectorAll("input, select");
 
-
   form.querySelectorAll(".text-danger").forEach(el => el.textContent = "");
 
   fields.forEach(field => {
     const errorDiv = field.parentElement.querySelector(".text-danger");
-    if (field.hasAttribute("required") && !field.value.trim()) {
+
+    if (field.hasAttribute("required") && !field.value.trim() && field.type !== "file") {
       errorDiv.textContent = "This field is required.";
       valid = false;
     } else if (field.name === "stu_email" && field.value) {
@@ -466,15 +479,19 @@ $conn->close();
     } else if (field.type === "file" && field.hasAttribute("required") && field.files.length === 0) {
       errorDiv.textContent = "Please upload a file.";
       valid = false;
+    } else if (field.name === "stu_pan" && field.files.length > 0) {
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      if (!allowedTypes.includes(field.files[0].type)) {
+        errorDiv.textContent = "Only PDF, JPG, or PNG files allowed.";
+        valid = false;
+      }
     }
   });
 
   if (!valid) {
-    e.preventDefault(); 
+    e.preventDefault();
   }
 });
-
-
 
 
 
@@ -485,14 +502,14 @@ function toggleInputBox(selectElement) {
   const transferInput = document.getElementById("transfercertificate");
   const marksheetInput = document.getElementById("marksheet");
 
+  const selectedValue = selectElement.value.toUpperCase(); // Ensure match with Roman numerals
+
   const requiresTransfer = [
-    "ukg", "first", "second", "third", "fourth", "fifth",
-    "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth"
+    "UKG", "I", "II", "III", "IV", "V", 
+    "VI", "VII", "VIII", "IX", "X", "XI", "XII"
   ];
 
-  const requiresAdditional = ["eleventh", "twelfth"];
-
-  const selectedValue = selectElement.value.toLowerCase();
+  const requiresAdditional = ["XI", "XII"];
 
   // Toggle Transfer Certificate
   if (requiresTransfer.includes(selectedValue)) {

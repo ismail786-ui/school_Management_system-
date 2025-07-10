@@ -97,6 +97,14 @@ if (isset($_POST['emp_submit'])) {
       select.form-select option {
       color: #212529 !important;
      }
+ 
+  .text-danger {
+    color: red !important;
+    font-size: 0.875rem;
+    margin-top: 4px;
+  }
+
+
     </style>
   </head>
   <body>
@@ -229,161 +237,159 @@ if (isset($_POST['emp_submit'])) {
 
 
 <!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
- 
  <div class="container mt-5 mb-5 ">
-    <div class="bg-white p-5 shadow rounded text-black">
-      <h2 class="mb-4 text-center">Teachers Enrollment</h2>
-      <form action="" method="POST" enctype="multipart/form-data" class="formcolor">
-       <!-- Name and Email -->
-        <div class="row mb-3">
-          <div class="col-md-4">
-             <label for="emp_name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="stu_name" name="emp_name" required>
-          </div>
-           <div class="col-md-4">
-          <label for="emp_address" class="form-label">Address</label>
-          <input type="text" class="form-control" id="emp_address" name="emp_address"  required> 
-          </div>
-           <div class="col-md-4">
-           <label for="emp_aadhar" class="form-label">Qualification</label>
-        <input type="file" class="form-control" id="emp_qualification" required name="emp_qualification" name="emp_aadhar" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-          </div>
-         
-        </div>     
-        <!--Age,Gender,Address -->
-<!----------------------------------------------------------------------------------------------------------------->
-         <div class="row mb-3">
-            <div class="col-md-4">
-             <label for="emp_email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="emp_email" name="emp_email"  required>
-          </div>   
-           <div class="col-md-4">
-            <label for="emp_city" class="form-label">City</label>
-            <input type="text" class="form-control" id="emp_city" name="emp_city"  required>
-          </div>
-           <div class="col-md-4">
-           <label for="emp_photo" class="form-label">Staff Photo</label>
-          <input class="form-control" type="file" id="emp_photo"  required name="emp_photo" name="emp_aadhar" accept=".doc, .docx,.jpg,.jpeg,.png">
-          </div>
-            
-        
-        </div>
-<!-------------------------------------------------------------------------------------------------------------->
-          <div class="row mb-3">
-         <div class="col-md-4">
-            <label for="emp_age" class="form-label">Age</label>
-            <input type="number" class="form-control" id="emp_age" name="emp_age"max="99"  required>
-          </div>
-           <div class="col-md-4">
-            <label for="emp_pincode" class="form-label">Pincode</label>
-            <input type="text" class="form-control" id="emp_pincode" name="emp_pincode" maxlength="6"  required>
-          </div>
-           <div class="col-md-4">
-        <label for="emp_aadhar" class="form-label">Aadhar Card</label>
-          <input class="form-control" type="file" id="emp_aadhar"  required name="emp_aadhar" accept=".doc, .docx, .jpg, .jpeg, .png">
-      </div>
-       
-        
-        </div>
-<!--------------------------------------------------------------------------------------------------------------->
-        <div class="row mb-3">
-            <div class="col-md-4">
-            <label for="emp_dob" class="form-label">Date of Birth</label>
-            <input type="date" class="form-control" id="emp_dob" name="emp_dob"  required>
-          </div>
-           <div class="col-md-4">
-            <label for="emp_state" class="form-label">State</label>
-            <input type="text" class="form-control" id="emp_state" name="emp_state"  required>
-          </div>
-              <div class="col-md-4">
-    <div id="">
-    <label for="emp_bank" class="form-label">Bank Details</label>
-    <input class="form-control" type="file" id="emp_bank"  required name="emp_bank"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-    </div>
-  </div>
-        </div>
-<!------------------------------------------------------------------------------------------------------------>
-<!--------------------Admission,Photo,certificate-------------------------->
-          <div class="row mb-3">
-            <div class="col-md-4">
-           <label for="emp_gender" class="form-label">Gender</label>
-            <select class="form-select text-dark p-3" id="emp_gender" name="emp_gender"  required>
-              <option selected disabled>Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-        </div>  
+  <div class="bg-white p-5 shadow rounded text-black">
+    <h2 class="mb-4 text-center">Teachers Enrollment</h2>
+    <form action="" method="POST" enctype="multipart/form-data" class="formcolor">
+      <!-- Name and Email -->
+      <div class="row mb-3">
         <div class="col-md-4">
-            <label for="emp_mobile" class="form-label">Mobile Number</label>
-            <input type="text" class="form-control" id="emp_mobile" name="emp_mobile"maxlength="10"  required>
-          </div>
+          <label for="emp_name" class="form-label">Full Name</label>
+         <input type="text" class="form-control" id="emp_name" name="emp_name">
 
 
-    <div class="col-md-4">
-    <div id="">
-    <label for="emp_community" class="form-label">Community</label>
-    <input class="form-control" type="file" id="emp_community"  required name="emp_community"  accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
-    </div>
-  </div>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="emp_address" name="emp_address">
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_aadhar" class="form-label">Qualification</label>
+          <input type="file" class="form-control" id="emp_qualification"  name="emp_qualification" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <!--Age,Gender,Address -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="emp_email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="emp_email" name="emp_email" >
+          
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_city" class="form-label">City</label>
+          <input type="text" class="form-control" id="emp_city" name="emp_city" >
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_photo" class="form-label">Staff Photo</label>
+          <input class="form-control" type="file" id="emp_photo"  name="emp_photo" accept=".doc, .docx,.jpg,.jpeg,.png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="emp_age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="emp_age" name="emp_age" max="99" >
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_pincode" class="form-label">Pincode</label>
+          <input type="text" class="form-control" id="emp_pincode" name="emp_pincode" maxlength="6" >
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_aadhar" class="form-label">Aadhar Card</label>
+          <input class="form-control" type="file" id="emp_aadhar"  name="emp_aadhar" accept=".doc, .docx, .jpg, .jpeg, .png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="emp_dob" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="emp_dob" name="emp_dob">
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_state" class="form-label">State</label>
+          <input type="text" class="form-control" id="emp_state" name="emp_state" >
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_bank" class="form-label">Bank Details</label>
+          <input class="form-control" type="file" id="emp_bank"  name="emp_bank" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="emp_gender" class="form-label">Gender</label>
+          <select class="form-select text-dark p-3" id="emp_gender" name="emp_gender" >
+            <option selected disabled>Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+             <option value="Others">Others</option>
+          </select>
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_mobile" class="form-label">Mobile Number</label>
+          <input type="text" class="form-control" id="emp_mobile" name="emp_mobile" maxlength="10">
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_community" class="form-label">Community</label>
+          <input class="form-control" type="file" id="emp_community"  name="emp_community" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="emp_mother" class="form-label">Mother Name</label>
+          <input type="text" class="form-control" id="emp_mother" name="emp_mother" >
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_major" class="form-label">Teacher Major</label>
+          <input class="form-control" type="text" id="emp_major" name="emp_major">
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="experience" class="form-label">Experience</label>
+          <select id="emp_experience" class="form-select text-dark p-3"  name="emp_experience" onchange="toggleExperienceInput(this)">
+            <option selected disabled>Previous Experience</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="emp_father" class="form-label">Father Name</label>
+          <input type="text" class="form-control" id="emp_father" name="emp_father" >
+          <div class="text-danger"></div>
+        </div>
+        <div class="col-md-4">
+          <label for="emp_types" class="form-label">Teacher Types</label>
+          <select id="emp_types" class="form-select text-dark p-3"  name="emp_types">
+            
+            <option selected disabled>select</option>
+            <option value="Primary level">Primary level</option>
+            <option value="Secondary level">Secondary level</option>
+            <option value="Senior secondary level">Senior secondary level</option>
+            <option value="Professors">Professors</option>
+          </select>
+            <div class="text-danger"></div>
          
         </div>
-        
-<!--------------------------------------------------------------------------------------------------------->
- <div class="row mb-3">
-   <div class="col-md-4">
-            <label for="emp_mother" class="form-label">Mother Name</label>
-            <input type="text" class="form-control" id="emp_mother" name="emp_mother"  required>
-          </div>
-                <div class="col-md-4">
-    <div id="">
-    <label for="emp_major" class="form-label">Teacher Major</label>
-    <input class="form-control" type="text" id="emp_major"  required name="emp_major">
-    </div>
-  </div>
-          
-     <div class="col-md-4">
-  <label for="experience" class="form-label">Experience</label>
-  <select id="emp_experience" class="form-select text-dark p-3"  required name="emp_experience" onchange="toggleExperienceInput(this)">
-    <option selected disabled>Previous Experience</option>
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
-</div>
-  </div>
-  <!---------------------------------------------------------------------------------------------------------------->
- <div class="row mb-3">
-  <div class="col-md-4">
-            <label for="emp_father" class="form-label">Father Name</label>
-            <input type="text" class="form-control" id="emp_father" name="emp_father"  required>
-          </div>
-            <div class="col-md-4">
-  <label for="emp_types" class="form-label">Teacher Types</label>
-  <select id="emp_types" class="form-select text-dark p-3"  required name="emp_types">
-    <option selected disabled>select</option>
-    <option value="Primary level">Primary level</option>
-    <option value="Secondary level">Secondary level</option>
-    <option value="Senior secondary level">Senior secondary level</option>
-    <option value="Professors">Professors</option>
-
-  </select>
-</div>
-           <div class="col-md-4" id="experienceDetail" style="display: none;">
-  <label for="emp_ecertificate" class="form-label">Experience Certificates</label>
-   <input type="file" class="form-control" id="emp_ecertificate" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="emp_ecertificate" placeholder="e.g., 3 years in XYZ School">
-  </div>
-  
-        
-<!---------------------------------------------------------------------------------------------------------------------------------------------->
-    <!---Submit button -->
-    <div class="col-lg-12 mt-4 text-center">
-    <button type="submit" name="emp_submit" class="btn btn-primary">Save</button>
-    <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button>
-
-    </div>  
+        <div class="col-md-4" id="experienceDetail" style="display: none;">
+          <label for="emp_ecertificate" class="form-label">Experience Certificates</label>
+          <input type="file" class="form-control" id="emp_ecertificate" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="emp_ecertificate">
+          <div class="text-danger"></div>
+        </div>
+      </div>
+      <!---Submit button -->
+      <div class="col-lg-12 mt-4 text-center">
+        <button type="submit" name="emp_submit" class="btn btn-primary">Save</button>
+        <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button>
+      </div>
     </form>
-    </div>
   </div>
-
+</div>
 
 
 
@@ -419,6 +425,145 @@ if (isset($_POST['emp_submit'])) {
 
 
 
+<script>
+function toggleExperienceInput(select) {
+  const expBox = document.getElementById("experienceDetail");
+  const certInput = document.getElementById("emp_ecertificate");
+  if (select.value === "Yes") {
+    expBox.style.display = "block";
+  } else {
+    expBox.style.display = "none";
+    certInput.value = "";
+    certInput.parentElement.querySelector(".text-danger").textContent = "";
+  }
+}
+
+document.querySelector("form").addEventListener("submit", function (e) {
+  let valid = true;
+  const form = e.target;
+  const fields = form.querySelectorAll("input, select");
+
+  // Clear previous error messages
+  form.querySelectorAll(".text-danger").forEach(el => el.textContent = "");
+
+  fields.forEach(field => {
+    const name = field.name;
+    const type = field.type;
+    const tag = field.tagName.toLowerCase();
+    const errorDiv = field.parentElement.querySelector(".text-danger");
+
+    if (!errorDiv) return;
+
+ 
+    if ((type === "text" || type === "email" || type === "number" || type === "date" || tag === "select") && field.value.trim() === "") {
+      errorDiv.textContent = "This field is required.";
+      valid = false;
+      return;
+    }
+
+       if (name === "emp_name" && field.value.trim() !== "") {
+      if (!/^[A-Za-z\s]+$/.test(field.value.trim())) {
+        errorDiv.textContent = "Name should contain only letters.";
+        valid = false;
+      }
+    }
+    if (name === "emp_email" && field.value.trim() !== "") {
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+      if (!emailPattern.test(field.value.trim())) {
+        errorDiv.textContent = "Enter a valid email address.";
+        valid = false;
+      }
+    }
+
+    // --- Mobile number ---
+    if (name === "emp_mobile" && field.value.trim() !== "") {
+      if (!/^\d{10}$/.test(field.value.trim())) {
+        errorDiv.textContent = "Enter a 10-digit mobile number.";
+        valid = false;
+      }
+    }
+
+    // --- Pincode ---
+    if (name === "emp_pincode" && field.value.trim() !== "") {
+      if (!/^\d{6}$/.test(field.value.trim())) {
+        errorDiv.textContent = "Enter a 6-digit pincode.";
+        valid = false;
+      }
+    }
+    
+        if (name === "emp_age" && field.value.trim() !== "") {
+      if (!/^\d+$/.test(field.value.trim()) || parseInt(field.value) < 18 || parseInt(field.value) > 99) {
+        errorDiv.textContent = "Enter a valid age (18–99).";
+        valid = false;
+      }
+    }
+
+    // --- File validation ---
+    if (type === "file") {
+      const isExperience = name === "emp_ecertificate";
+      const expRequired = document.getElementById("emp_experience").value === "Yes";
+
+      // Required file check
+      if (field.files.length === 0 && (!isExperience || (isExperience && expRequired))) {
+        errorDiv.textContent = "Please upload a file.";
+        valid = false;
+        return;
+      }
+
+      // Allowed file type check
+      if (field.files.length > 0) {
+        const file = field.files[0];
+        const allowedTypes = [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "image/jpeg",
+          "image/jpg",
+          "image/png"
+        ];
+        if (!allowedTypes.includes(file.type)) {
+          errorDiv.textContent = "Only PDF, Word, JPG, or PNG files allowed.";
+          valid = false;
+        }
+      }
+    }
+  });
+
+  // ✅ Gender validation
+  const gender = document.getElementById("emp_gender");
+  const genderError = gender.parentElement.querySelector(".text-danger");
+  if (gender.selectedIndex === 0) {
+    genderError.textContent = "Please select gender.";
+    valid = false;
+  }
+
+  // ✅ Teacher type validation
+  const teacherType = document.getElementById("emp_types");
+  const typeError = teacherType.parentElement.querySelector(".text-danger");
+  if (teacherType.selectedIndex === 0) {
+    typeError.textContent = "Please select teacher type.";
+    valid = false;
+  }
+
+  // ✅ Experience validation
+  const expSelect = document.getElementById("emp_experience");
+  const expError = expSelect.parentElement.querySelector(".text-danger");
+  if (expSelect.selectedIndex === 0) {
+    expError.textContent = "Please select experience option.";
+    valid = false;
+  }
+
+  // ✅ Experience certificate required if Yes selected
+  const expCert = document.getElementById("emp_ecertificate");
+  const certError = expCert.parentElement.querySelector(".text-danger");
+  if (expSelect.value === "Yes" && expCert.files.length === 0) {
+    certError.textContent = "Please upload experience certificate.";
+    valid = false;
+  }
+
+  if (!valid) e.preventDefault();
+});
+</script>
 
 
 

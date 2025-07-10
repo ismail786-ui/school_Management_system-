@@ -10,7 +10,7 @@ require 'PHPMailer/src/SMTP.php';
 
 // Example dynamic data (replace with real values or $_POST/DB data)
 $student_email = "student@example.com";
-$student_name = "John Doe";
+$student_name = "Ismail";
 $stu_id = "STU123";
 $standard = "8-B";
 $payment_mode = "Cash";
@@ -28,14 +28,14 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'mohamedismail6362@gmail.com';         // ✅ Your Gmail
-    $mail->Password   = 'uzxgyktzwwzvblyq';                     // ✅ App Password (remove spaces!)
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;        // ✅ Best practice
+    $mail->Username   = 'mohamedismail6362@gmail.com';        
+    $mail->Password   = 'uzxgyktzwwzvblyq';                   
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;      
     $mail->Port       = 587;
 
     // From and To
-    $mail->setFrom('mohamedismail6362@gmail.com', 'Pearlsys School'); // ✅ Fix from email
-    $mail->addAddress($student_email, $student_name); // ✅ Recipient
+    $mail->setFrom('mohamedismail6362@gmail.com', 'Pearlsys School');
+    $mail->addAddress($student_email, $student_name); 
 
     // Content
     $mail->isHTML(true);

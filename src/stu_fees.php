@@ -239,12 +239,12 @@ if (isset($_POST['submit_fees'])) {
 
         <!-- Student ID Row -->
         <div class="row mb-3">
-          <div class="col-md-3">
+          <div class="col-md-2 col-sm-4">
             <label for="stu_id" class="form-label">Student ID</label>
             <input type="number" class="form-control p-2" id="stu_id" name="stu_id" value="<?= $stu_id ?>">
           </div>
-          <div class="col-md-2 d-flex align-items-end">
-            <button type="submit" name="get_student" class="btn btn-info text-white w-100 p-2 " Required>Search</button>
+          <div class="col-md-2 d-flex align-items-end mt-2 col-sm-6">
+            <button type="submit" name="get_student" class="btn btn-info text-white w-50 p-2 " Required>Search</button>
           </div>
         </div>
 
@@ -311,7 +311,7 @@ if (isset($_POST['submit_fees'])) {
 
         <!-- Submit -->
         <div class="col-md-8 text-center mt-4">
-          <button type="submit" name="submit_fees" class="btn btn-primary px-4 py-2">Submit Form</button>
+          <button type="submit" name="submit_fees" class="btn btn-primary px-4 py-2">Submit</button>
         </div>
 
       </form>
