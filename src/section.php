@@ -61,7 +61,7 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+         <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -191,53 +191,69 @@ if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
 }
 ?>
 
-
-  <div class="container-fluid mt-5 ">
-    <h2 class="col-lg-11 text-center mb-4">Sections</h2>
+<div class="container mt-5 bg-white shadow-sm rounded p-4">
+  <!-- Title + Search -->
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h3 class="mb-3 mb-md-0">📚 Class Sections</h3>
 
     <!-- Search Form -->
-    <form method="GET" class="row mb-4 justify-content-center">
-      <div class="col-lg-2">
-        <input type="text" name="search_name" class="form-control" placeholder="Enter Class Name (e.g., First, Second)" required>
-      </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-primary">Search</button>
-      </div>
-    </form>
+    <form method="GET" class="d-flex align-items-center" role="search">
+    <input
+  type="text"
+  name="search_name"
+  class="form-control form-control-sm w-auto me-2 my-1"
+  placeholder="Enter Class Name (e.g., First, Second)"
+  required
+  style="border: 1px solid black; box-shadow: none; outline: none;"
+   this.style.boxShadow='none';"
+  onblur="this.style.outline='none';"
+  value="<?= htmlspecialchars($_GET['search_name'] ?? '') ?>"
+>
 
-    <!-- Table to show result -->
-    <?php if (!empty($classData)) { ?>
-      <div class="table-responsive">
-        <table class="table table-bordered table-striped text-center">
-          <thead class="table-primary">
-            <tr>
-              <th>Class ID</th>
-              <th>Class Name</th>
-              <th>Class Section</th>
-              <th>Class Teacher</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($classData as $row) { ?>
-              <tr>
-                <td><?= $row['class_id'] ?></td>
-                <td><?= $row['class_name'] ?></td>
-                <td><?= $row['class_section'] ?></td>
-                <td><?= $row['class_teacher'] ?></td>
-              </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      </div>
-    <?php } elseif (isset($_GET['search_name'])) { ?>
-      <div class="alert alert-warning text-center">
-        No record found for class name "<strong><?= htmlspecialchars($_GET['search_name']) ?></strong>"
+     
+       <button type="submit" class="btn btn-primary">Search</button>
+</form>
+    </form>
+  </div>
+<?php if (!empty($classData)) { ?>
+  <!-- Regular table on large screens -->
+  <div class="d-none d-md-block">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th class="fs-6"><h3>🆔 Class ID</h3></th>
+          <th class="fs-6"><h3>📖 Class Name</h3></th>
+          <th class="fs-6"><h3>🏫 Section</h3></th>
+          <th class="fs-6"><h3>👩‍🏫 Class Teacher</h3></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($classData as $row) { ?>
+          <tr>
+            <td><h6><?= htmlspecialchars($row['class_id']) ?></h6></td>
+            <td><h6><?= htmlspecialchars($row['class_name']) ?></h6></td>
+            <td><h6><?= htmlspecialchars($row['class_section']) ?></h6></td>
+            <td><h6><?= htmlspecialchars($row['class_teacher']) ?></h6></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile card layout on small screens -->
+  <div class="d-block d-md-none">
+    <?php foreach ($classData as $row) { ?>
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <h5 class="mb-1"><strong>🆔 Class ID:</strong> <?= htmlspecialchars($row['class_id']) ?></h5>
+          <h5 class="mb-1"><strong>📖 Class Name:</strong> <?= htmlspecialchars($row['class_name']) ?></h5>
+          <h5 class="mb-1"><strong>🏫 Section:</strong> <?= htmlspecialchars($row['class_section']) ?></h5>
+          <h5 class="mb-0"><strong>👩‍🏫 Class Teacher:</strong> <?= htmlspecialchars($row['class_teacher']) ?></h5>
+        </div>
       </div>
     <?php } ?>
   </div>
-</body>
-</html>
-
+<?php } ?>
 
 
 

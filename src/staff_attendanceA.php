@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+          <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -204,25 +204,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </style>
 </head>
 <body>
+<div class="col-md-10">
+  <div class="container mt-4 bg-white shadow-sm rounded p-4">
 
-<div class="container">
-  <div class="card col-md-8">
-    <h3 class="mb-4 text-center text-primary">Mark Teacher Attendance</h3>
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <h3 class="mb-3 mb-md-0">👨‍🏫 Teacher Attendance</h3>
 
-    <!-- Search Form -->
-    <form method="GET" action="">
-      <div class="row mb-3">
-        <div class="col-md-3">
-          <label for="search" class="form-label">ID or Name:</label>
-          <input type="text" name="search" id="search" class="form-control" placeholder="e.g. 101 "
-                 required value="<?= $_GET['search'] ?? '' ?>">
-        </div>
-        <div class="col-md-4 d-flex align-items-end">
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </form>
+      <!-- Search Form -->
+      <form method="GET" class="d-flex align-items-center flex-wrap gap-2" role="search">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          class="form-control me-2 w-50"
+          placeholder="e.g. 101"
+          required
+          style="border: 1px solid black; box-shadow: none; outline: none;"
+          this.style.boxShadow='none';
+          onblur="this.style.outline='none';"
+          value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
+        >
+        <button type="submit" class="btn btn-primary" style="background-color: rgb(32, 143, 255); outline: none;">Search</button>
+        <a href="staff_attendanceAV.php" class="btn btn-warning text-white">View</a>
+      </form>
+    </div>
 
+    <!-- Attendance Table -->
     <?php
     if (!$_POST && isset($_GET['search'])) {
       $search = mysqli_real_escape_string($conn, $_GET['search']);
@@ -230,8 +238,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       if ($result->num_rows > 0) {
     ?>
-
-    <!-- Attendance Form -->
     <form method="POST" action="">
       <input type="hidden" name="attendance_date" value="<?= date('Y-m-d') ?>">
 
@@ -240,14 +246,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="date" name="attendance_date" class="form-control w-25" value="<?= date('Y-m-d') ?>" readonly>
       </div>
 
-      <div class="table-responsive mb-3">
-        <table class="table table-bordered text-center">
-          <thead class="table-light">
+      <div class="table-responsive">
+        <table class="table table-bordered text-center align-middle">
+          <thead class="table-primary">
             <tr>
-              <th>Staff Name</th>
-              <th>Present</th>
-              <th>Absent</th>
-              <th>OT</th>
+              <th>👤 Staff Name</th>
+              <th>✅ Present</th>
+              <th>❌ Absent</th>
+              <th>🕒 OT</th>
             </tr>
           </thead>
           <tbody>
@@ -259,13 +265,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?= htmlspecialchars($row['emp_Name']) ?>
               </td>
               <td>
-                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Present" class="form-check-input attendance-checkbox" checked data-index="<?= $i ?>">
+                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Present" class="form-check-input attendance-checkbox" checked data-index="<?= $i ?>" style="border:1px solid black;">
               </td>
               <td>
-                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Absent" class="form-check-input attendance-checkbox" data-index="<?= $i ?>">
+                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="Absent" class="form-check-input attendance-checkbox" data-index="<?= $i ?>" style="border:1px solid black;">
               </td>
               <td>
-                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="OT" class="form-check-input attendance-checkbox" data-index="<?= $i ?>">
+                <input type="checkbox" name="staff[<?= $i ?>][attendance][]" value="OT" class="form-check-input attendance-checkbox" data-index="<?= $i ?>" style="border:1px solid black;">
               </td>
             </tr>
             <?php $i++; } ?>
@@ -273,9 +279,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </table>
       </div>
 
-      <div class="d-flex justify-content-center gap-2">
-        <button type="submit" class="btn btn-primary text-white">Submit</button>
-
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-success text-white">Submit</button>
         <a href="staff_attendanceAV.php" class="btn btn-warning text-white">View</a>
       </div>
     </form>
@@ -288,6 +293,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ?>
   </div>
 </div>
+
 
 <script>
   document.querySelectorAll('.attendance-checkbox').forEach(cb => {

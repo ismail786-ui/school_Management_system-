@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="../src./assets/images/ps.png" type="image/png">
     <link href="../src./assets/images/ps.png" rel="apple-touch-icon">
-    <title>Standard</title>
+    <title>Pearlsys</title>
     <!-- plugins:css -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Chart.js -->
@@ -64,7 +64,7 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+          <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -86,9 +86,9 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
-          <span class="menu-title">Dashboard</span>
+               <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
@@ -185,29 +185,35 @@
     <h2 class="mb-0">Students by Standard</h2>
   </div>
 
-  <!-- Dropdown Form -->
-  <form method="GET" class="row g-3 mb-4 justify-content-center">
-    <div class="col-md-2">
-      <select name="std" class="form-select" required>
-        <option value="" class="text-dark">Select Standard</option>
-        <?php
-          $standards = [
-            "Pre-KG", "LKG", "UKG",
-            "First", "Second", "Third", "Fourth", "Fifth",
-            "Sixth", "Seventh", "Eighth",
-            "Ninth", "Tenth", "Eleventh", "Twelfth"
-          ];
-          foreach ($standards as $std) {
-            $selected = (isset($_GET['std']) && $_GET['std'] == $std) ? 'selected' : '';
-            echo "<option class='text-dark' value='$std' $selected>$std</option>";
-          }
-        ?>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary w-100">Search</button>
-    </div>
-  </form>
+  <div class="container mt-5 bg-white shadow-sm rounded p-4">
+  <!-- Page Title -->
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h3 class="mb-3 mb-md-0">🎓 Student List by Standard</h3>
+
+  <!-- Standard Dropdown Search Form -->
+<form method="GET" class="d-flex align-items-center gap-2" role="search">
+  <select name="std" class="form-select me-2 text-dark"
+          required
+          style="border: 2px solid black; box-shadow: none; outline: none; height: 38px;width:125px;">
+    <option value="" class="text-dark">Select</option>
+    <?php
+      $standards = [
+        "Pre-KG", "LKG", "UKG",
+        "First", "Second", "Third", "Fourth", "Fifth",
+        "Sixth", "Seventh", "Eighth",
+        "Ninth", "Tenth", "Eleventh", "Twelfth"
+      ];
+      foreach ($standards as $std) {
+        $selected = (isset($_GET['std']) && $_GET['std'] == $std) ? 'selected' : '';
+        echo "<option value='$std' class='text-dark' $selected>$std</option>";
+      }
+    ?>
+  </select>
+
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+  </div>
 
   <?php
     if (isset($_GET['std'])) {
@@ -218,23 +224,22 @@
       $result = mysqli_query($conn, $sql);
 
       if (mysqli_num_rows($result) > 0) {
-        echo "<table class='table table-bordered table-striped'>
-                <thead class='table-info'>
-                  <tr>
-                    <th class=''>Name</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                    <th>Date of Birth</th>
-                    <th>Blood Group</th>
-                    <th>City</th>
-                    <th>Mobile</th>
-                  </tr>
-                </thead>
-                <tbody>";
-        $i = 1;
+        echo "<div class='table-responsive'>
+                <table class='table table-bordered table-striped'>
+                  <thead class='table-info'>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Gender</th>
+                      <th>Date of Birth</th>
+                      <th>Blood Group</th>
+                      <th>City</th>
+                      <th>Mobile</th>
+                    </tr>
+                  </thead>
+                  <tbody>";
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr>
-
                   <td>{$row['stu_name']}</td>
                   <td>{$row['stu_email']}</td>
                   <td>{$row['stu_gender']}</td>
@@ -243,11 +248,12 @@
                   <td>{$row['stu_city']}</td>
                   <td>{$row['stu_mobile']}</td>
                 </tr>";
-          $i++;
         }
-        echo "</tbody></table>";
+        echo "</tbody></table></div>";
       } else {
-        echo "<div class='d-flex justify-content-center'><div class='alert alert-warning text-center'>No students found in $standard.</div></div>";
+        echo "<div class='d-flex justify-content-center'>
+                <div class='alert alert-warning text-center'>No students found in $standard.</div>
+              </div>";
       }
     }
   ?>

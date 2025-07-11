@@ -61,7 +61,7 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+         <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">

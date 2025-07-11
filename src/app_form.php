@@ -137,7 +137,7 @@ $conn->close();
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+         <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -268,7 +268,7 @@ $conn->close();
       <div class="row mb-3">
         <div class="col-md-4">
           <label for="stu_name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="stu_name" name="stu_name" required>
+          <input type="text" class="form-control" id="stu_name" pattern="[A-Za-z\s]+" name="stu_name" required>
           <div class="text-danger"></div>
         </div>
         <div class="col-md-4">
@@ -381,7 +381,6 @@ $conn->close();
   <option value="AB-">AB−</option>
 </select>
 <div class="text-danger" id="bloodError"></div>
-
         </div>
         <div class="col-md-4">
           <label for="stu_state" class="form-label">State</label>
@@ -437,7 +436,7 @@ $conn->close();
 
       <!-- Submit Buttons -->
       <div class="text-center mt-4">
-        <button type="submit" name="submit" class="btn btn-primary text-white">Submit</button>
+        <button type="submit" name="submit" class="btn btn-primary text-white">Save</button>
         <button type="reset" class="btn btn-danger text-white">Reset</button>
       </div>
 

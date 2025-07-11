@@ -55,12 +55,12 @@
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
        <a class="nav-link m-4 text-white " href="./staf_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '> Teacher Enrollment</h4>
+        <h4 class='p-1 bg-success ml-5 mt-2 '> Teacher Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+         <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -208,57 +208,95 @@ if (!empty($search_term)) {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Employee Details</title>
+
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-5">
-  <h4 class="mb-2 text-center col-lg-11"> Teacher Details</h4>
+<div class="container  bg-white shadow-sm rounded p-4">
+  <!-- Page Title -->
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+  <h2 class="mb-3 mb-md-0">👩‍🏫 Teacher Details</h2>
 
   <!-- Search Form -->
-  <form method="GET" class="mb-2">
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-2 mt-3">
-        <input type="text" name="search_term" class="form-control" placeholder="Search ID or Name" value="<?= htmlspecialchars($search_term) ?>">
-      </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-primary w-50 mt-3 mb-3">Search</button>
-      </div>
-    </div>
-  </form>
+<form method="GET" class="d-flex align-items-center " role="search">
+  <input
+    type="text"
+    name="search_term"
+    class="form-control me-2"
+    style="border:1px solid black; box-shadow: none; outline: none; font-size:16px;"
+    this.style.boxShadow='none';
+    onblur="this.style.outline='none';"
+    placeholder="Enter ID or Name"
+    value="<?= htmlspecialchars($search_term ?? '') ?>">
+ <button type="submit" class="btn btn-primary w-75 p-2 "
+  style="background-color: rgb(27, 112, 196); border: none; border-radius:0;">
+  Search
+</button>
 
-  <?php if ($show_table): ?>
-    <table class="table table-bordered table-hover text-center">
-      <thead class="table-success">
+</form>
+
+</div>
+
+
+
+<!-- Results Table -->
+<?php if ($show_table): ?>
+
+  <!-- 🖥️ Table View on Medium+ screens -->
+  <div class="table-responsive d-none d-md-block">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-light">
         <tr>
-          <th>Employee Name</th>
-          <th>Subject Name</th>
-          <th>Standard</th>
-          <th>Section</th>
+          <th><h5>👤 Employee Name</h5></th>
+          <th><h5>📘 Subject Name</h5></th>
+          <th><h5>🎓 Standard</h5></th>
+          <th><h5>🏫 Section</h5></th>
         </tr>
       </thead>
       <tbody>
-        <?php
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>
-                        <td>{$row['emp_Name']}</td>
-                        <td>{$row['sub_name']}</td>
-                        <td>{$row['sub_standard']}</td>
-                        <td>{$row['sub_sec']}</td>
-                      </tr>";
-            }
-        } else {
-            echo "<tr><td colspan='4'>No results found</td></tr>";
-        }
-        ?>
+        <?php if (mysqli_num_rows($result) > 0): ?>
+          <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            <tr>
+              <td><h6><?= htmlspecialchars($row['emp_Name']) ?></h6></td>
+              <td><h6><?= htmlspecialchars($row['sub_name']) ?></h6></td>
+              <td><h6><?= htmlspecialchars($row['sub_standard']) ?></h6></td>
+              <td><h6><?= htmlspecialchars($row['sub_sec']) ?></h6></td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <tr><td colspan="4" class="text-white bg-danger">No results found.</td></tr>
+        <?php endif; ?>
       </tbody>
     </table>
-  <?php endif; ?>
-</div>
+  </div>
+
+  <!-- 📱 Card View on Small Screens -->
+  <div class="d-block d-md-none">
+    <?php if (mysqli_num_rows($result) > 0): ?>
+      <?php
+      // Move pointer to beginning for second loop
+      mysqli_data_seek($result, 0);
+      while ($row = mysqli_fetch_assoc($result)): ?>
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <p class="mb-1"><strong>👤 Employee Name:</strong> <?= htmlspecialchars($row['emp_Name']) ?></p>
+            <p class="mb-1"><strong>📘 Subject Name:</strong> <?= htmlspecialchars($row['sub_name']) ?></p>
+            <p class="mb-1"><strong>🎓 Standard:</strong> <?= htmlspecialchars($row['sub_standard']) ?></p>
+            <p class="mb-0"><strong>🏫 Section:</strong> <?= htmlspecialchars($row['sub_sec']) ?></p>
+          </div>
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <div class="alert alert-danger text-center mt-2">No results found.</div>
+    <?php endif; ?>
+  </div>
+
+<?php endif; ?>
+
+
+
+
+
+
 </body>
 </html>
 

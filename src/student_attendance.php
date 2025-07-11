@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+         <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -171,84 +171,105 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </ul>
 </nav>
 
-  <!-- Main Content -->
-<div class="col-md-10">
-        <div class="container mt-4">
-          <h3 class="mb-4">Mark Attendance</h3>
-          <form method="GET" action="">
-            <div class="row mb-4">
-              <div class="col-md-2">
-                <label for="search_class" class="form-label">Select Class:</label>
-              <input type="text" name="search_class" id="search_class" class="form-control"
-              placeholder="e.g. 11-A" required value="">
-              </div>
-              <div class="col-md-4 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary">Search</button>
-              </div>
-            </div>
-          </form>
-          <?php
-          if (isset($_GET['search_class'])) {
-            $class = $_GET['search_class'];
-            $result = $conn->query("SELECT * FROM students WHERE class='$class'");
-            if ($result->num_rows > 0) {
-          ?>
-<form method="POST" action="student_submitattendance.php">
-  <input type="hidden" name="staff_name" value="Shankar">
-  <input type="hidden" name="class" value="<?= htmlspecialchars($class) ?>">
-  <div class="mb-3">
-    <label><strong>Date:</strong></label>
-    <input type="date" name="attendance_date" id="attendance_date" class="form-control w-25" required>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-bordered text-center">
-      <thead class="table-primary">
-        <tr>
-          <th>Student Name</th>
-          <th>Present</th>
-          <th>Absent</th>
-          <th>OT</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php $i = 0; while ($row = $result->fetch_assoc()) { ?>
-        <tr>
-          <td class="text-start">
-            <input type="hidden" name="students[<?= $i ?>][id]" value="<?= $row['id'] ?>">
-            <input type="hidden" name="students[<?= $i ?>][name]" value="<?= $row['name'] ?>">
-            <?= htmlspecialchars($row['name']) ?>
-          </td>
-          <td>
-            <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Present" class="attendance-checkbox" checked data-index="<?= $i ?>">
-          </td>
-          <td>
-           <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Absent" class="attendance-checkbox" data-index="<?= $i ?>">
-          </td>
-          <td>
-            <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="OT" class="attendance-checkbox" data-index="<?= $i ?>">
-          </td>
-        </tr>
-        <?php $i++; } ?>
-      </tbody>
-    </table>
-  </div>
 
-  <div class="text-end mt-3">
-    <a href="student_viewattendance.php" class="btn btn-warning text-white">View Attendance</a>
-    <button type="submit" class="btn btn-success text-white">Submit Attendance</button>
-  </div>
+
+
+<!-- Main Content -->
+<div class="col-md-10">
+  <div class="container mt-4 bg-white shadow-sm rounded p-4">
+    
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <h3 class="mb-3 mb-md-0">📋 Student Attendance</h3>
+
+<!-- Search Form -->
+<form method="GET" class="d-flex align-items-center flex-wrap gap-2" role="search">
+  <input
+    type="text"
+    name="search_class"
+    id="search_class"
+    class="form-control me-2 w-50"
+    placeholder="e.g. 11-A"
+    required
+    style="border: 1px solid black; box-shadow: none; outline: none;"
+    this.style.boxShadow='none';
+    onblur="this.style.outline='none';"
+  >
+  <button type="submit" class="btn btn-primary" style="background-color: rgb(32, 143, 255); outline: none;">Search</button>
+  
+  <!-- View Button -->
+  <a href="student_viewattendance.php" class="btn btn-warning text-white">View </a>
 </form>
-          <?php
-            } else {
-              echo "<div class='alert alert-danger w-25'>No students found for class <strong>" . htmlspecialchars($class) . "</strong>.</div>";
-            }
-          }
-          ?>
-        </div>
-      </div>
+
     </div>
+
+    <!-- Attendance Table -->
+    <?php
+    if (isset($_GET['search_class'])) {
+      $class = $_GET['search_class'];
+      $result = $conn->query("SELECT * FROM students WHERE class='$class'");
+      if ($result->num_rows > 0) {
+    ?>
+
+    <form method="POST" action="student_submitattendance.php">
+      <input type="hidden" name="staff_name" value="Shankar">
+      <input type="hidden" name="class" value="<?= htmlspecialchars($class) ?>">
+
+      <div class="mb-3 mt-3">
+        <label><strong>Date:</strong></label>
+        <input type="date" name="attendance_date" id="attendance_date" class="form-control w-25" required>
+      </div>
+
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered text-center align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th>👤 Student Name</th>
+              <th>✅ Present</th>
+              <th>❌ Absent</th>
+              <th>🕒 OT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $i = 0; while ($row = $result->fetch_assoc()) { ?>
+              <tr>
+                <td class="text-start">
+                  <input type="hidden" name="students[<?= $i ?>][id]" value="<?= $row['id'] ?>">
+                  <input type="hidden" name="students[<?= $i ?>][name]" value="<?= $row['name'] ?>">
+                  <?= htmlspecialchars($row['name']) ?>
+                </td>
+                <td>
+                  <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Present" class="form-check-input attendance-checkbox" checked data-index="<?= $i ?>"  style="border:1px solid black;">
+                </td>
+                <td>
+                  <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="Absent" class="form-check-input attendance-checkbox" data-index="<?= $i ?>"  style="border:1px solid black;">
+                </td>
+                <td>
+                  <input type="checkbox" name="students[<?= $i ?>][attendance][]" value="OT" class="form-check-input attendance-checkbox" data-index="<?= $i ?>"  style="border:1px solid black;">
+                </td>
+              </tr>
+            <?php $i++; } ?>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Buttons -->
+      <div class="text-center mt-3">
+        <a href="student_viewattendance.php" class="btn btn-warning text-white">View </a>
+        <button type="submit" class="btn btn-success text-white">Submit </button>
+      </div>
+    </form>
+
+    <?php
+      } else {
+        echo "<div class='alert alert-danger w-25'>No students found for class <strong>" . htmlspecialchars($class) . "</strong>.</div>";
+      }
+    }
+    ?>
   </div>
 </div>
+
 
 
 

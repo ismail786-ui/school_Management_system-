@@ -60,7 +60,7 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+          <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -194,48 +194,59 @@ if (!empty($search_id)) {
     }
 }
 ?>
+<div class="col-md-10">
+  <div class="container bg-white shadow-sm rounded p-4">
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-5 col-md-5">
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <h2 class="mb-3 mb-md-0">🎓 Search Student</h2>
 
-      <!-- Top Section: Title + Home Button -->
-      <div class="d-flex  justify-content-start align-items-center">
-        <h3 class="mb-0 ml-2">Search Student</h3>
-</div>
       <!-- Search Form -->
-      <form method="GET" class="row g-2 mb-2 p-3">
-        <div class="col-md-4">
-          <input type="text" name="stu_id" class="form-control p-2 gx-2" placeholder="Enter Student ID" value="<?= htmlspecialchars($search_id ?? '') ?>" required>
-        </div>
-        <div class="col-md-4">
-          <button type="submit" class="btn btn-primary w-75  p-2 ">Search</button>
-        </div>
-      </form>
-      <!-- Result Card -->
-      <?php if (isset($data) && $data): ?>
-        <div class="card shadow-sm mt-4">
-          <div class="card-header bg-success text-white">Student Information</div>
-          <div class="card-body">
-            <table class="table table-bordered mb-0">
-              <tr><th>ID</th><td><?= $data['stu_id'] ?></td></tr>
-              <tr><th>Admission Date</th><td><?= $data['stu_admission'] ?></td></tr>
-              <tr><th>Name</th><td><?= $data['stu_name'] ?></td></tr>
-              <tr><th>Date of Birth</th><td><?= $data['stu_dob'] ?></td></tr>
-              <tr><th>Blood Group</th><td><?= $data['stu_blood'] ?></td></tr>
-              <tr><th>Class</th><td><?= $data['class_name'] ?></td></tr>
-              <tr><th>Section</th><td><?= $data['class_section'] ?></td></tr>
-              <tr><th>Class Teacher</th><td><?= $data['class_teacher'] ?></td></tr>
-            </table>
-          </div>
-        </div>
-      <?php elseif (!empty($search_id)): ?>
-        <div class="alert alert-danger text-center mt-4">No record found for ID: <?= htmlspecialchars($search_id) ?></div>
-      <?php endif; ?>
+     <form method="GET" class="d-flex align-items-center" role="search">
+  <input
+    type="text"
+    name="stu_id"
+    class="form-control me-2 w-50"
+    placeholder="Enter Student ID "
+    required
+    style="border:1px solid black; box-shadow: none; outline: none; font-size:16px;height:15px;"
+    this.style.boxShadow='none';
+    onblur="this.style.outline='none';"
+    value="<?= htmlspecialchars($search_id ?? '') ?>"
+  >
+<button type="submit" class="btn btn-primary"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Search
+</button>
+
+</form>
 
     </div>
+
+    <!-- Result Display -->
+    <?php if (isset($data) && $data): ?>
+      <div class="card shadow-sm mt-3">
+        <div class="card-header bg-success text-white">Student Information</div>
+        <div class="card-body">
+          <table class="table table-bordered mb-0">
+            <tr><th>ID</th><td><?= $data['stu_id'] ?></td></tr>
+            <tr><th>Admission Date</th><td><?= $data['stu_admission'] ?></td></tr>
+            <tr><th>Name</th><td><?= $data['stu_name'] ?></td></tr>
+            <tr><th>Date of Birth</th><td><?= $data['stu_dob'] ?></td></tr>
+            <tr><th>Blood Group</th><td><?= $data['stu_blood'] ?></td></tr>
+            <tr><th>Class</th><td><?= $data['class_name'] ?></td></tr>
+            <tr><th>Section</th><td><?= $data['class_section'] ?></td></tr>
+            <tr><th>Class Teacher</th><td><?= $data['class_teacher'] ?></td></tr>
+          </table>
+        </div>
+      </div>
+    <?php elseif (!empty($search_id)): ?>
+      <div class="alert alert-danger text-center mt-4">No record found for ID: <?= htmlspecialchars($search_id) ?></div>
+    <?php endif; ?>
+
   </div>
 </div>
+
 <!------------------------------------------------------------------------------------------------------------------------------------------->
 
 

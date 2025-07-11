@@ -34,25 +34,7 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="../src./assets/images/ps.png" type="image/png">
     <link href="../src./assets/images/ps.png" rel="apple-touch-icon">
-    <title>Staff Attendance View</title>
-      <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .card {
-      max-width: 800px;
-      margin: auto;
-      margin-top: 50px;
-      padding: 30px;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .table th, .table td {
-      vertical-align: middle;
-    }
-    .badge { font-size: 0.9rem; }
-    .filter-label { font-weight: 600; }
-  </style>
+    <title>Pearlsys</title>
     <!-- plugins:css -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Chart.js -->
@@ -74,7 +56,20 @@ $result = mysqli_query($conn, $query);
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- endinject -->
+    <!-- <link rel="shortcut icon" href="assets/images/favicon.png"/> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style type="text/css">
+    .chart-container {
+      width: 400px;
+      height: 400px;
+      margin: auto;
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    }
+  </style>
   </head>
   <body>
 <!------------------------------------------navbar start--------------------------------------------------------------------->
@@ -82,19 +77,20 @@ $result = mysqli_query($conn, $query);
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-     <h3 class="navbar-brand brand-logo me-5 ">School</h3>
+     <h3 class="navbar-brand brand-logo me-5 ">
+        <img class="logo-image" src="../src./assets/images/ps.png" width="50" alt="Logo"><span class="text-success">Pearlsys</span> </h3>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-       <a class="nav-link m-4 text-white " href="./staf_form.php">
-        <h4 class='p-2 bg-success ml-5 mt-2 '>Teacher Enrollment</h4>
+       <a class="nav-link m-4 text-white " href="./app_form.php">
+        <h4 class='p-2 bg-success ml-5 mt-2 '>Student Enrollment</h4>
         </a>
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-        <h2><i class="bi bi-person-circle menu-icon"></i></h2>
+     <img src="../src./assets/images/login1.png" alt="Person" style="width:45px; height:45px;" class="">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <!-- <a href="./login.php" class="dropdown-item">
@@ -116,7 +112,7 @@ $result = mysqli_query($conn, $query);
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="./index.php">
+      <a class="nav-link" href="">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -145,7 +141,7 @@ $result = mysqli_query($conn, $query);
           <li class="nav-item"><a class="nav-link" href="./staf_form.php">Teacher Form</a></li>
           <li class="nav-item"> <a class="nav-link" href="./section.php">Class Standard</a></li>
           <li class="nav-item"> <a class="nav-link" href="./sub_staff.php">Teacher Details</a></li>
-             <li class="nav-item"> <a class="nav-link" href="">Attendance</a></li>
+             <li class="nav-item"> <a class="nav-link" href="./staff_attendanceA.php">Attendance</a></li>
         </ul>
       </div>
     </li>
@@ -190,7 +186,7 @@ $result = mysqli_query($conn, $query);
           <li class="nav-item"> <a class="nav-link" href="./staff_view.php">Teacher View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./stu_vfees.php">Fees View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./student_viewattendance.php">Student Attendance</a></li>
-          <li class="nav-item"> <a class="nav-link" href="">Teacher Attendance</a></li>
+          <li class="nav-item"> <a class="nav-link" href="./staff_attendanceAV.php">Teacher Attendance</a></li>
           <li class="nav-item"> <a class="nav-link" href="./syllabus_view.php">Syllabus View</a></li>
           <li class="nav-item"> <a class="nav-link" href="./ques_view.php">Questions View</a></li>
         </ul>
