@@ -222,30 +222,28 @@ if (!empty($search_id)) {
 </form>
 
     </div>
-
-    <!-- Result Display -->
-    <?php if (isset($data) && $data): ?>
-      <div class="card shadow-sm mt-3">
-        <div class="card-header bg-success text-white">Student Information</div>
-        <div class="card-body">
-          <table class="table table-bordered mb-0">
-            <tr><th>ID</th><td><?= $data['stu_id'] ?></td></tr>
-            <tr><th>Admission Date</th><td><?= $data['stu_admission'] ?></td></tr>
-            <tr><th>Name</th><td><?= $data['stu_name'] ?></td></tr>
-            <tr><th>Date of Birth</th><td><?= $data['stu_dob'] ?></td></tr>
-            <tr><th>Blood Group</th><td><?= $data['stu_blood'] ?></td></tr>
-            <tr><th>Class</th><td><?= $data['class_name'] ?></td></tr>
-            <tr><th>Section</th><td><?= $data['class_section'] ?></td></tr>
-            <tr><th>Class Teacher</th><td><?= $data['class_teacher'] ?></td></tr>
-          </table>
-        </div>
+<!-- Result Display -->
+<?php if (isset($data) && $data): ?>
+  <div class="row justify-content-center mt-4">
+    <div class="card shadow-sm text-center col-lg-7 mx-auto">
+      <div class="card-header bg-success text-white">Student Information</div>
+      <div class="card-body">
+        <table class="table table-bordered mb-0">
+          <tr><th>ID</th><td><?= $data['stu_id'] ?></td></tr>
+          <tr><th>Admission Date</th><td><?= $data['stu_admission'] ?></td></tr>
+          <tr><th>Name</th><td><?= $data['stu_name'] ?></td></tr>
+          <tr><th>Date of Birth</th><td><?= $data['stu_dob'] ?></td></tr>
+          <tr><th>Blood Group</th><td><?= $data['stu_blood'] ?></td></tr>
+          <tr><th>Class</th><td><?= $data['class_name'] ?></td></tr>
+          <tr><th>Section</th><td><?= $data['class_section'] ?></td></tr>
+          <tr><th>Class Teacher</th><td><?= $data['class_teacher'] ?></td></tr>
+        </table>
       </div>
-    <?php elseif (!empty($search_id)): ?>
-      <div class="alert alert-danger text-center mt-4">No record found for ID: <?= htmlspecialchars($search_id) ?></div>
-    <?php endif; ?>
-
+    </div>
   </div>
-</div>
+<?php elseif (!empty($search_id)): ?>
+  <div class="alert alert-danger text-center mt-4">No record found for ID: <?= htmlspecialchars($search_id) ?></div>
+<?php endif; ?>
 
 <!------------------------------------------------------------------------------------------------------------------------------------------->
 

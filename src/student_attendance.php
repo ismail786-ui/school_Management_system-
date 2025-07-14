@@ -191,14 +191,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     class="form-control me-2 w-50"
     placeholder="e.g. 11-A"
     required
-    style="border: 1px solid black; box-shadow: none; outline: none;"
+    style="border: 1px solid black; box-shadow: none; outline: none;height:44px;"
     this.style.boxShadow='none';
     onblur="this.style.outline='none';"
   >
-  <button type="submit" class="btn btn-primary" style="background-color: rgb(32, 143, 255); outline: none;">Search</button>
-  
+  <button type="submit" class="btn btn-primary"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Search
+</button>
+
   <!-- View Button -->
-  <a href="student_viewattendance.php" class="btn btn-warning text-white">View </a>
+ 
+  <a href="student_viewattendance.php" class="btn btn-warning text-white" style=" border: none; border-radius: 0;">View </a>
 </form>
 
     </div>

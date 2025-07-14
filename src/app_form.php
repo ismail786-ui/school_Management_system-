@@ -22,7 +22,6 @@ if (isset($_POST['submit'])) {
     $stu_admission = $_POST['stu_admission'];
     $stu_standard = $_POST['standard'];
     $stu_blood = $_POST['stu_blood'];
-    $school_fees = $_POST['school_fees'];
 
     // Upload file function
     function uploadFile($key) {
@@ -52,14 +51,14 @@ if (isset($_POST['submit'])) {
         stu_mother, stu_father, stu_mobile, stu_admission,
         stu_standard, stu_blood, stu_aadhar, stu_photo,
         stu_community, stu_pan, stu_tc, stu_marksheet,
-        academic_year, school_fees
+        academic_year
     ) VALUES (
         '$stu_name', '$stu_email', '$stu_dob', '$stu_age', '$stu_gender',
         '$stu_address', '$stu_city', '$stu_state', '$stu_pincode',
         '$stu_mother', '$stu_father', '$stu_mobile', '$stu_admission',
         '$stu_standard', '$stu_blood', '$file_aadhar', '$file_photo',
         '$file_community', '$file_pan', '$file_tc', '$file_marksheet',
-        '$academic_year', '$school_fees'
+        '$academic_year'
     )";
 
    if ($conn->query($insert) === TRUE) {
@@ -360,7 +359,6 @@ $conn->close();
         <div class="col-md-4">
           <label for="stu_community" class="form-label">Community Certificate</label>
         <input type="file" class="form-control" id="stu_community" name="stu_community" accept=".pdf,.jpg,.jpeg,.png" required>
-
           <div class="text-danger"></div>
         </div>
       </div>
@@ -435,10 +433,17 @@ $conn->close();
   </div>
 
       <!-- Submit Buttons -->
-      <div class="text-center mt-4">
-        <button type="submit" name="submit" class="btn btn-primary text-white">Save</button>
-        <button type="reset" class="btn btn-danger text-white">Reset</button>
-      </div>
+  <div class="text-center mt-4">
+  <button type="submit" class="btn btn-primary" name="submit"
+    style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+    Save
+  </button>
+
+  <button type="reset" class="btn btn-danger text-white"
+    style="border-radius: 0;">
+    Reset
+  </button>
+</div>
 
     </form>
   </div>

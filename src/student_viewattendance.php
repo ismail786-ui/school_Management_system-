@@ -191,8 +191,10 @@
         <input type="date" name="date_filter" class="form-control" value="<?= isset($_GET['date_filter']) ? $_GET['date_filter'] : '' ?>">
       </div>
       <div class="col-md-4 d-flex gap-2">
-        <button type="submit" class="btn btn-primary px-3"> Search</button>
-        <a href="view_attendance.php" class="btn btn-secondary px-3"> Reset</a>
+              <button type="submit" class="btn btn-primary" name="submit_fees"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Search</button>
+        <button type='reset' style=" border: none; border-radius: 0;" class="btn btn-danger text-white px-3"> Reset</button>
       </div>
     </div>
   </form>

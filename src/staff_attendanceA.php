@@ -217,16 +217,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           type="text"
           name="search"
           id="search"
-          class="form-control me-2 w-50"
+          class="form-control me-2"
           placeholder="e.g. 101"
           required
-          style="border: 1px solid black; box-shadow: none; outline: none;"
+          style="border: 1px solid black; box-shadow: none; outline:none;height:42px;width:125px;"
           this.style.boxShadow='none';
           onblur="this.style.outline='none';"
           value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
         >
-        <button type="submit" class="btn btn-primary" style="background-color: rgb(32, 143, 255); outline: none;">Search</button>
-        <a href="staff_attendanceAV.php" class="btn btn-warning text-white">View</a>
+        <button type="submit" class="btn btn-primary"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Search
+</button>
+        <a href="staff_attendanceAV.php"  style="background-color: border: none; border-radius: 0;" class="btn btn-warning text-white">View</a>
       </form>
     </div>
 
@@ -280,8 +283,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
       <div class="text-center mt-3">
-        <button type="submit" class="btn btn-success text-white">Submit</button>
-        <a href="staff_attendanceAV.php" class="btn btn-warning text-white">View</a>
+        <button type="submit" class="btn btn-primary"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Submit
+</button>
+        <a href="staff_attendanceAV.php" style="border: none; border-radius: 0;" class="btn btn-warning text-white">View</a>
       </div>
     </form>
 

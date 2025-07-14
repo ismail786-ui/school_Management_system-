@@ -384,8 +384,14 @@ if (isset($_POST['emp_submit'])) {
       </div>
       <!---Submit button -->
       <div class="col-lg-12 mt-4 text-center">
-        <button type="submit" name="emp_submit" class="btn btn-primary">Save</button>
-        <button type="reset" name="reset" class="btn btn-danger text-white">Reset</button>
+        <button type="submit" class="btn btn-primary" name='emp_submit'
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Save
+</button>
+          <button type="submit" class="btn btn-primary"
+  style="background-color: rgb(240, 45, 49); border: none; border-radius: 0;">
+  Reset
+</button>
       </div>
     </form>
   </div>

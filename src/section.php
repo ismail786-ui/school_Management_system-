@@ -191,7 +191,7 @@ if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
 }
 ?>
 
-<div class="container mt-5 bg-white shadow-sm rounded p-4">
+<div class="container bg-white shadow-sm rounded p-4">
   <!-- Title + Search -->
   <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
     <h3 class="mb-3 mb-md-0">📚 Class Sections</h3>
@@ -211,7 +211,11 @@ if (isset($_GET['search_name']) && $_GET['search_name'] !== '') {
 >
 
      
-       <button type="submit" class="btn btn-primary">Search</button>
+     <button type="submit" class="btn btn-primary w-50"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Search
+</button>
+
 </form>
     </form>
   </div>

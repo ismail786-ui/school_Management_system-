@@ -178,14 +178,9 @@
 <!------------------------------------------End bar ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
-<div class="container mt-5">
+<div class="container">
 
-  <!-- Title Row with Home Button -->
-  <div class="d-flex justify-content-center align-items-center mb-4">
-    <h2 class="mb-0">Students by Standard</h2>
-  </div>
-
-  <div class="container mt-5 bg-white shadow-sm rounded p-4">
+  <div class="container bg-white shadow-sm rounded p-4">
   <!-- Page Title -->
   <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
     <h3 class="mb-3 mb-md-0">🎓 Student List by Standard</h3>
@@ -194,31 +189,46 @@
 <form method="GET" class="d-flex align-items-center gap-2" role="search">
   <select name="std" class="form-select me-2 text-dark"
           required
-          style="border: 2px solid black; box-shadow: none; outline: none; height: 38px;width:125px;">
+          style="border:2px solid black; box-shadow: none; outline: none; height:40px;width:155px;">
     <option value="" class="text-dark">Select</option>
     <?php
+     
       $standards = [
-        "Pre-KG", "LKG", "UKG",
-        "First", "Second", "Third", "Fourth", "Fifth",
-        "Sixth", "Seventh", "Eighth",
-        "Ninth", "Tenth", "Eleventh", "Twelfth"
+        "Pre-KG" => "pre kg",
+        "LKG" => "lkg",
+        "UKG" => "ukg",
+        "First" => "I",
+        "Second" => "II",
+        "Third" => "III",
+        "Fourth" => "IV",
+        "Fifth" => "V",
+        "Sixth" => "VI",
+        "Seventh" => "VII",
+        "Eighth" => "VIII",
+        "Ninth" => "IX",
+        "Tenth" => "X",
+        "Eleventh" => "XI",
+        "Twelfth" => "XII"
       ];
-      foreach ($standards as $std) {
-        $selected = (isset($_GET['std']) && $_GET['std'] == $std) ? 'selected' : '';
-        echo "<option value='$std' class='text-dark' $selected>$std</option>";
+
+      foreach ($standards as $label => $value) {
+        $selected = (isset($_GET['std']) && $_GET['std'] == $value) ? 'selected' : '';
+        echo "<option value='$value' class='text-dark' $selected>$label</option>";
       }
     ?>
   </select>
 
-  <button type="submit" class="btn btn-primary">Search</button>
+  <button type="submit" class="btn btn-primary"
+    style="background-color: rgb(27, 112, 196); border: none; border-radius: 0; width:100px;">
+    Search
+  </button>
 </form>
-
   </div>
 
   <?php
     if (isset($_GET['std'])) {
       $standard = $_GET['std'];
-      echo "<h4 class='text-center text-primary mb-3'>Students in $standard</h4>";
+      echo "<h3 class='text-center text-primary mb-3'>Students in $standard</h3>";
 
       $sql = "SELECT * FROM student_admission WHERE stu_standard = '$standard'";
       $result = mysqli_query($conn, $sql);
@@ -252,23 +262,12 @@
         echo "</tbody></table></div>";
       } else {
         echo "<div class='d-flex justify-content-center'>
-                <div class='alert alert-warning text-center'>No students found in $standard.</div>
+                <div class='alert alert-danger text-center'>No students found in $standard.</div>
               </div>";
       }
     }
   ?>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
                   <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

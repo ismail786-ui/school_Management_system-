@@ -60,8 +60,8 @@ $data = [$students, $teachers, $staff];
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-     <h3 class="navbar-brand brand-logo me-5 ">
-        <img class="logo-image" src="../src./assets/images/ps.png" width="50" alt="Logo"><span class="text-success">Pearlsys</span> </h3>
+     <h2 class="navbar-brand brand-logo me-5 ">
+        <img class="logo-image" src="../src./assets/images/ps.png" width="66" alt="Logo"><span class="text-success">Pearlsys</span></h2>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -188,112 +188,62 @@ $data = [$students, $teachers, $staff];
 
 
 <!-- ------------------------------------------------------------------------------- -->
-<div class="container mb-5"> 
-<div class="col-lg-12 col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-<div class="container py-5">
-  <!-- Dashboard Header -->
-  <div class="mb-4 text-center">
-    <h2>📊 Dashboard Overview</h2>
-    <p class="text-muted">School users and activity</p>
+<?php
+include 'conn.php';
+
+$students = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM student_admission"))['total'];
+$teachers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM employee_form"))['total'];
+$classes  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM class_master"))['total'];
+
+$labels = json_encode(['Students', 'Teachers', 'Classes']);
+$values = json_encode([$students, $teachers, $classes]);
+?>
+
+
+<div class="container my-5">
+  <div class="row text-center mb-4">
+    <h2 class="text-dark">📊 School Overview</h2>
+    <p class="text-muted">Total Students, Teachers & Classes</p>
   </div>
 
-  <!-- Quick Stats -->
-  <div class="row mb-4 text-center">
-    <div class="col-md-4 mb-3">
-      <div class="card p-4">
-        <h5>👩‍🎓 Students</h5>
-          <?php 
-           include './conn.php';
-
-// Fetch records
-
-$sql = "SELECT COUNT(*) AS row_count FROM student_admission";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-
-?>
-        <h2 class="text-primary"><?php echo  $row["row_count"] ?></h2>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card p-4">
-        <h5>👨‍🏫 Employees</h5>
-           <?php
-      include './conn.php';
-
-// Fetch records
-$sql = "SELECT COUNT(*) AS emp_count FROM employee_form";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-?>
-        <h2 class="text-success"><?php echo  $row['emp_count'] ?></h2>
-      </div>
-    </div>
-    <div class="col-md-4 mb-2">
-      <div class="card p-4">
-        <h5>🛠️ Total Classes</h5>
-        <?php 
-include './conn.php';
-$sql = "SELECT COUNT(*) AS sch_class FROM class_master";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} 
-$conn->close();
-?>
-        <h2 class="text-warning"><?php echo  $row["sch_class"] ?></h2>
+  <div class="row justify-content-center">
+    <div class="col-lg-12 col-xl-10"> 
+      <div class="card p-4 shadow-lg" style="min-height: 500px;">
+      
+        <canvas id="overviewChart" height="350"></canvas> 
       </div>
     </div>
   </div>
-  <!----------------------------------------------------------------------------->
+</div>
 
- <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card text-center p-4">
-          <h5 class="mb-3">Overall Count</h5>
-          <div class="chart-container">
-            <canvas id="circleChart"></canvas>
-          </div>
-          <div class="mt-5">
-            <span class="badge bg-primary">Students: <?= $students ?></span>
-            <span class="badge bg-success">Teachers: <?= $teachers ?></span>
-            <span class="badge bg-warning ">Classes: <?= $staff ?></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-   <script>
-    const ctx = document.getElementById('circleChart').getContext('2d');
-    const circleChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Students', 'Teachers', 'Classes'],
-        datasets: [{
-          data: <?= json_encode($data) ?>,
-          backgroundColor: ['#0d6efd', '#198754', '#ffc107'], // blue, green, yellow
-          borderWidth: 1
-        }]
-      },
-      options: {
-        cutout: '60%',
-        plugins: {
-          legend: { position: 'bottom' },
-          tooltip: { enabled: true }
-        }
+<script>
+const ctx = document.getElementById('overviewChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: <?= $labels ?>,
+    datasets: [{
+      label: 'Count',
+      data: <?= $values ?>,
+      backgroundColor: ['#0d6efd', '#198754', '#ffc107']
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: true }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { stepSize: 10 }
       }
-    });
-  </script>
+    }
+  }
+});
+</script>
+
 <!--------------------------------------------------------------------------------------------------------->
       </div>
       <!-- content-wrapper ends -->

@@ -112,7 +112,7 @@ $result = mysqli_query($conn, $query);
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav position-fixed">
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="./index.php">
         <i class="bi bi-graph-up-arrow menu-icon"></i>
                <span class="menu-title">Dashboard</span>
       </a>
@@ -207,7 +207,7 @@ $result = mysqli_query($conn, $query);
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Teacher Attendance Report</h2>
-    <a href="staff_attendanceA.php" class="btn btn-warning">Add Attendance</a>
+    <a href="staff_attendanceA.php" style="background-color: rgb(133, 137, 12); border: none; border-radius: 0;" class="btn btn-warning text-white">Add Attendance</a>
   </div>
 
   <!-- FILTER FORM -->
@@ -224,8 +224,15 @@ $result = mysqli_query($conn, $query);
              value="<?= htmlspecialchars($filterDate) ?>">
     </div>
     <div class="col-md-3 d-flex align-items-end">
-      <button type="submit" class="btn btn-primary me-2">Search</button>
-      <a href="staff_attendanceAV.php" class="btn btn-secondary text-white">Reset</a>
+      <button type="submit" class="btn btn-primary"
+  style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
+  Search
+</button>
+  <button type="reset" class="btn btn-primary mx-2"
+  style="background-color: rgb(235, 41, 44); border: none; border-radius: 0;">
+ Reset
+</button>
+   
     </div>
   </form>
 
