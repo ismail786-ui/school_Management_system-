@@ -203,13 +203,11 @@ $values = json_encode([$students, $teachers, $classes]);
 <div class="container my-5">
   <div class="row text-center mb-4">
     <h2 class="text-dark">📊 School Overview</h2>
-    <p class="text-muted">Total Students, Teachers & Classes</p>
+    <h6 class="text-muted mt-2">Total Students, Teachers & Classes</h6>
   </div>
-
   <div class="row justify-content-center">
     <div class="col-lg-12 col-xl-10"> 
       <div class="card p-4 shadow-lg" style="min-height: 500px;">
-      
         <canvas id="overviewChart" height="350"></canvas> 
       </div>
     </div>
@@ -245,12 +243,7 @@ new Chart(ctx, {
 </script>
 
 <!--------------------------------------------------------------------------------------------------------->
-      </div>
-      <!-- content-wrapper ends -->
-      <!-- partial:partials/_footer.html -->
-      </div>
-      <!-- partial -->
-      </div>
+    
       </div>
       </div>
       <div class="row">

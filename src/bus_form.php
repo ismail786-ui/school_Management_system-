@@ -266,7 +266,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="d-flex justify-content-center gap-2">
             <button type="submit" class="btn btn-primary"
   style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">
- Submit
+ Save
 </button>
         <a href="bus_view.php"  style=" border: none; border-radius: 0;" class="btn  text-white btn-warning">View</a>
       </div>

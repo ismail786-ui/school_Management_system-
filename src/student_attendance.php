@@ -260,8 +260,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <!-- Buttons -->
       <div class="text-center mt-3">
-        <a href="student_viewattendance.php" class="btn btn-warning text-white">View </a>
-        <button type="submit" class="btn btn-success text-white">Submit </button>
+        <!-- <a href="student_viewattendance.php" class="btn text-white" style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;" class="btn btn-warning text-white">View </a> -->
+        <button type="submit" class="btn text-white" style="background-color: rgb(27, 112, 196); border: none; border-radius: 0;">Submit </button>
       </div>
     </form>
 
